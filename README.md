@@ -1,0 +1,1 @@
+# schmiedeler-associates
