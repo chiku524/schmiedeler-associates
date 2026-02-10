@@ -12,17 +12,15 @@ Institutional website for **Schmiedeler & Associates Inc.** (schmiedeler.com). S
 
 ## Run locally
 
-No build step. Open `index.html` in a browser, or use a local server:
+No build step. To preview the site before deploying:
 
 ```bash
-# Python
-python -m http.server 8000
-
-# Node (npx)
-npx serve .
+npm run dev
 ```
 
-Then visit `http://localhost:8000`.
+Then open **http://localhost:3000**. The dev server serves the project root and reloads on file changes.
+
+Alternatively, open `index.html` in a browser or run `python -m http.server 8000` / `npx serve .`.
 
 ## Deploy to Cloudflare Pages
 

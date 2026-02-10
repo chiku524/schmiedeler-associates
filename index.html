@@ -61,29 +61,49 @@
   <header class="site-header" id="header">
     <div class="header-inner">
       <a href="/" class="logo" aria-label="Schmiedeler & Associates home">
-        <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" aria-hidden="true" width="44" height="44">
-          <rect x="8" y="12" width="32" height="24" rx="3" stroke="currentColor" stroke-width="2" fill="none"/>
-          <rect x="4" y="16" width="4" height="2" rx="1" fill="currentColor"/>
-          <rect x="4" y="22" width="4" height="2" rx="1" fill="currentColor"/>
-          <rect x="4" y="28" width="4" height="2" rx="1" fill="currentColor"/>
-          <rect x="40" y="16" width="4" height="2" rx="1" fill="currentColor"/>
-          <rect x="40" y="22" width="4" height="2" rx="1" fill="currentColor"/>
-          <rect x="40" y="28" width="4" height="2" rx="1" fill="currentColor"/>
-          <path d="M14 24h8M26 24h8M20 20v8M28 20v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          <circle cx="14" cy="24" r="1.5" fill="currentColor"/>
-          <circle cx="22" cy="24" r="1.5" fill="currentColor"/>
-          <circle cx="26" cy="24" r="1.5" fill="currentColor"/>
-          <circle cx="34" cy="24" r="1.5" fill="currentColor"/>
-          <circle cx="22" cy="20" r="1.5" fill="currentColor"/>
-          <circle cx="22" cy="28" r="1.5" fill="currentColor"/>
-          <circle cx="28" cy="20" r="1.5" fill="currentColor"/>
-          <circle cx="28" cy="28" r="1.5" fill="currentColor"/>
-        </svg>
+        <span class="logo-icon-wrap" aria-hidden="true">
+          <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" aria-hidden="true" width="28" height="28">
+            <rect x="8" y="10" width="32" height="28" rx="3" stroke="currentColor" stroke-width="1.8" fill="none"/>
+            <rect x="21" y="8" width="6" height="2" rx="1" fill="currentColor" opacity="0.35"/>
+            <rect x="4" y="14" width="4" height="1.8" rx="0.9" fill="currentColor"/>
+            <rect x="4" y="19" width="4" height="1.8" rx="0.9" fill="currentColor"/>
+            <rect x="4" y="24" width="4" height="1.8" rx="0.9" fill="currentColor"/>
+            <rect x="4" y="29" width="4" height="1.8" rx="0.9" fill="currentColor"/>
+            <rect x="40" y="14" width="4" height="1.8" rx="0.9" fill="currentColor"/>
+            <rect x="40" y="19" width="4" height="1.8" rx="0.9" fill="currentColor"/>
+            <rect x="40" y="24" width="4" height="1.8" rx="0.9" fill="currentColor"/>
+            <rect x="40" y="29" width="4" height="1.8" rx="0.9" fill="currentColor"/>
+            <rect x="16" y="4" width="1.8" height="4" rx="0.9" fill="currentColor"/>
+            <rect x="30" y="4" width="1.8" height="4" rx="0.9" fill="currentColor"/>
+            <rect x="16" y="40" width="1.8" height="4" rx="0.9" fill="currentColor"/>
+            <rect x="30" y="40" width="1.8" height="4" rx="0.9" fill="currentColor"/>
+            <path d="M12 18h6M30 18h6M12 30h6M30 30h6M18 14v6M18 28v6M30 14v6M30 28v6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+            <path d="M18 20h12M24 14v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="logo-accent"/>
+            <circle cx="12" cy="18" r="1.2" fill="currentColor" opacity="0.8"/>
+            <circle cx="18" cy="18" r="1.2" fill="currentColor" opacity="0.8"/>
+            <circle cx="30" cy="18" r="1.2" fill="currentColor" opacity="0.8"/>
+            <circle cx="36" cy="18" r="1.2" fill="currentColor" opacity="0.8"/>
+            <circle cx="18" cy="14" r="1.2" fill="currentColor" opacity="0.8"/>
+            <circle cx="18" cy="26" r="1.2" fill="currentColor" opacity="0.8"/>
+            <circle cx="30" cy="14" r="1.2" fill="currentColor" opacity="0.8"/>
+            <circle cx="30" cy="26" r="1.2" fill="currentColor" opacity="0.8"/>
+            <circle cx="12" cy="30" r="1.2" fill="currentColor" opacity="0.8"/>
+            <circle cx="18" cy="30" r="1.2" fill="currentColor" opacity="0.8"/>
+            <circle cx="30" cy="30" r="1.2" fill="currentColor" opacity="0.8"/>
+            <circle cx="36" cy="30" r="1.2" fill="currentColor" opacity="0.8"/>
+            <circle cx="24" cy="20" r="1.5" fill="currentColor" class="logo-accent"/>
+            <circle cx="24" cy="14" r="1.2" fill="currentColor" class="logo-accent"/>
+            <circle cx="24" cy="26" r="1.2" fill="currentColor" class="logo-accent"/>
+          </svg>
+        </span>
         <span class="logo-text">
-          <span class="logo-name">Schmiedeler & Associates</span>
-          <span class="logo-inc">Inc.</span>
+          <span class="logo-name">Schmiedeler & Associates</span> <span class="logo-inc">Inc.</span>
         </span>
       </a>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle light/dark mode">
+        <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true">☀</span>
+        <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true">☽</span>
+      </button>
       <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span>
         <span></span>
@@ -115,7 +135,7 @@
       </div>
     </section>
 
-    <section class="section about" id="about">
+    <section class="section animate-in about" id="about">
       <div class="container">
         <h2 class="section-title">About us</h2>
         <div class="about-grid">
@@ -138,7 +158,7 @@
       </div>
     </section>
 
-    <section class="section services alt" id="services">
+    <section class="section animate-in services alt" id="services">
       <div class="container">
         <h2 class="section-title">Our services</h2>
         <ul class="services-list">
@@ -166,7 +186,7 @@
       </div>
     </section>
 
-    <section class="section products" id="products">
+    <section class="section animate-in products" id="products">
       <div class="container">
         <h2 class="section-title">Electronic components</h2>
         <p class="section-intro">We import and export a broad range of electronic components for industrial and commercial use.</p>
@@ -185,7 +205,7 @@
       </div>
     </section>
 
-    <section class="section manufacturers alt" id="manufacturers">
+    <section class="section animate-in manufacturers alt" id="manufacturers">
       <div class="container">
         <h2 class="section-title">Equipment from major manufacturers</h2>
         <p class="section-intro">We represent and sell electronics equipment from industry-leading brands.</p>
@@ -198,8 +218,8 @@
       </div>
     </section>
 
-    <section class="section contact" id="contact">
-      <div class="container">
+    <section class="section animate-in contact" id="contact">
+      <div class="container contact-section-inner">
         <h2 class="section-title">Contact</h2>
         <p class="section-intro">For inquiries about representation, sourcing, or equipment sales, please reach out.</p>
 
@@ -208,27 +228,31 @@
         </div>
 
         <!-- Form submits to Formspree; replace YOUR_FORM_ID with your Formspree form ID (formspree.io) and set recipient to info@schmiedeler.com -->
-        <form id="contact-form" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
-          <input type="hidden" name="_subject" value="Schmiedeler.com contact form" />
-          <input type="hidden" name="_next" value="https://schmiedeler.com/#contact?sent=1" />
-          <div class="form-row">
-            <label class="form-label" for="contact-name">Name <span class="form-required">*</span></label>
-            <input type="text" id="contact-name" name="name" class="form-input" required autocomplete="name" />
-          </div>
-          <div class="form-row">
-            <label class="form-label" for="contact-email">Email <span class="form-required">*</span></label>
-            <input type="email" id="contact-email" name="_replyto" class="form-input" required autocomplete="email" />
-          </div>
-          <div class="form-row">
-            <label class="form-label" for="contact-subject">Subject <span class="form-required">*</span></label>
-            <input type="text" id="contact-subject" name="subject" class="form-input" required />
-          </div>
-          <div class="form-row">
-            <label class="form-label" for="contact-message">Message <span class="form-required">*</span></label>
-            <textarea id="contact-message" name="message" class="form-input form-textarea" rows="5" required></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary">Send message</button>
-        </form>
+        <div class="contact-form-card">
+          <form id="contact-form" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+            <input type="hidden" name="_subject" value="Schmiedeler.com contact form" />
+            <input type="hidden" name="_next" value="https://schmiedeler.com/#contact?sent=1" />
+            <div class="form-grid form-grid--row">
+              <div class="form-row">
+                <label class="form-label" for="contact-name">Name <span class="form-required">*</span></label>
+                <input type="text" id="contact-name" name="name" class="form-input" required autocomplete="name" placeholder="Your name" />
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="contact-email">Email <span class="form-required">*</span></label>
+                <input type="email" id="contact-email" name="_replyto" class="form-input" required autocomplete="email" placeholder="you@example.com" />
+              </div>
+            </div>
+            <div class="form-row">
+              <label class="form-label" for="contact-subject">Subject <span class="form-required">*</span></label>
+              <input type="text" id="contact-subject" name="subject" class="form-input" required placeholder="e.g. Sourcing inquiry" />
+            </div>
+            <div class="form-row">
+              <label class="form-label" for="contact-message">Message <span class="form-required">*</span></label>
+              <textarea id="contact-message" name="message" class="form-input form-textarea" rows="5" required placeholder="How can we help you?"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send message</button>
+          </form>
+        </div>
 
         <p class="contact-fallback">Or email us directly at <a href="mailto:info@schmiedeler.com">info@schmiedeler.com</a>.</p>
       </div>

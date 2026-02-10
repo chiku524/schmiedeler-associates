@@ -13,12 +13,14 @@ const LOGO_SVG = path.join(ASSETS, 'logo.svg');
 const LOGO_PNG = path.join(ASSETS, 'logo.png');
 const LOGO_JPEG = path.join(ASSETS, 'logo.jpg');
 
-// Brand color for raster export (currentColor in SVG becomes this)
+// Brand colors for raster export
 const BRAND_NAVY = '#1e293b';
+const BRAND_ACCENT = '#b45309';
 
 function main() {
   let svg = fs.readFileSync(LOGO_SVG, 'utf8');
   svg = svg.replace(/currentColor/g, BRAND_NAVY);
+  svg = svg.replace(/var\(--logo-accent,\s*#b45309\)/g, BRAND_ACCENT);
 
   const opts = {
     fitTo: { mode: 'width', value: 512 },

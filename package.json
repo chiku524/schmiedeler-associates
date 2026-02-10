@@ -2,6 +2,7 @@
   "name": "schmiedeler-associates",
   "private": true,
   "scripts": {
+    "dev": "node scripts/serve.js",
     "export-logo": "node scripts/export-logo.js"
   },
   "devDependencies": {
