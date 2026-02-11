@@ -111,13 +111,13 @@ Output: `assets/logo.png` (512px width, transparent), `assets/logo.jpg` (512px, 
 
 ## Customization
 
-- **Contact form (Formspree):** The contact form at the bottom of the site posts to [Formspree](https://formspree.io). To receive submissions at **info@schmiedeler.com**:
-  1. Sign up at [formspree.io](https://formspree.io) and create a new form.
-  2. Set the form’s email address to **info@schmiedeler.com**.
-  3. Copy your form ID (e.g. `xyzabc` from `https://formspree.io/f/xyzabc`).
-  4. In `index.html`, find the contact form and replace `YOUR_FORM_ID` in the form `action` with your form ID: `action="https://formspree.io/f/YOUR_FORM_ID"`.
-  After a successful submit, Formspree redirects back to the site and a “Thank you” message is shown.
-- **Contact email:** Update `info@schmiedeler.com` in the form’s `_next` URL, mailto link, and Formspree recipient if you change the address.
+- **Contact form:** The form submits to a Cloudflare Pages Function (`/api/contact`) which sends email via [Resend](https://resend.com). Set up Resend and add the API key in Cloudflare:
+  1. Create an account at [resend.com](https://resend.com) and create an API key.
+  2. In Cloudflare Dashboard → Pages → your project → **Settings** → **Environment variables**, add:
+     - **RESEND_API_KEY** (secret): your Resend API key (e.g. `re_xxxxx`).
+     - **RESEND_FROM** (optional): sender address Resend will use. If omitted, the function uses `Schmiedeler Contact <onboarding@resend.dev>` (Resend’s sandbox). After you [verify your domain](https://resend.com/docs/dashboard/domains/introduction) in Resend, set this to e.g. `Schmiedeler & Associates <info@schmiedeler.com>`.
+  3. Redeploy the site so the new env vars are picked up.
+  Messages are sent to **info@schmiedeler.com** (set in `functions/api/contact.js` as `TO_EMAIL`). If the API is unavailable, the form falls back to opening the user’s email client (mailto).
 - **Employee count:** The site does not display employee count; add a line in the About section or in a meta block if needed.
 - **Favicon:** The site uses `assets/logo.png` as favicon and Apple touch icon. To use a different image, replace the file or add `<link rel="icon" href="…" />` and `<link rel="apple-touch-icon" href="…" />` in the `<head>`.
 - **Sitemap:** When you make significant content changes, update the `<lastmod>` date in `sitemap.xml`.

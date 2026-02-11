@@ -72,18 +72,73 @@
     }
   });
 
-  // Contact form: show success message after Formspree redirect
+  // Contact form: POST to /api/contact (Cloudflare Pages Function + Resend). Fallback to mailto if API fails.
   var formSuccess = document.getElementById('form-success');
+  var formError = document.getElementById('form-error');
   var contactForm = document.getElementById('contact-form');
-  if (formSuccess && contactForm) {
-    var showSuccess = window.location.search.indexOf('sent=1') !== -1 ||
-      window.location.hash.indexOf('sent=1') !== -1;
-    if (showSuccess) {
-      formSuccess.hidden = false;
-      contactForm.style.display = 'none';
-      var formCard = contactForm.closest('.contact-form-card');
-      if (formCard) formCard.style.display = 'none';
-      formSuccess.focus({ focusVisible: true });
-    }
+  if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nameEl = document.getElementById('contact-name');
+      var emailEl = document.getElementById('contact-email');
+      var subjectEl = document.getElementById('contact-subject');
+      var messageEl = document.getElementById('contact-message');
+      if (!nameEl || !emailEl || !subjectEl || !messageEl) return;
+      var name = (nameEl.value || '').trim();
+      var email = (emailEl.value || '').trim();
+      var subject = (subjectEl.value || '').trim();
+      var message = (messageEl.value || '').trim();
+      if (!name || !email || !subject || !message) return;
+
+      if (formError) {
+        formError.hidden = true;
+        formError.textContent = '';
+      }
+      var submitBtn = contactForm.querySelector('button[type="submit"]');
+      var btnText = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+      }
+
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, email: email, subject: subject, message: message }),
+      })
+        .then(function (res) {
+          return res.json().then(function (data) {
+            if (res.ok && data.success) {
+              if (formSuccess) formSuccess.hidden = false;
+              contactForm.style.display = 'none';
+              var formCard = contactForm.closest('.contact-form-card');
+              if (formCard) formCard.style.display = 'none';
+              if (formSuccess) formSuccess.focus({ focusVisible: true });
+            } else {
+              if (formError) {
+                formError.textContent = data.error || 'Something went wrong. Please try again or email us directly.';
+                formError.hidden = false;
+              }
+              if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = btnText;
+              }
+            }
+          });
+        })
+        .catch(function () {
+          if (formError) {
+            formError.textContent = 'Unable to send. Opening your email client instead…';
+            formError.hidden = false;
+          }
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = btnText;
+          }
+          var subjectLine = 'Schmiedeler.com: ' + subject;
+          var body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message;
+          window.location.href = 'mailto:info@schmiedeler.com?subject=' + encodeURIComponent(subjectLine) + '&body=' + encodeURIComponent(body);
+        });
+    });
   }
 })();

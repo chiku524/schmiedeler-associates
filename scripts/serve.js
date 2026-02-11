@@ -1,6 +1,10 @@
 /**
  * Minimal static dev server (no .bin path issues with special chars in dir name).
  * Run: node scripts/serve.js  or  npm run dev
+ *
+ * Strips query/hash from URLs so cache-busted assets (e.g. css/style.css?v=2)
+ * resolve to the real file on disk. Uses pathname-only so path.join(ROOT, ...)
+ * is correct on all platforms.
  */
 const http = require('http');
 const fs = require('fs');
@@ -27,8 +31,10 @@ const MIME = {
 
 function createServer() {
   return http.createServer((req, res) => {
-    let file = req.url === '/' ? '/index.html' : req.url;
-    file = path.join(ROOT, path.normalize(file).replace(/^(\.\.(\/|\\|$))+/, ''));
+    // Strip query string and hash so "css/style.css?v=2" resolves to the real file
+    const raw = req.url.split('?')[0].split('#')[0] || '/';
+    const pathname = raw.replace(/^\/+/, '') || 'index.html';
+    let file = path.join(ROOT, path.normalize(pathname).replace(/^(\.\.(\/|\\|$))+/, ''));
     const ext = path.extname(file);
     const mime = MIME[ext] || 'application/octet-stream';
 

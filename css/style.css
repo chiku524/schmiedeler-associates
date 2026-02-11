@@ -774,6 +774,18 @@ a:hover {
   border-color: #047857;
 }
 
+.form-message--error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+[data-theme="dark"] .form-message--error {
+  background: #7f1d1d;
+  color: #fecaca;
+  border-color: #b91c1c;
+}
+
 .form-row {
   margin-bottom: var(--space-md);
 }
