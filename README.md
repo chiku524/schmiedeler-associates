@@ -121,3 +121,34 @@ Output: `assets/logo.png` (512px width, transparent), `assets/logo.jpg` (512px, 
 - **Employee count:** The site does not display employee count; add a line in the About section or in a meta block if needed.
 - **Favicon:** The site uses `assets/logo.png` as favicon and Apple touch icon. To use a different image, replace the file or add `<link rel="icon" href="…" />` and `<link rel="apple-touch-icon" href="…" />` in the `<head>`.
 - **Sitemap:** When you make significant content changes, update the `<lastmod>` date in `sitemap.xml`.
+
+## GitHub Actions + Cloudflare (auto-deploy on push)
+
+If pushing to GitHub does **not** trigger a Cloudflare deployment, the Pages project may not be connected to Git. You can deploy on every push using GitHub Actions instead:
+
+1. **Create a Cloudflare API token**
+   - Go to [Cloudflare Dashboard](https://dash.cloudflare.com) → **My Profile** → **API Tokens** → **Create Token**.
+   - Use the “Edit Cloudflare Workers” template (or create a custom token with **Account** → **Cloudflare Pages** → **Edit**).
+   - Copy the token value.
+
+2. **Add GitHub repository secrets**
+   - In your GitHub repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**.
+   - Add:
+     - **`CLOUDFLARE_API_TOKEN`** — the API token from step 1.
+     - **`CLOUDFLARE_ACCOUNT_ID`** — your Cloudflare account ID (Dashboard → right sidebar or **Workers & Pages** → any project → URL contains the account ID).
+
+3. Push to `main`; the workflow in `.github/workflows/deploy.yml` will run and deploy via `wrangler pages deploy`.
+
+## Admin dashboard (contact submissions)
+
+Employees can view contact form submissions at **/admin.html** (e.g. `https://schmiedeler.com/admin.html`). Submissions are **stored when each contact email is sent** (not read from your email inbox). To enable:
+
+1. **Create a KV namespace** (Cloudflare Dashboard → **Workers & Pages** → **KV** → **Create namespace**). Name it e.g. `contact-submissions`.
+
+2. **Bind KV to your Pages project** — **Workers & Pages** → your Pages project → **Settings** → **Functions** → **KV namespace bindings** → **Add binding** → Variable name: **`CONTACT_SUBMISSIONS`**, KV namespace: the one you created.
+
+3. **Set an admin secret** — In the same project → **Settings** → **Environment variables** → add **`ADMIN_SECRET`** (e.g. a long random string). This is the “admin key” users enter on the admin page.
+
+4. Redeploy. Visit `/admin.html`, enter the admin key, and view submissions.
+
+**Note:** To “retrieve and display” emails directly from your inbox (Gmail, Outlook, etc.), you would need to connect that provider (e.g. Gmail API, Microsoft Graph) and build a separate backend with OAuth; the dashboard above shows the same content that was sent by the form, stored at send time.

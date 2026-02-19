@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Contact submissions | Schmiedeler &amp; Associates</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" sizes="32x32" />
+  <link rel="stylesheet" href="css/style.css?v=2" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700&display=swap" rel="stylesheet" />
+  <style>
+    .admin-wrap { max-width: 56rem; margin: 0 auto; padding: var(--space-xl); }
+    .admin-title { font-family: var(--font-heading); font-size: 1.75rem; margin-bottom: var(--space-lg); }
+    .admin-login { margin-bottom: var(--space-xl); }
+    .admin-login label { display: block; font-weight: 600; margin-bottom: var(--space-xs); }
+    .admin-login input { width: 100%; max-width: 20rem; padding: 0.5rem 0.75rem; border: 1px solid var(--color-trace); border-radius: var(--radius); }
+    .admin-login button { margin-top: var(--space-sm); }
+    .admin-error { color: #b91c1c; margin-top: var(--space-sm); }
+    .admin-table-wrap { overflow-x: auto; }
+    .admin-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    .admin-table th, .admin-table td { text-align: left; padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--color-trace); }
+    .admin-table th { font-weight: 600; color: var(--color-navy); background: var(--color-bg-alt); }
+    .admin-table .dept { font-weight: 600; }
+    .admin-table .message { max-width: 20rem; white-space: pre-wrap; word-break: break-word; }
+    .admin-table .date { color: var(--color-text-muted); font-size: 0.9rem; }
+    .admin-empty { color: var(--color-text-muted); padding: var(--space-xl); }
+    .admin-logout { margin-top: var(--space-lg); }
+  </style>
+</head>
+<body>
+  <div class="admin-wrap">
+    <h1 class="admin-title">Contact submissions</h1>
+    <p class="section-intro">This page is restricted. Sign in with your admin key to view messages sent via the contact form.</p>
+
+    <div id="admin-login" class="admin-login">
+      <label for="admin-key">Admin key</label>
+      <input type="password" id="admin-key" placeholder="Enter admin key" autocomplete="off" />
+      <button type="button" class="btn btn-primary" id="admin-load">Sign in</button>
+      <p id="admin-error" class="admin-error" hidden></p>
+    </div>
+
+    <div id="admin-content" hidden>
+      <div class="admin-table-wrap">
+        <table class="admin-table" id="admin-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Department</th>
+              <th>From</th>
+              <th>Subject</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody id="admin-tbody"></tbody>
+        </table>
+      </div>
+      <p id="admin-empty" class="admin-empty" hidden>No submissions yet.</p>
+      <button type="button" class="btn btn-secondary admin-logout" id="admin-logout">Log out</button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var keyInput = document.getElementById('admin-key');
+      var loadBtn = document.getElementById('admin-load');
+      var errorEl = document.getElementById('admin-error');
+      var loginDiv = document.getElementById('admin-login');
+      var contentDiv = document.getElementById('admin-content');
+      var tbody = document.getElementById('admin-tbody');
+      var emptyEl = document.getElementById('admin-empty');
+      var logoutBtn = document.getElementById('admin-logout');
+      var STORAGE_KEY = 'schmiedeler_admin_key';
+
+      function showError(msg) {
+        errorEl.textContent = msg || '';
+        errorEl.hidden = !msg;
+      }
+
+      function loadSubmissions(key) {
+        showError('');
+        fetch('/api/submissions', {
+          method: 'GET',
+          headers: { 'Authorization': 'Bearer ' + key }
+        })
+          .then(function (r) {
+            if (r.status === 401) {
+              sessionStorage.removeItem(STORAGE_KEY);
+              showError('Invalid key. Please try again.');
+              return null;
+            }
+            return r.json();
+          })
+          .then(function (data) {
+            if (!data) return;
+            if (data.error && !data.submissions) {
+              showError(data.error || 'Failed to load.');
+              return;
+            }
+            loginDiv.hidden = true;
+            contentDiv.hidden = false;
+            sessionStorage.setItem(STORAGE_KEY, key);
+            render(data.submissions || []);
+          })
+          .catch(function () {
+            showError('Network error.');
+          });
+      }
+
+      function render(submissions) {
+        tbody.innerHTML = '';
+        emptyEl.hidden = submissions.length > 0;
+        submissions.forEach(function (s) {
+          var tr = document.createElement('tr');
+          var date = s.createdAt ? new Date(s.createdAt).toLocaleString() : '—';
+          tr.innerHTML =
+            '<td class="date">' + escapeHtml(date) + '</td>' +
+            '<td class="dept">' + escapeHtml(s.department || '—') + '</td>' +
+            '<td>' + escapeHtml(s.name || '') + ' &lt;' + escapeHtml(s.email || '') + '&gt;</td>' +
+            '<td>' + escapeHtml(s.subject || '—') + '</td>' +
+            '<td class="message">' + escapeHtml(s.message || '—') + '</td>';
+          tbody.appendChild(tr);
+        });
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      loadBtn.addEventListener('click', function () {
+        var key = (keyInput && keyInput.value) ? keyInput.value.trim() : '';
+        if (!key) {
+          showError('Enter the admin key.');
+          return;
+        }
+        loadSubmissions(key);
+      });
+
+      keyInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') loadBtn.click();
+      });
+
+      logoutBtn.addEventListener('click', function () {
+        sessionStorage.removeItem(STORAGE_KEY);
+        contentDiv.hidden = true;
+        loginDiv.hidden = false;
+        keyInput.value = '';
+        showError('');
+      });
+
+      var saved = sessionStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        keyInput.value = '';
+        loadSubmissions(saved);
+      } else {
+        contentDiv.hidden = true;
+        loginDiv.hidden = false;
+      }
+    })();
+  </script>
+</body>
+</html>

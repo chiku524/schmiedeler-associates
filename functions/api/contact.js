@@ -113,5 +113,25 @@ export async function onRequest(context) {
     );
   }
 
+  // Store submission for admin dashboard (if KV binding is configured)
+  const kv = env.CONTACT_SUBMISSIONS;
+  if (kv && typeof kv.put === 'function') {
+    const id = `submission:${Date.now()}-${crypto.randomUUID()}`;
+    const payload = {
+      name,
+      email,
+      subject,
+      message,
+      department: department || 'general',
+      toEmail,
+      createdAt: new Date().toISOString(),
+    };
+    try {
+      await kv.put(id, JSON.stringify(payload));
+    } catch (_) {
+      // Non-fatal; email was already sent
+    }
+  }
+
   return jsonResponse({ success: true }, 200, corsHeaders(origin));
 }
