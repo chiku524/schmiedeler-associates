@@ -5,7 +5,14 @@
  */
 
 const RESEND_URL = 'https://api.resend.com/emails';
-const TO_EMAIL = 'info@schmiedeler.com';
+
+/** Department → recipient email. Unknown/missing department defaults to general. */
+const DEPARTMENT_EMAILS = {
+  general: 'info@schmiedeler.com',
+  sales: 'sales@schmiedeler.com',
+  accounting: 'accounting@schmiedeler.com',
+};
+const DEFAULT_TO_EMAIL = 'info@schmiedeler.com';
 
 function corsHeaders(origin) {
   const o = origin || '*';
@@ -56,6 +63,7 @@ export async function onRequest(context) {
   const email = typeof body.email === 'string' ? body.email.trim() : '';
   const subject = typeof body.subject === 'string' ? body.subject.trim() : '';
   const message = typeof body.message === 'string' ? body.message.trim() : '';
+  const department = typeof body.department === 'string' ? body.department.trim() : '';
 
   if (!name || !email || !subject || !message) {
     return jsonResponse(
@@ -69,10 +77,16 @@ export async function onRequest(context) {
   if (name.length > 200 || email.length > 254 || subject.length > 300 || message.length > 10000) {
     return jsonResponse({ error: 'A field exceeds maximum length' }, 400, corsHeaders(origin));
   }
+  if (department.length > 80) {
+    return jsonResponse({ error: 'Department value too long' }, 400, corsHeaders(origin));
+  }
 
+  const toEmail = (department && DEPARTMENT_EMAILS[department]) ? DEPARTMENT_EMAILS[department] : DEFAULT_TO_EMAIL;
   const fromAddress = env.RESEND_FROM || 'Schmiedeler & Associates Inc <info@schmiedeler.com>';
-  const subjectLine = `Schmiedeler.com: ${subject}`;
-  const textBody = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+  const subjectPrefix = department ? `[${department}] ` : '';
+  const subjectLine = `Schmiedeler.com: ${subjectPrefix}${subject}`;
+  const deptBlock = department ? `Department: ${department}\n\n` : '';
+  const textBody = `Name: ${name}\nEmail: ${email}\n${deptBlock}${message}`;
 
   const res = await fetch(RESEND_URL, {
     method: 'POST',
@@ -82,7 +96,7 @@ export async function onRequest(context) {
     },
     body: JSON.stringify({
       from: fromAddress,
-      to: [TO_EMAIL],
+      to: [toEmail],
       reply_to: email,
       subject: subjectLine,
       text: textBody,

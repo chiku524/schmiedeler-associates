@@ -72,6 +72,34 @@
     }
   });
 
+  // Department chooser: select department, scroll to form, set hidden input and optional subject
+  var departmentBtns = document.querySelectorAll('.department-btn');
+  var contactDepartmentEl = document.getElementById('contact-department');
+  var contactSubjectEl = document.getElementById('contact-subject');
+  var departmentChosenEl = document.getElementById('department-chosen');
+  var contactSection = document.getElementById('contact');
+  if (departmentBtns.length && contactDepartmentEl && contactSection) {
+    departmentBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var dept = btn.getAttribute('data-department');
+        var label = btn.getAttribute('data-label');
+        if (!dept) return;
+        contactDepartmentEl.value = dept;
+        departmentBtns.forEach(function (b) { b.classList.remove('is-selected'); });
+        btn.classList.add('is-selected');
+        if (departmentChosenEl) {
+          departmentChosenEl.hidden = false;
+          departmentChosenEl.textContent = 'Sending to: ' + (label || dept) + '. Fill in the form below.';
+        }
+        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (contactSubjectEl && !contactSubjectEl.value) {
+          var placeholders = { general: 'General inquiry', sales: 'Business / sales inquiry', accounting: 'Finance / accounting inquiry' };
+          contactSubjectEl.placeholder = placeholders[dept] || 'Your subject';
+        }
+      });
+    });
+  }
+
   // Contact form: POST to /api/contact (Cloudflare Pages Function + Resend). Fallback to mailto if API fails.
   var formSuccess = document.getElementById('form-success');
   var formError = document.getElementById('form-error');
@@ -83,11 +111,13 @@
       var emailEl = document.getElementById('contact-email');
       var subjectEl = document.getElementById('contact-subject');
       var messageEl = document.getElementById('contact-message');
+      var departmentEl = document.getElementById('contact-department');
       if (!nameEl || !emailEl || !subjectEl || !messageEl) return;
       var name = (nameEl.value || '').trim();
       var email = (emailEl.value || '').trim();
       var subject = (subjectEl.value || '').trim();
       var message = (messageEl.value || '').trim();
+      var department = (departmentEl && departmentEl.value) ? departmentEl.value.trim() : '';
       if (!name || !email || !subject || !message) return;
 
       if (formError) {
@@ -101,10 +131,13 @@
         submitBtn.textContent = 'Sending…';
       }
 
+      var payload = { name: name, email: email, subject: subject, message: message };
+      if (department) payload.department = department;
+
       fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name, email: email, subject: subject, message: message }),
+        body: JSON.stringify(payload),
       })
         .then(function (res) {
           return res.json().then(function (data) {
@@ -135,9 +168,11 @@
             submitBtn.disabled = false;
             submitBtn.textContent = btnText;
           }
-          var subjectLine = 'Schmiedeler.com: ' + subject;
-          var body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message;
-          window.location.href = 'mailto:info@schmiedeler.com?subject=' + encodeURIComponent(subjectLine) + '&body=' + encodeURIComponent(body);
+          var departmentEmails = { general: 'info@schmiedeler.com', sales: 'sales@schmiedeler.com', accounting: 'accounting@schmiedeler.com' };
+          var toEmail = (department && departmentEmails[department]) ? departmentEmails[department] : 'info@schmiedeler.com';
+          var subjectLine = 'Schmiedeler.com: ' + (department ? '[' + department + '] ' : '') + subject;
+          var body = 'Name: ' + name + '\nEmail: ' + email + (department ? '\nDepartment: ' + department : '') + '\n\n' + message;
+          window.location.href = 'mailto:' + toEmail + '?subject=' + encodeURIComponent(subjectLine) + '&body=' + encodeURIComponent(body);
         });
     });
   }

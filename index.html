@@ -221,7 +221,29 @@
     <section class="section animate-in contact" id="contact">
       <div class="container contact-section-inner">
         <h2 class="section-title">Contact</h2>
-        <p class="section-intro">For inquiries about representation, sourcing, or equipment sales, please reach out.</p>
+        <p class="section-intro">Reach the right team with one click, then send your message.</p>
+
+        <div class="department-chooser" role="group" aria-label="Choose department">
+          <p class="department-chooser-label">I need to contact:</p>
+          <div class="department-buttons">
+            <button type="button" class="department-btn" data-department="general" data-label="General Inquiries">
+              <span class="department-btn-icon" aria-hidden="true">◉</span>
+              <span class="department-btn-text">General Inquiries</span>
+              <span class="department-btn-desc">info@schmiedeler.com</span>
+            </button>
+            <button type="button" class="department-btn" data-department="sales" data-label="Business Inquiries">
+              <span class="department-btn-icon" aria-hidden="true">◉</span>
+              <span class="department-btn-text">Business Inquiries</span>
+              <span class="department-btn-desc">sales@schmiedeler.com</span>
+            </button>
+            <button type="button" class="department-btn" data-department="accounting" data-label="Finance Inquiries">
+              <span class="department-btn-icon" aria-hidden="true">◉</span>
+              <span class="department-btn-text">Finance Inquiries</span>
+              <span class="department-btn-desc">accounting@schmiedeler.com</span>
+            </button>
+          </div>
+          <p id="department-chosen" class="department-chosen" aria-live="polite" hidden></p>
+        </div>
 
         <div id="form-success" class="form-message form-message--success" role="alert" hidden>
           Thank you. Your message has been sent and we will get back to you soon.
@@ -231,6 +253,7 @@
         <!-- Form posts to /api/contact (Cloudflare Pages Function + Resend). -->
         <div class="contact-form-card">
           <form id="contact-form" class="contact-form" novalidate>
+            <input type="hidden" id="contact-department" name="department" value="" />
             <div class="form-grid form-grid--row">
               <div class="form-row">
                 <label class="form-label" for="contact-name">Name <span class="form-required">*</span></label>
