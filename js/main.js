@@ -72,31 +72,32 @@
     }
   });
 
-  // Department chooser: select department, scroll to form, set hidden input and optional subject
-  var departmentBtns = document.querySelectorAll('.department-btn');
+  // Department chooser: select department, scroll to form, set hidden input and optional subject (event delegation)
+  var departmentChooser = document.getElementById('department-chooser');
   var contactDepartmentEl = document.getElementById('contact-department');
   var contactSubjectEl = document.getElementById('contact-subject');
   var departmentChosenEl = document.getElementById('department-chosen');
   var contactSection = document.getElementById('contact');
-  if (departmentBtns.length && contactDepartmentEl && contactSection) {
-    departmentBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var dept = btn.getAttribute('data-department');
-        var label = btn.getAttribute('data-label');
-        if (!dept) return;
-        contactDepartmentEl.value = dept;
-        departmentBtns.forEach(function (b) { b.classList.remove('is-selected'); });
-        btn.classList.add('is-selected');
-        if (departmentChosenEl) {
-          departmentChosenEl.hidden = false;
-          departmentChosenEl.textContent = 'Sending to: ' + (label || dept) + '. Fill in the form below.';
-        }
-        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        if (contactSubjectEl && !contactSubjectEl.value) {
-          var placeholders = { general: 'General inquiry', sales: 'Business / sales inquiry', accounting: 'Finance / accounting inquiry' };
-          contactSubjectEl.placeholder = placeholders[dept] || 'Your subject';
-        }
-      });
+  if (departmentChooser && contactDepartmentEl && contactSection) {
+    departmentChooser.addEventListener('click', function (e) {
+      var btn = e.target && e.target.closest && e.target.closest('.department-btn');
+      if (!btn) return;
+      var dept = btn.getAttribute('data-department');
+      var label = btn.getAttribute('data-label');
+      if (!dept) return;
+      contactDepartmentEl.value = dept;
+      var allBtns = departmentChooser.querySelectorAll('.department-btn');
+      for (var i = 0; i < allBtns.length; i++) allBtns[i].classList.remove('is-selected');
+      btn.classList.add('is-selected');
+      if (departmentChosenEl) {
+        departmentChosenEl.hidden = false;
+        departmentChosenEl.textContent = 'Sending to: ' + (label || dept) + '. Fill in the form below.';
+      }
+      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (contactSubjectEl && !contactSubjectEl.value) {
+        var placeholders = { general: 'General inquiry', sales: 'Business / sales inquiry', accounting: 'Finance / accounting inquiry' };
+        contactSubjectEl.placeholder = placeholders[dept] || 'Your subject';
+      }
     });
   }
 

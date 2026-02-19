@@ -223,23 +223,29 @@
         <h2 class="section-title">Contact</h2>
         <p class="section-intro">Reach the right team with one click, then send your message.</p>
 
-        <div class="department-chooser" role="group" aria-label="Choose department">
-          <p class="department-chooser-label">I need to contact:</p>
+        <div class="department-chooser" id="department-chooser" role="group" aria-label="Choose department">
+          <p class="department-chooser-label">Choose who to contact</p>
           <div class="department-buttons">
             <button type="button" class="department-btn" data-department="general" data-label="General Inquiries">
-              <span class="department-btn-icon" aria-hidden="true">◉</span>
-              <span class="department-btn-text">General Inquiries</span>
-              <span class="department-btn-desc">info@schmiedeler.com</span>
+              <span class="department-btn-dot" aria-hidden="true"></span>
+              <span class="department-btn-content">
+                <span class="department-btn-text">General Inquiries</span>
+                <span class="department-btn-desc">info@schmiedeler.com</span>
+              </span>
             </button>
             <button type="button" class="department-btn" data-department="sales" data-label="Business Inquiries">
-              <span class="department-btn-icon" aria-hidden="true">◉</span>
-              <span class="department-btn-text">Business Inquiries</span>
-              <span class="department-btn-desc">sales@schmiedeler.com</span>
+              <span class="department-btn-dot" aria-hidden="true"></span>
+              <span class="department-btn-content">
+                <span class="department-btn-text">Business Inquiries</span>
+                <span class="department-btn-desc">sales@schmiedeler.com</span>
+              </span>
             </button>
             <button type="button" class="department-btn" data-department="accounting" data-label="Finance Inquiries">
-              <span class="department-btn-icon" aria-hidden="true">◉</span>
-              <span class="department-btn-text">Finance Inquiries</span>
-              <span class="department-btn-desc">accounting@schmiedeler.com</span>
+              <span class="department-btn-dot" aria-hidden="true"></span>
+              <span class="department-btn-content">
+                <span class="department-btn-text">Finance Inquiries</span>
+                <span class="department-btn-desc">accounting@schmiedeler.com</span>
+              </span>
             </button>
           </div>
           <p id="department-chosen" class="department-chosen" aria-live="polite" hidden></p>
