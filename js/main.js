@@ -72,60 +72,57 @@
     }
   });
 
-  // Department chooser: select department, scroll to form, set hidden input and optional subject (event delegation)
+  // Department chooser: select department, show that department's form, hide others (event delegation)
   var departmentChooser = document.getElementById('department-chooser');
-  var contactDepartmentEl = document.getElementById('contact-department');
-  var contactSubjectEl = document.getElementById('contact-subject');
   var departmentChosenEl = document.getElementById('department-chosen');
   var contactSection = document.getElementById('contact');
-  if (departmentChooser && contactDepartmentEl && contactSection) {
+  var formPrompt = document.getElementById('form-prompt');
+  var formCardIds = { general: 'contact-form-general', sales: 'contact-form-sales', accounting: 'contact-form-accounting' };
+  if (departmentChooser && contactSection) {
     departmentChooser.addEventListener('click', function (e) {
       var btn = e.target && e.target.closest && e.target.closest('.department-btn');
       if (!btn) return;
       var dept = btn.getAttribute('data-department');
       var label = btn.getAttribute('data-label');
-      if (!dept) return;
-      contactDepartmentEl.value = dept;
+      if (!dept || !formCardIds[dept]) return;
       var allBtns = departmentChooser.querySelectorAll('.department-btn');
       for (var i = 0; i < allBtns.length; i++) allBtns[i].classList.remove('is-selected');
       btn.classList.add('is-selected');
+      if (formPrompt) formPrompt.hidden = true;
+      for (var key in formCardIds) {
+        var card = document.getElementById(formCardIds[key]);
+        if (card) card.hidden = key !== dept;
+      }
       if (departmentChosenEl) {
         departmentChosenEl.hidden = false;
         departmentChosenEl.textContent = 'Sending to: ' + (label || dept) + '. Fill in the form below.';
       }
       contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      if (contactSubjectEl && !contactSubjectEl.value) {
-        var placeholders = { general: 'General inquiry', sales: 'Business / sales inquiry', accounting: 'Finance / accounting inquiry' };
-        contactSubjectEl.placeholder = placeholders[dept] || 'Your subject';
-      }
     });
   }
 
-  // Contact form: POST to /api/contact (Cloudflare Pages Function + Resend). Fallback to mailto if API fails.
+  // Contact forms: one handler for all department forms (POST /api/contact, fallback mailto)
   var formSuccess = document.getElementById('form-success');
   var formError = document.getElementById('form-error');
-  var contactForm = document.getElementById('contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', function (e) {
+  var contactFormsContainer = document.getElementById('contact');
+  if (contactFormsContainer) {
+    contactFormsContainer.addEventListener('submit', function (e) {
+      var form = e.target && e.target.closest && e.target.closest('form.js-contact-form');
+      if (!form) return;
       e.preventDefault();
-      var nameEl = document.getElementById('contact-name');
-      var emailEl = document.getElementById('contact-email');
-      var subjectEl = document.getElementById('contact-subject');
-      var messageEl = document.getElementById('contact-message');
-      var departmentEl = document.getElementById('contact-department');
-      if (!nameEl || !emailEl || !subjectEl || !messageEl) return;
-      var name = (nameEl.value || '').trim();
-      var email = (emailEl.value || '').trim();
-      var subject = (subjectEl.value || '').trim();
-      var message = (messageEl.value || '').trim();
-      var department = (departmentEl && departmentEl.value) ? departmentEl.value.trim() : '';
+      var fd = new FormData(form);
+      var name = (fd.get('name') || '').trim();
+      var email = (fd.get('email') || '').trim();
+      var subject = (fd.get('subject') || '').trim();
+      var message = (fd.get('message') || '').trim();
+      var department = (fd.get('department') || '').trim();
       if (!name || !email || !subject || !message) return;
 
       if (formError) {
         formError.hidden = true;
         formError.textContent = '';
       }
-      var submitBtn = contactForm.querySelector('button[type="submit"]');
+      var submitBtn = form.querySelector('button[type="submit"]');
       var btnText = submitBtn ? submitBtn.textContent : '';
       if (submitBtn) {
         submitBtn.disabled = true;
@@ -144,9 +141,9 @@
           return res.json().then(function (data) {
             if (res.ok && data.success) {
               if (formSuccess) formSuccess.hidden = false;
-              contactForm.style.display = 'none';
-              var formCard = contactForm.closest('.contact-form-card');
-              if (formCard) formCard.style.display = 'none';
+              if (formPrompt) formPrompt.hidden = true;
+              var cards = contactFormsContainer.querySelectorAll('.contact-form-card');
+              for (var i = 0; i < cards.length; i++) cards[i].hidden = true;
               if (formSuccess) formSuccess.focus({ focusVisible: true });
             } else {
               if (formError) {

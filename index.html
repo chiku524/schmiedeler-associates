@@ -256,33 +256,97 @@
         </div>
         <div id="form-error" class="form-message form-message--error" role="alert" hidden></div>
 
-        <!-- Form posts to /api/contact (Cloudflare Pages Function + Resend). -->
-        <div class="contact-form-card">
-          <form id="contact-form" class="contact-form" novalidate>
-            <input type="hidden" id="contact-department" name="department" value="" />
+        <p id="form-prompt" class="contact-form-prompt">Choose a department above to see the contact form.</p>
+
+        <!-- Separate form per department; only the selected one is visible. -->
+        <div id="contact-form-general" class="contact-form-card contact-form-card--general" hidden>
+          <div class="contact-form-card-header">
+            <span class="contact-form-card-title">General Inquiries</span>
+            <span class="contact-form-card-email">info@schmiedeler.com</span>
+          </div>
+          <form class="contact-form js-contact-form" data-department="general" novalidate>
+            <input type="hidden" name="department" value="general" />
             <div class="form-grid form-grid--row">
               <div class="form-row">
-                <label class="form-label" for="contact-name">Name <span class="form-required">*</span></label>
-                <input type="text" id="contact-name" name="name" class="form-input" required autocomplete="name" placeholder="Your name" />
+                <label class="form-label" for="contact-name-general">Name <span class="form-required">*</span></label>
+                <input type="text" id="contact-name-general" name="name" class="form-input" required autocomplete="name" placeholder="Your name" />
               </div>
               <div class="form-row">
-                <label class="form-label" for="contact-email">Email <span class="form-required">*</span></label>
-                <input type="email" id="contact-email" name="email" class="form-input" required autocomplete="email" placeholder="you@example.com" />
+                <label class="form-label" for="contact-email-general">Email <span class="form-required">*</span></label>
+                <input type="email" id="contact-email-general" name="email" class="form-input" required autocomplete="email" placeholder="you@example.com" />
               </div>
             </div>
             <div class="form-row">
-              <label class="form-label" for="contact-subject">Subject <span class="form-required">*</span></label>
-              <input type="text" id="contact-subject" name="subject" class="form-input" required placeholder="e.g. Sourcing inquiry" />
+              <label class="form-label" for="contact-subject-general">Subject <span class="form-required">*</span></label>
+              <input type="text" id="contact-subject-general" name="subject" class="form-input" required placeholder="e.g. General inquiry" />
             </div>
             <div class="form-row">
-              <label class="form-label" for="contact-message">Message <span class="form-required">*</span></label>
-              <textarea id="contact-message" name="message" class="form-input form-textarea" rows="5" required placeholder="How can we help you?"></textarea>
+              <label class="form-label" for="contact-message-general">Message <span class="form-required">*</span></label>
+              <textarea id="contact-message-general" name="message" class="form-input form-textarea" rows="5" required placeholder="How can we help you?"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Send message</button>
+            <button type="submit" class="btn btn-primary">Send to General Inquiries</button>
           </form>
         </div>
 
-        <p class="contact-fallback">Or email us directly at <a href="mailto:info@schmiedeler.com">info@schmiedeler.com</a>.</p>
+        <div id="contact-form-sales" class="contact-form-card contact-form-card--sales" hidden>
+          <div class="contact-form-card-header">
+            <span class="contact-form-card-title">Business Inquiries</span>
+            <span class="contact-form-card-email">sales@schmiedeler.com</span>
+          </div>
+          <form class="contact-form js-contact-form" data-department="sales" novalidate>
+            <input type="hidden" name="department" value="sales" />
+            <div class="form-grid form-grid--row">
+              <div class="form-row">
+                <label class="form-label" for="contact-name-sales">Name <span class="form-required">*</span></label>
+                <input type="text" id="contact-name-sales" name="name" class="form-input" required autocomplete="name" placeholder="Your name" />
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="contact-email-sales">Email <span class="form-required">*</span></label>
+                <input type="email" id="contact-email-sales" name="email" class="form-input" required autocomplete="email" placeholder="you@example.com" />
+              </div>
+            </div>
+            <div class="form-row">
+              <label class="form-label" for="contact-subject-sales">Subject <span class="form-required">*</span></label>
+              <input type="text" id="contact-subject-sales" name="subject" class="form-input" required placeholder="e.g. Business / sales inquiry" />
+            </div>
+            <div class="form-row">
+              <label class="form-label" for="contact-message-sales">Message <span class="form-required">*</span></label>
+              <textarea id="contact-message-sales" name="message" class="form-input form-textarea" rows="5" required placeholder="How can we help you?"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn--sales">Send to Business</button>
+          </form>
+        </div>
+
+        <div id="contact-form-accounting" class="contact-form-card contact-form-card--accounting" hidden>
+          <div class="contact-form-card-header">
+            <span class="contact-form-card-title">Finance Inquiries</span>
+            <span class="contact-form-card-email">accounting@schmiedeler.com</span>
+          </div>
+          <form class="contact-form js-contact-form" data-department="accounting" novalidate>
+            <input type="hidden" name="department" value="accounting" />
+            <div class="form-grid form-grid--row">
+              <div class="form-row">
+                <label class="form-label" for="contact-name-accounting">Name <span class="form-required">*</span></label>
+                <input type="text" id="contact-name-accounting" name="name" class="form-input" required autocomplete="name" placeholder="Your name" />
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="contact-email-accounting">Email <span class="form-required">*</span></label>
+                <input type="email" id="contact-email-accounting" name="email" class="form-input" required autocomplete="email" placeholder="you@example.com" />
+              </div>
+            </div>
+            <div class="form-row">
+              <label class="form-label" for="contact-subject-accounting">Subject <span class="form-required">*</span></label>
+              <input type="text" id="contact-subject-accounting" name="subject" class="form-input" required placeholder="e.g. Finance / accounting inquiry" />
+            </div>
+            <div class="form-row">
+              <label class="form-label" for="contact-message-accounting">Message <span class="form-required">*</span></label>
+              <textarea id="contact-message-accounting" name="message" class="form-input form-textarea" rows="5" required placeholder="How can we help you?"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn--accounting">Send to Finance</button>
+          </form>
+        </div>
+
+        <p class="contact-fallback">Or email us directly: <a href="mailto:info@schmiedeler.com">info@schmiedeler.com</a>, <a href="mailto:sales@schmiedeler.com">sales@schmiedeler.com</a>, <a href="mailto:accounting@schmiedeler.com">accounting@schmiedeler.com</a>.</p>
       </div>
     </section>
   </main>

@@ -946,13 +946,120 @@ a:hover {
   }
 }
 
+.contact-form-prompt {
+  margin: 0 0 var(--space-lg);
+  padding: var(--space-lg);
+  background: var(--color-bg-alt);
+  border-radius: var(--radius);
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  text-align: center;
+}
+
 .contact-form-card {
   background: var(--color-surface);
   border-radius: 10px;
   box-shadow: var(--shadow-lg);
   border-left: 4px solid var(--color-accent);
-  padding: var(--space-xl);
+  padding: 0;
   margin-bottom: var(--space-lg);
+  overflow: hidden;
+}
+
+.contact-form-card-header {
+  padding: var(--space-md) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.contact-form-card-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--color-navy-dark);
+}
+
+.contact-form-card-email {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+/* General: amber accent (default) */
+.contact-form-card--general {
+  border-left-color: var(--color-accent);
+}
+
+.contact-form-card--general .contact-form-card-header {
+  background: rgba(180, 83, 9, 0.08);
+  border-bottom: 1px solid var(--color-trace);
+}
+
+[data-theme="dark"] .contact-form-card--general .contact-form-card-header {
+  background: rgba(217, 119, 6, 0.12);
+}
+
+/* Business: navy */
+.contact-form-card--sales {
+  border-left-color: var(--color-navy);
+}
+
+.contact-form-card--sales .contact-form-card-header {
+  background: rgba(30, 41, 59, 0.08);
+  border-bottom: 1px solid var(--color-trace);
+}
+
+[data-theme="dark"] .contact-form-card--sales .contact-form-card-header {
+  background: rgba(30, 41, 59, 0.25);
+}
+
+.contact-form-card--sales .contact-form-card-title {
+  color: var(--color-navy);
+}
+
+.btn--sales {
+  background: var(--color-navy);
+}
+
+.btn--sales:hover {
+  background: var(--color-navy-dark);
+  box-shadow: 0 4px 14px rgba(30, 41, 59, 0.35);
+}
+
+/* Finance: accent-light / warmer tone */
+.contact-form-card--accounting {
+  border-left-color: var(--color-accent-light);
+}
+
+.contact-form-card--accounting .contact-form-card-header {
+  background: rgba(217, 119, 6, 0.06);
+  border-bottom: 1px solid var(--color-trace);
+}
+
+[data-theme="dark"] .contact-form-card--accounting .contact-form-card-header {
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.contact-form-card--accounting .contact-form-card-title {
+  color: var(--color-accent-light);
+}
+
+[data-theme="dark"] .contact-form-card--accounting .contact-form-card-title {
+  color: var(--color-accent-light);
+}
+
+.btn--accounting {
+  background: var(--color-accent-light);
+}
+
+.btn--accounting:hover {
+  background: #ea580c;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4);
+}
+
+.contact-form-card .contact-form {
+  padding: var(--space-xl);
+  margin: 0;
 }
 
 @media (max-width: 480px) {
@@ -967,9 +1074,13 @@ a:hover {
   .contact-section-inner .section-title,
   .contact-section-inner .section-intro,
   .contact-section-inner .department-chooser,
-  .contact-section-inner .form-message {
+  .contact-section-inner .form-message,
+  .contact-section-inner .contact-form-prompt {
     padding-left: var(--space-md);
     padding-right: var(--space-md);
+  }
+  .contact-form-card .contact-form {
+    padding: var(--space-md);
   }
   .contact-fallback {
     padding-left: var(--space-md);
