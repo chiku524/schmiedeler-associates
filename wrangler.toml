@@ -1,0 +1,7 @@
+# Cloudflare Pages project config. Used on deploy to apply KV binding for admin dashboard.
+name = "schmiedeler"
+pages_build_output_dir = "."
+
+[[kv_namespaces]]
+binding = "CONTACT_SUBMISSIONS"
+id = "848085a277d743be8a4453e93eca0129"
