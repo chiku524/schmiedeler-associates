@@ -41,7 +41,9 @@ export async function onRequest(context) {
       const raw = await kv.get(key);
       if (raw) {
         try {
-          submissions.push(JSON.parse(raw));
+          const obj = JSON.parse(raw);
+          obj.id = key;
+          submissions.push(obj);
         } catch (_) {
           submissions.push({ id: key, raw });
         }

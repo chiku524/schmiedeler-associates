@@ -9,6 +9,12 @@
   <link rel="stylesheet" href="css/style.css?v=2" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700&display=swap" rel="stylesheet" />
   <style>
+    .admin-header { position: sticky; top: 0; z-index: 50; background: var(--color-surface); border-bottom: 2px solid var(--color-trace); box-shadow: var(--shadow); }
+    .admin-header-inner { max-width: 56rem; margin: 0 auto; padding: var(--space-sm) var(--space-md); display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); }
+    .admin-header-logo { font-family: var(--font-heading); font-weight: 700; color: var(--color-navy-dark); text-decoration: none; font-size: 1.2rem; }
+    .admin-header-logo:hover { color: var(--color-accent); }
+    .admin-header-portal { font-weight: 600; color: var(--color-navy); text-decoration: none; padding: var(--space-xs) var(--space-sm); border-radius: var(--radius); transition: color 0.2s, background 0.2s; }
+    .admin-header-portal:hover { color: var(--color-accent); background: var(--color-bg-alt); }
     .admin-wrap { max-width: 56rem; margin: 0 auto; padding: var(--space-xl); }
     .admin-title { font-family: var(--font-heading); font-size: 1.75rem; margin-bottom: var(--space-lg); }
     .admin-login { margin-bottom: var(--space-xl); }
@@ -16,31 +22,45 @@
     .admin-login input { width: 100%; max-width: 20rem; padding: 0.5rem 0.75rem; border: 1px solid var(--color-trace); border-radius: var(--radius); }
     .admin-login button { margin-top: var(--space-sm); }
     .admin-error { color: #b91c1c; margin-top: var(--space-sm); }
-    .admin-table-wrap { overflow-x: auto; }
-    .admin-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-    .admin-table th, .admin-table td { text-align: left; padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--color-trace); }
-    .admin-table th { font-weight: 600; color: var(--color-navy); background: var(--color-bg-alt); }
-    .admin-table .dept { font-weight: 600; }
-    .admin-table .message { max-width: 20rem; white-space: pre-wrap; word-break: break-word; }
-    .admin-table .date { color: var(--color-text-muted); font-size: 0.9rem; }
-    .admin-empty { color: var(--color-text-muted); padding: var(--space-xl); }
+    .admin-dept-section { margin-bottom: var(--space-2xl); }
+    .admin-dept-title { font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: var(--space-md); padding-bottom: var(--space-xs); border-bottom: 2px solid var(--color-accent); color: var(--color-navy); }
+    .admin-card { background: var(--color-bg-alt); border: 1px solid var(--color-trace); border-radius: var(--radius); padding: var(--space-md); margin-bottom: var(--space-md); }
+    .admin-card-header { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-sm); margin-bottom: var(--space-sm); }
+    .admin-card-from { font-weight: 600; color: var(--color-navy); }
+    .admin-card-date { color: var(--color-text-muted); font-size: 0.9rem; }
+    .admin-card-subject { font-weight: 600; margin-bottom: var(--space-xs); }
+    .admin-card-message { white-space: pre-wrap; word-break: break-word; font-size: 0.95rem; margin-bottom: var(--space-md); color: var(--color-text); }
+    .admin-reply-toggle { margin-bottom: var(--space-sm); }
+    .admin-reply-form { margin-top: var(--space-sm); padding-top: var(--space-sm); border-top: 1px solid var(--color-trace); }
+    .admin-reply-form label { display: block; font-weight: 600; margin-bottom: var(--space-xs); font-size: 0.95rem; }
+    .admin-reply-form textarea { width: 100%; min-height: 120px; padding: 0.5rem 0.75rem; border: 1px solid var(--color-trace); border-radius: var(--radius); font-family: inherit; font-size: 0.95rem; resize: vertical; }
+    .admin-reply-form .reply-actions { margin-top: var(--space-sm); display: flex; gap: var(--space-sm); align-items: center; }
+    .admin-reply-form .reply-status { font-size: 0.9rem; }
+    .admin-reply-form .reply-status.success { color: #15803d; }
+    .admin-reply-form .reply-status.error { color: #b91c1c; }
+    .admin-wrap .btn-sm { padding: 0.35rem 0.75rem; font-size: 0.9rem; }
+    .admin-empty { color: var(--color-text-muted); padding: var(--space-md); }
+    .admin-empty-dept { color: var(--color-text-muted); font-size: 0.95rem; padding: var(--space-sm) 0; }
     .admin-logout { margin-top: var(--space-lg); }
     @media (max-width: 640px) {
       .admin-wrap { padding: var(--space-md); }
       .admin-title { font-size: 1.4rem; }
-      .admin-table { font-size: 0.875rem; }
-      .admin-table th, .admin-table td { padding: var(--space-xs) var(--space-sm); }
-      .admin-table .message { max-width: 12rem; }
+      .admin-card { padding: var(--space-sm); }
     }
     @media (max-width: 480px) {
       .admin-wrap { padding: var(--space-sm); }
       .admin-title { font-size: 1.25rem; }
       .admin-login input { max-width: 100%; }
-      .admin-table .message { max-width: 10rem; }
     }
   </style>
 </head>
 <body>
+  <header class="admin-header">
+    <div class="admin-header-inner">
+      <a href="/" class="admin-header-logo">Schmiedeler &amp; Associates</a>
+      <a href="/" class="admin-header-portal">Back to site</a>
+    </div>
+  </header>
   <div class="admin-wrap">
     <h1 class="admin-title">Contact submissions</h1>
     <p class="section-intro">This page is restricted. Sign in with your admin key to view messages sent via the contact form.</p>
@@ -53,21 +73,24 @@
     </div>
 
     <div id="admin-content" hidden>
-      <div class="admin-table-wrap">
-        <table class="admin-table" id="admin-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Department</th>
-              <th>From</th>
-              <th>Subject</th>
-              <th>Message</th>
-            </tr>
-          </thead>
-          <tbody id="admin-tbody"></tbody>
-        </table>
-      </div>
       <p id="admin-empty" class="admin-empty" hidden>No submissions yet.</p>
+      <div id="admin-depts">
+        <div class="admin-dept-section" data-dept="general">
+          <h2 class="admin-dept-title">General (info@schmiedeler.com)</h2>
+          <div class="admin-dept-list" id="dept-general"></div>
+          <p class="admin-empty-dept" id="dept-general-empty" hidden>No messages in this department.</p>
+        </div>
+        <div class="admin-dept-section" data-dept="sales">
+          <h2 class="admin-dept-title">Sales (sales@schmiedeler.com)</h2>
+          <div class="admin-dept-list" id="dept-sales"></div>
+          <p class="admin-empty-dept" id="dept-sales-empty" hidden>No messages in this department.</p>
+        </div>
+        <div class="admin-dept-section" data-dept="accounting">
+          <h2 class="admin-dept-title">Accounting (accounting@schmiedeler.com)</h2>
+          <div class="admin-dept-list" id="dept-accounting"></div>
+          <p class="admin-empty-dept" id="dept-accounting-empty" hidden>No messages in this department.</p>
+        </div>
+      </div>
       <button type="button" class="btn btn-secondary admin-logout" id="admin-logout">Log out</button>
     </div>
   </div>
@@ -79,14 +102,18 @@
       var errorEl = document.getElementById('admin-error');
       var loginDiv = document.getElementById('admin-login');
       var contentDiv = document.getElementById('admin-content');
-      var tbody = document.getElementById('admin-tbody');
       var emptyEl = document.getElementById('admin-empty');
       var logoutBtn = document.getElementById('admin-logout');
       var STORAGE_KEY = 'schmiedeler_admin_key';
+      var DEPT_IDS = { general: 'dept-general', sales: 'dept-sales', accounting: 'dept-accounting' };
 
       function showError(msg) {
         errorEl.textContent = msg || '';
         errorEl.hidden = !msg;
+      }
+
+      function getAuthKey() {
+        return sessionStorage.getItem(STORAGE_KEY) || (keyInput && keyInput.value ? keyInput.value.trim() : '');
       }
 
       function loadSubmissions(key) {
@@ -119,20 +146,13 @@
           });
       }
 
-      function render(submissions) {
-        tbody.innerHTML = '';
-        emptyEl.hidden = submissions.length > 0;
+      function groupByDept(submissions) {
+        var groups = { general: [], sales: [], accounting: [] };
         submissions.forEach(function (s) {
-          var tr = document.createElement('tr');
-          var date = s.createdAt ? new Date(s.createdAt).toLocaleString() : '—';
-          tr.innerHTML =
-            '<td class="date">' + escapeHtml(date) + '</td>' +
-            '<td class="dept">' + escapeHtml(s.department || '—') + '</td>' +
-            '<td>' + escapeHtml(s.name || '') + ' &lt;' + escapeHtml(s.email || '') + '&gt;</td>' +
-            '<td>' + escapeHtml(s.subject || '—') + '</td>' +
-            '<td class="message">' + escapeHtml(s.message || '—') + '</td>';
-          tbody.appendChild(tr);
+          var dept = (s.department && groups.hasOwnProperty(s.department)) ? s.department : 'general';
+          groups[dept].push(s);
         });
+        return groups;
       }
 
       function escapeHtml(str) {
@@ -140,6 +160,105 @@
         var div = document.createElement('div');
         div.textContent = str;
         return div.innerHTML;
+      }
+
+      function renderCard(s) {
+        var date = s.createdAt ? new Date(s.createdAt).toLocaleString() : '—';
+        var card = document.createElement('div');
+        card.className = 'admin-card';
+        card.dataset.id = s.id || '';
+        card.innerHTML =
+          '<div class="admin-card-header">' +
+            '<span class="admin-card-from">' + escapeHtml(s.name || '') + ' &lt;' + escapeHtml(s.email || '') + '&gt;</span>' +
+            '<span class="admin-card-date">' + escapeHtml(date) + '</span>' +
+          '</div>' +
+          '<div class="admin-card-subject">' + escapeHtml(s.subject || '—') + '</div>' +
+          '<div class="admin-card-message">' + escapeHtml(s.message || '—') + '</div>' +
+          '<div class="admin-reply-toggle">' +
+            '<button type="button" class="btn btn-secondary btn-sm reply-toggle-btn">Reply</button>' +
+          '</div>' +
+          '<div class="admin-reply-form" hidden>' +
+            '<label>Your reply</label>' +
+            '<textarea placeholder="Type your reply..." rows="4"></textarea>' +
+            '<div class="reply-actions">' +
+              '<button type="button" class="btn btn-primary reply-send-btn">Send reply</button>' +
+              '<button type="button" class="btn btn-secondary reply-cancel-btn">Cancel</button>' +
+              '<span class="reply-status" aria-live="polite"></span>' +
+            '</div>' +
+          '</div>';
+        var form = card.querySelector('.admin-reply-form');
+        var toggleBtn = card.querySelector('.reply-toggle-btn');
+        var sendBtn = card.querySelector('.reply-send-btn');
+        var cancelBtn = card.querySelector('.reply-cancel-btn');
+        var textarea = card.querySelector('textarea');
+        var statusEl = card.querySelector('.reply-status');
+        toggleBtn.addEventListener('click', function () {
+          form.hidden = !form.hidden;
+          if (!form.hidden) textarea.focus();
+        });
+        cancelBtn.addEventListener('click', function () {
+          form.hidden = true;
+          textarea.value = '';
+          statusEl.textContent = '';
+          statusEl.className = 'reply-status';
+        });
+        sendBtn.addEventListener('click', function () {
+          var msg = (textarea && textarea.value) ? textarea.value.trim() : '';
+          if (!msg) {
+            statusEl.textContent = 'Please enter a message.';
+            statusEl.className = 'reply-status error';
+            return;
+          }
+          statusEl.textContent = 'Sending…';
+          statusEl.className = 'reply-status';
+          sendBtn.disabled = true;
+          fetch('/api/reply', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + getAuthKey()
+            },
+            body: JSON.stringify({ id: s.id, message: msg, subject: s.subject })
+          })
+            .then(function (r) { return r.json().then(function (data) { return { status: r.status, data: data }; }); })
+            .then(function (res) {
+              sendBtn.disabled = false;
+              if (res.status === 200 && res.data.success) {
+                statusEl.textContent = 'Reply sent.';
+                statusEl.className = 'reply-status success';
+                textarea.value = '';
+                setTimeout(function () {
+                  form.hidden = true;
+                  statusEl.textContent = '';
+                }, 2000);
+              } else {
+                statusEl.textContent = res.data.error || 'Failed to send reply.';
+                statusEl.className = 'reply-status error';
+              }
+            })
+            .catch(function () {
+              sendBtn.disabled = false;
+              statusEl.textContent = 'Network error.';
+              statusEl.className = 'reply-status error';
+            });
+        });
+        return card;
+      }
+
+      function render(submissions) {
+        emptyEl.hidden = submissions.length > 0;
+        var groups = groupByDept(submissions);
+        ['general', 'sales', 'accounting'].forEach(function (dept) {
+          var listEl = document.getElementById(DEPT_IDS[dept]);
+          var emptyDeptEl = document.getElementById(DEPT_IDS[dept] + '-empty');
+          if (!listEl) return;
+          listEl.innerHTML = '';
+          var list = groups[dept] || [];
+          if (emptyDeptEl) emptyDeptEl.hidden = list.length > 0;
+          list.forEach(function (s) {
+            listEl.appendChild(renderCard(s));
+          });
+        });
       }
 
       loadBtn.addEventListener('click', function () {

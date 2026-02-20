@@ -474,6 +474,11 @@ a:hover {
   gap: var(--space-lg);
 }
 
+/* Portal link in top right of navbar */
+.nav-item-portal {
+  margin-left: auto;
+}
+
 .nav a {
   color: var(--color-navy);
   font-weight: 600;
@@ -533,6 +538,10 @@ a:hover {
 
   .nav li {
     border-bottom: 1px solid var(--color-bg-alt);
+  }
+
+  .nav-item-portal {
+    margin-left: 0;
   }
 
   .nav a {
