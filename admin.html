@@ -25,6 +25,19 @@
     .admin-table .date { color: var(--color-text-muted); font-size: 0.9rem; }
     .admin-empty { color: var(--color-text-muted); padding: var(--space-xl); }
     .admin-logout { margin-top: var(--space-lg); }
+    @media (max-width: 640px) {
+      .admin-wrap { padding: var(--space-md); }
+      .admin-title { font-size: 1.4rem; }
+      .admin-table { font-size: 0.875rem; }
+      .admin-table th, .admin-table td { padding: var(--space-xs) var(--space-sm); }
+      .admin-table .message { max-width: 12rem; }
+    }
+    @media (max-width: 480px) {
+      .admin-wrap { padding: var(--space-sm); }
+      .admin-title { font-size: 1.25rem; }
+      .admin-login input { max-width: 100%; }
+      .admin-table .message { max-width: 10rem; }
+    }
   </style>
 </head>
 <body>

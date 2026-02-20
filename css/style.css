@@ -44,10 +44,15 @@
   --dept-accounting-bg: rgba(5, 150, 105, 0.12);
 }
 
-/* Responsive container padding — more on small viewports to avoid edge-to-edge */
+/* Responsive container padding — avoid edge-to-edge on small viewports */
 @media (max-width: 480px) {
   :root {
     --container: min(1120px, 100vw - 1.25rem);
+  }
+}
+@media (max-width: 360px) {
+  :root {
+    --container: min(1120px, 100vw - 1rem);
   }
 }
 
@@ -81,6 +86,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 
@@ -111,6 +117,11 @@ h1, h2, h3 {
   color: var(--color-navy);
   font-weight: 600;
 }
+@media (max-width: 480px) {
+  .lead {
+    font-size: 1.15rem;
+  }
+}
 
 a {
   color: var(--color-accent);
@@ -140,6 +151,12 @@ a:hover {
   .section {
     padding-top: var(--space-xl);
     padding-bottom: var(--space-xl);
+  }
+}
+@media (max-width: 360px) {
+  .section {
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-lg);
   }
 }
 
@@ -176,6 +193,12 @@ a:hover {
   letter-spacing: 0.02em;
   display: inline-block;
   word-wrap: break-word;
+  max-width: 100%;
+}
+@media (max-width: 360px) {
+  .section-title {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
 }
 
 /* Circuit-style trace under section titles */
@@ -194,6 +217,12 @@ a:hover {
   margin: 0 0 var(--space-xl);
   font-size: 1.15rem;
   color: var(--color-text-muted);
+}
+@media (max-width: 480px) {
+  .section-intro {
+    font-size: 1rem;
+    margin-bottom: var(--space-lg);
+  }
 }
 
 /* Header */
@@ -218,6 +247,8 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-sm);
+  min-width: 0;
 }
 
 .logo {
@@ -304,6 +335,25 @@ a:hover {
     font-size: 0.95rem;
   }
 }
+@media (max-width: 360px) {
+  .logo-icon-wrap {
+    width: 40px;
+    height: 40px;
+  }
+  .logo-icon {
+    width: 24px;
+    height: 24px;
+  }
+  .logo-text {
+    max-width: 110px;
+  }
+  .logo-name {
+    font-size: 1rem;
+  }
+  .logo-inc {
+    font-size: 0.85rem;
+  }
+}
 
 .logo-name {
   font-size: 1.35rem;
@@ -325,10 +375,10 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  min-height: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   padding: 0;
   margin: 0;
   border: none;
@@ -382,9 +432,12 @@ a:hover {
   display: none;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 5px;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   padding: 0;
   border: none;
   background: transparent;
@@ -485,6 +538,9 @@ a:hover {
   .nav a {
     display: block;
     padding: var(--space-sm) 0;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -574,6 +630,22 @@ a:hover {
   .hero-cta .btn {
     width: 100%;
     text-align: center;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+@media (max-width: 360px) {
+  .hero-title {
+    font-size: 1.65rem;
+  }
+  .hero-tagline {
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+  }
+  .hero-subtitle {
+    font-size: 0.95rem;
   }
 }
 
@@ -677,6 +749,11 @@ a:hover {
   background: var(--color-surface);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+}
+@media (max-width: 480px) {
+  .meta-list {
+    padding: var(--space-md);
+  }
 }
 
 .meta-list dt {
@@ -815,6 +892,15 @@ a:hover {
   .mfg-name {
     padding: var(--space-sm) var(--space-md);
     font-size: 1.15rem;
+  }
+}
+@media (max-width: 360px) {
+  .manufacturers-list {
+    gap: var(--space-xs);
+  }
+  .mfg-name {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 1rem;
   }
 }
 
@@ -988,6 +1074,16 @@ a:hover {
   }
   .department-btn {
     padding: var(--space-sm) var(--space-md);
+    min-height: 44px;
+  }
+}
+@media (max-width: 360px) {
+  .department-btn-desc {
+    font-size: 0.8rem;
+    word-break: break-all;
+  }
+  .department-chooser-label {
+    font-size: 1rem;
   }
 }
 
@@ -999,6 +1095,12 @@ a:hover {
   color: var(--color-text-muted);
   font-size: 1.05rem;
   text-align: center;
+}
+@media (max-width: 480px) {
+  .contact-form-prompt {
+    padding: var(--space-md);
+    font-size: 0.95rem;
+  }
 }
 
 .contact-form-card {
@@ -1098,8 +1200,11 @@ a:hover {
 
 @media (max-width: 480px) {
   .contact-form-card {
-    padding: var(--space-md);
     margin-left: calc(-1 * var(--space-md));
+    margin-right: 0;
+  }
+  .contact-form-card-header {
+    padding: var(--space-sm) var(--space-md);
   }
   .contact-section-inner {
     padding-left: 0;
@@ -1119,6 +1224,33 @@ a:hover {
   .contact-fallback {
     padding-left: var(--space-md);
     padding-right: var(--space-md);
+    font-size: 0.95rem;
+    word-break: break-word;
+  }
+  .contact-fallback a {
+    display: inline-block;
+    margin-bottom: 0.15em;
+  }
+}
+@media (max-width: 360px) {
+  .contact-form-card {
+    margin-left: calc(-1 * var(--space-sm));
+  }
+  .contact-section-inner .section-title,
+  .contact-section-inner .section-intro,
+  .contact-section-inner .department-chooser,
+  .contact-section-inner .form-message,
+  .contact-section-inner .contact-form-prompt,
+  .contact-fallback {
+    padding-left: var(--space-sm);
+    padding-right: var(--space-sm);
+  }
+  .contact-form-card .contact-form {
+    padding: var(--space-sm);
+  }
+  .form-message {
+    padding: var(--space-md);
+    font-size: 0.95rem;
   }
 }
 
@@ -1202,6 +1334,7 @@ a:hover {
 
 .form-input {
   width: 100%;
+  max-width: 100%;
   padding: 0.75rem 1rem;
   font-family: var(--font-body);
   font-size: 1.0625rem;
@@ -1211,6 +1344,11 @@ a:hover {
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+@media (max-width: 480px) {
+  .form-input {
+    font-size: 16px; /* prevents zoom on focus in iOS */
+  }
 }
 
 .form-input:hover {
@@ -1294,6 +1432,22 @@ a:hover {
   .footer-tagline,
   .footer-legal {
     font-size: 0.9rem;
+  }
+}
+@media (max-width: 360px) {
+  .site-footer {
+    padding: var(--space-md) var(--space-sm);
+  }
+  .footer-brand {
+    font-size: 1rem;
+  }
+  .footer-tagline,
+  .footer-legal {
+    font-size: 0.85rem;
+  }
+  .footer-tagline,
+  .footer-legal {
+    word-break: break-word;
   }
 }
 
