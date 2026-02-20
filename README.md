@@ -143,7 +143,11 @@ If pushing to GitHub does **not** trigger a Cloudflare deployment, the Pages pro
 
 Employees can view contact form submissions at **/admin.html** (e.g. `https://schmiedeler.com/admin.html`). Submissions are **stored when each contact email is sent** (not read from your email inbox). To enable:
 
-1. **Create a KV namespace** (Cloudflare Dashboard → **Workers & Pages** → **KV** → **Create namespace**). Name it e.g. `contact-submissions`.
+1. **Create the KV namespace** — From the project root, run:
+   ```bash
+   CLOUDFLARE_ACCOUNT_ID=your_account_id CLOUDFLARE_API_TOKEN=your_token npm run create-admin-kv
+   ```
+   Use the same **CLOUDFLARE_ACCOUNT_ID** and **CLOUDFLARE_API_TOKEN** as for GitHub Actions (Dashboard → My Profile → API Tokens). The script creates a namespace named `contact-submissions` and prints the exact binding steps.
 
 2. **Bind KV to your Pages project** — **Workers & Pages** → your Pages project → **Settings** → **Functions** → **KV namespace bindings** → **Add binding** → Variable name: **`CONTACT_SUBMISSIONS`**, KV namespace: the one you created.
 
