@@ -69,7 +69,7 @@
 
     .admin-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: flex; align-items: center; justify-content: center; padding: var(--space-md); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); overflow-y: auto; }
     .admin-modal-overlay[hidden] { display: none; }
-    .admin-modal-box { background: var(--color-surface); border-radius: 14px; box-shadow: 0 24px 56px rgba(0,0,0,0.18), 0 0 0 1px var(--color-trace); max-width: 1100px; width: 100%; max-height: min(90vh, 920px); display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; margin: auto; }
+    .admin-modal-box { background: var(--color-surface); border-radius: 14px; box-shadow: 0 24px 56px rgba(0,0,0,0.18), 0 0 0 1px var(--color-trace); max-width: min(70vw, 1100px); width: 100%; max-height: min(90vh, 920px); display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; margin: auto; }
     .admin-modal-header { padding: var(--space-md) var(--space-xl); border-bottom: 1px solid var(--color-trace); display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-md); background: var(--color-surface); flex-shrink: 0; }
     .admin-modal-header-content { flex: 1; min-width: 0; }
     .admin-modal-dept-badge { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent); background: var(--dept-general-bg); padding: 0.25rem 0.5rem; border-radius: 6px; margin-bottom: 0.35rem; }
@@ -108,14 +108,14 @@
     .admin-emoji-picker[hidden] { display: none !important; }
     .admin-emoji-picker span { cursor: pointer; font-size: 1.15rem; padding: 4px; line-height: 1; }
     .admin-emoji-picker span:hover { background: var(--color-bg-alt); border-radius: 4px; }
-    .admin-attach-zone { border: 2px dashed var(--color-trace); border-radius: 8px; padding: var(--space-md); text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; background: var(--color-surface); margin-top: var(--space-xs); }
+    .admin-attach-zone { border: 2px dashed var(--color-trace); border-radius: 6px; padding: var(--space-sm) var(--space-md); text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; background: var(--color-surface); margin-top: var(--space-xs); }
     .admin-attach-zone:hover { border-color: var(--color-accent); background: rgba(180, 83, 9, 0.04); }
     .admin-attach-zone.is-dragover { border-color: var(--color-accent); background: rgba(180, 83, 9, 0.08); }
-    .admin-attach-zone.has-files { border-style: solid; padding: var(--space-sm); }
-    .admin-attach-zone-icon { font-size: 1.5rem; margin-bottom: 4px; opacity: 0.7; }
-    .admin-attach-zone-text { font-size: 0.85rem; font-weight: 600; color: var(--color-navy); margin-bottom: 2px; }
-    .admin-attach-zone-hint { font-size: 0.75rem; color: var(--color-text-muted); }
-    .admin-attach-list { font-size: 0.85rem; color: var(--color-text-muted); margin-top: var(--space-sm); display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+    .admin-attach-zone.has-files { border-style: solid; padding: var(--space-xs) var(--space-sm); }
+    .admin-attach-zone-icon { font-size: 1.1rem; margin-bottom: 2px; opacity: 0.7; }
+    .admin-attach-zone-text { font-size: 0.8rem; font-weight: 600; color: var(--color-navy); margin-bottom: 0; }
+    .admin-attach-zone-hint { font-size: 0.7rem; color: var(--color-text-muted); }
+    .admin-attach-list { font-size: 0.8rem; color: var(--color-text-muted); margin-top: var(--space-xs); display: flex; flex-wrap: wrap; gap: var(--space-xs); }
     .admin-attach-list span { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; background: var(--color-bg-alt); border-radius: 6px; }
     .admin-attach-list .remove-attach { cursor: pointer; color: #b91c1c; padding: 0 2px; font-weight: 700; }
     .admin-reply-hint { margin-top: var(--space-sm); margin-bottom: 0; font-size: 0.75rem; color: var(--color-text-muted); }
@@ -144,7 +144,7 @@
     .admin-format-toolbar button:hover { background: var(--color-bg-alt); border-color: var(--color-accent); }
     .admin-format-toolbar button.active { background: var(--color-bg-alt); color: var(--color-accent); }
     #reply-body-wrap { margin-top: 2px; }
-    .admin-reply-body-editor { min-height: 100px; max-height: 160px; overflow-y: auto; padding: 0.55rem 0.75rem; border: 1px solid var(--color-trace); border-radius: 8px; font-family: inherit; font-size: 0.95rem; background: var(--color-surface); color: var(--color-text); line-height: 1.5; }
+    .admin-reply-body-editor { min-height: 180px; max-height: 320px; overflow-y: auto; padding: 0.6rem 0.75rem; border: 1px solid var(--color-trace); border-radius: 8px; font-family: inherit; font-size: 0.95rem; background: var(--color-surface); color: var(--color-text); line-height: 1.5; }
     .admin-reply-body-editor:focus { outline: 2px solid var(--color-accent); outline-offset: 2px; }
     .admin-reply-body-editor[data-placeholder]:empty::before { content: attr(data-placeholder); color: var(--color-text-muted); }
 
@@ -154,7 +154,6 @@
       .admin-sidebar-nav { flex: 1 1 auto; display: flex; flex-wrap: wrap; }
       .admin-sidebar .nav-item { flex: 1 1 auto; }
       .admin-sidebar-footer { width: 100%; margin-top: 0; display: flex; align-items: center; gap: var(--space-sm); flex-wrap: wrap; }
-    }
       .admin-modal-box { max-width: 100%; max-height: 95vh; }
       .admin-modal-columns { flex-direction: column; }
       .admin-modal-body { width: 100%; max-height: 40vh; border-right: none; border-bottom: 1px solid var(--color-trace); }
@@ -656,7 +655,8 @@
       document.getElementById('format-italic').addEventListener('click', function () { replyBody.focus(); document.execCommand('italic', false, null); });
       document.getElementById('format-underline').addEventListener('click', function () { replyBody.focus(); document.execCommand('underline', false, null); });
 
-      replyEmojiBtn.addEventListener('click', function () {
+      replyEmojiBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
         emojiPicker.hidden = !emojiPicker.hidden;
         replyEmojiBtn.setAttribute('aria-expanded', emojiPicker.hidden ? 'false' : 'true');
         if (!emojiPicker.hidden && !emojiPicker.children.length) {
@@ -672,6 +672,17 @@
             });
             emojiPicker.appendChild(span);
           });
+        }
+        if (!emojiPicker.hidden) {
+          setTimeout(function () {
+            var closeOnClickOutside = function (ev) {
+              if (emojiPicker.contains(ev.target) || (replyEmojiBtn && replyEmojiBtn.contains(ev.target))) return;
+              emojiPicker.hidden = true;
+              if (replyEmojiBtn) replyEmojiBtn.setAttribute('aria-expanded', 'false');
+              document.removeEventListener('click', closeOnClickOutside);
+            };
+            document.addEventListener('click', closeOnClickOutside);
+          }, 0);
         }
       });
 
