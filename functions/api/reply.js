@@ -1,8 +1,10 @@
 /**
  * POST /api/reply — send a reply to a contact submission (admin only).
  * Auth: Authorization: Bearer <ADMIN_SECRET>.
- * Body: { id: submissionKey, message: string, subject?: string }.
- * Sends from the department address that received the original (submission.toEmail) to submission.email.
+ * Body: { id, message, subject?, cc?, attachments? }.
+ * cc: optional array of email strings or comma-separated string.
+ * attachments: optional array of { filename: string, content: base64 string }; max 4MB each, 10MB total.
+ * Sends from the department address that received the original (submission.toEmail).
  * Requires env: ADMIN_SECRET, RESEND_API_KEY, CONTACT_SUBMISSIONS (KV).
  */
 
@@ -70,6 +72,24 @@ export async function onRequest(context) {
   const id = typeof body.id === 'string' ? body.id.trim() : '';
   const message = typeof body.message === 'string' ? body.message.trim() : '';
   const subjectOverride = typeof body.subject === 'string' ? body.subject.trim() : '';
+  let cc = body.cc;
+  if (typeof cc === 'string') cc = cc.split(/[\s,;]+/).map((e) => e.trim()).filter(Boolean);
+  if (!Array.isArray(cc)) cc = [];
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const ccValid = cc.filter((e) => typeof e === 'string' && emailRegex.test(e));
+  let attachments = Array.isArray(body.attachments) ? body.attachments : [];
+  const MAX_ATTACHMENT_BYTES = 4 * 1024 * 1024; // 4MB each (decoded)
+  const MAX_TOTAL_ATTACHMENTS_BYTES = 10 * 1024 * 1024; // 10MB total
+  let totalAttachmentBytes = 0;
+  const attachmentsSanitized = [];
+  for (const a of attachments) {
+    if (!a || typeof a.filename !== 'string' || typeof a.content !== 'string') continue;
+    const raw = a.content.replace(/^data:[^;]+;base64,/, '').trim();
+    const approxBytes = Math.floor((raw.length * 3) / 4);
+    if (approxBytes > MAX_ATTACHMENT_BYTES || totalAttachmentBytes + approxBytes > MAX_TOTAL_ATTACHMENTS_BYTES) continue;
+    totalAttachmentBytes += approxBytes;
+    attachmentsSanitized.push({ filename: a.filename.slice(0, 255), content: raw });
+  }
 
   if (!id || !message) {
     return jsonResponse({ error: 'Missing required fields: id, message' }, 400, corsHeaders(origin));
@@ -104,18 +124,22 @@ export async function onRequest(context) {
     ? (subjectOverride.startsWith('Re:') ? subjectOverride : `Re: ${subjectOverride}`)
     : (submission.subject ? `Re: ${submission.subject}` : 'Re: Your message');
 
+  const payload = {
+    from: fromAddress,
+    to: [toEmail],
+    subject,
+    text: message,
+  };
+  if (ccValid.length > 0) payload.cc = ccValid;
+  if (attachmentsSanitized.length > 0) payload.attachments = attachmentsSanitized;
+
   const res = await fetch(RESEND_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${apiKey}`,
     },
-    body: JSON.stringify({
-      from: fromAddress,
-      to: [toEmail],
-      subject,
-      text: message,
-    }),
+    body: JSON.stringify(payload),
   });
 
   const data = await res.json().catch(() => ({}));

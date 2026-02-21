@@ -3,54 +3,95 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin — Contact submissions | Schmiedeler &amp; Associates</title>
+  <title>Admin — Inbox | Schmiedeler &amp; Associates</title>
   <meta name="robots" content="noindex, nofollow" />
   <link rel="icon" type="image/png" href="assets/favicon.png" sizes="32x32" />
   <link rel="stylesheet" href="css/style.css?v=2" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700&display=swap" rel="stylesheet" />
   <style>
-    .admin-header { position: sticky; top: 0; z-index: 50; background: var(--color-surface); border-bottom: 2px solid var(--color-trace); box-shadow: var(--shadow); }
-    .admin-header-inner { max-width: 56rem; margin: 0 auto; padding: var(--space-sm) var(--space-md); display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); }
+    .admin-header { position: sticky; top: 0; z-index: 100; background: var(--color-surface); border-bottom: 1px solid var(--color-trace); }
+    .admin-header-inner { max-width: 100%; margin: 0; padding: var(--space-sm) var(--space-md); display: flex; align-items: center; justify-content: space-between; }
     .admin-header-logo { font-family: var(--font-heading); font-weight: 700; color: var(--color-navy-dark); text-decoration: none; font-size: 1.2rem; }
-    .admin-header-logo:hover { color: var(--color-accent); }
-    .admin-header-portal { font-weight: 600; color: var(--color-navy); text-decoration: none; padding: var(--space-xs) var(--space-sm); border-radius: var(--radius); transition: color 0.2s, background 0.2s; }
-    .admin-header-portal:hover { color: var(--color-accent); background: var(--color-bg-alt); }
-    .admin-wrap { max-width: 56rem; margin: 0 auto; padding: var(--space-xl); }
-    .admin-title { font-family: var(--font-heading); font-size: 1.75rem; margin-bottom: var(--space-lg); }
-    .admin-login { margin-bottom: var(--space-xl); }
+    .admin-header-portal { font-weight: 600; color: var(--color-navy); text-decoration: none; padding: var(--space-xs) var(--space-sm); border-radius: var(--radius); }
+    .admin-login-wrap { max-width: 24rem; margin: 2rem auto; padding: var(--space-xl); }
     .admin-login label { display: block; font-weight: 600; margin-bottom: var(--space-xs); }
-    .admin-login input { width: 100%; max-width: 20rem; padding: 0.5rem 0.75rem; border: 1px solid var(--color-trace); border-radius: var(--radius); }
+    .admin-login input { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--color-trace); border-radius: var(--radius); }
     .admin-login button { margin-top: var(--space-sm); }
-    .admin-error { color: #b91c1c; margin-top: var(--space-sm); }
-    .admin-dept-section { margin-bottom: var(--space-2xl); }
-    .admin-dept-title { font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: var(--space-md); padding-bottom: var(--space-xs); border-bottom: 2px solid var(--color-accent); color: var(--color-navy); }
-    .admin-card { background: var(--color-bg-alt); border: 1px solid var(--color-trace); border-radius: var(--radius); padding: var(--space-md); margin-bottom: var(--space-md); }
-    .admin-card-header { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-sm); margin-bottom: var(--space-sm); }
-    .admin-card-from { font-weight: 600; color: var(--color-navy); }
-    .admin-card-date { color: var(--color-text-muted); font-size: 0.9rem; }
-    .admin-card-subject { font-weight: 600; margin-bottom: var(--space-xs); }
-    .admin-card-message { white-space: pre-wrap; word-break: break-word; font-size: 0.95rem; margin-bottom: var(--space-md); color: var(--color-text); }
-    .admin-reply-toggle { margin-bottom: var(--space-sm); }
-    .admin-reply-form { margin-top: var(--space-sm); padding-top: var(--space-sm); border-top: 1px solid var(--color-trace); }
-    .admin-reply-form label { display: block; font-weight: 600; margin-bottom: var(--space-xs); font-size: 0.95rem; }
-    .admin-reply-form textarea { width: 100%; min-height: 120px; padding: 0.5rem 0.75rem; border: 1px solid var(--color-trace); border-radius: var(--radius); font-family: inherit; font-size: 0.95rem; resize: vertical; }
-    .admin-reply-form .reply-actions { margin-top: var(--space-sm); display: flex; gap: var(--space-sm); align-items: center; }
-    .admin-reply-form .reply-status { font-size: 0.9rem; }
-    .admin-reply-form .reply-status.success { color: #15803d; }
-    .admin-reply-form .reply-status.error { color: #b91c1c; }
-    .admin-wrap .btn-sm { padding: 0.35rem 0.75rem; font-size: 0.9rem; }
-    .admin-empty { color: var(--color-text-muted); padding: var(--space-md); }
-    .admin-empty-dept { color: var(--color-text-muted); font-size: 0.95rem; padding: var(--space-sm) 0; }
-    .admin-logout { margin-top: var(--space-lg); }
-    @media (max-width: 640px) {
-      .admin-wrap { padding: var(--space-md); }
-      .admin-title { font-size: 1.4rem; }
-      .admin-card { padding: var(--space-sm); }
-    }
-    @media (max-width: 480px) {
-      .admin-wrap { padding: var(--space-sm); }
-      .admin-title { font-size: 1.25rem; }
-      .admin-login input { max-width: 100%; }
+    .admin-error { color: #b91c1c; margin-top: var(--space-sm); font-size: 0.9rem; }
+
+    .admin-app { display: flex; min-height: calc(100vh - 52px); }
+    .admin-sidebar { width: 220px; flex-shrink: 0; background: var(--color-bg-alt); border-right: 1px solid var(--color-trace); padding: var(--space-md) 0; }
+    .admin-sidebar .nav-item { display: flex; align-items: center; justify-content: space-between; padding: var(--space-sm) var(--space-md); color: var(--color-navy); text-decoration: none; font-weight: 600; cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-size: 1rem; }
+    .admin-sidebar .nav-item:hover { background: var(--color-surface); color: var(--color-accent); }
+    .admin-sidebar .nav-item.active { background: rgba(180, 83, 9, 0.12); color: var(--color-accent); border-left: 3px solid var(--color-accent); padding-left: calc(var(--space-md) - 3px); }
+    .admin-sidebar .nav-count { font-size: 0.85rem; color: var(--color-text-muted); font-weight: 500; }
+    .admin-sidebar .nav-item.active .nav-count { color: var(--color-accent); }
+    .admin-sidebar .logout-wrap { padding: var(--space-md); border-top: 1px solid var(--color-trace); margin-top: var(--space-sm); }
+    .admin-main { flex: 1; min-width: 0; display: flex; flex-direction: column; background: var(--color-surface); }
+    .admin-toolbar { padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--color-trace); font-weight: 600; color: var(--color-navy); }
+    .admin-emaillist { flex: 1; overflow-y: auto; }
+    .admin-emailrow { display: flex; align-items: center; gap: var(--space-md); padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--color-trace); cursor: pointer; transition: background 0.15s; }
+    .admin-emailrow:hover { background: var(--color-bg-alt); }
+    .admin-emailrow .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; flex-shrink: 0; }
+    .admin-emailrow .meta { flex: 1; min-width: 0; }
+    .admin-emailrow .from-line { display: flex; align-items: center; gap: var(--space-sm); margin-bottom: 2px; }
+    .admin-emailrow .from-name { font-weight: 600; color: var(--color-navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .admin-emailrow .date { font-size: 0.85rem; color: var(--color-text-muted); flex-shrink: 0; }
+    .admin-emailrow .subject { font-weight: 600; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .admin-emailrow .snippet { font-size: 0.9rem; color: var(--color-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .admin-empty-inbox { padding: var(--space-2xl); text-align: center; color: var(--color-text-muted); }
+
+    .admin-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; display: flex; align-items: center; justify-content: center; padding: var(--space-md); }
+    .admin-modal-overlay[hidden] { display: none; }
+    .admin-modal-box { background: var(--color-surface); border-radius: var(--radius); box-shadow: var(--shadow-lg); max-width: 640px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; }
+    .admin-modal-header { padding: var(--space-md); border-bottom: 1px solid var(--color-trace); display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-md); }
+    .admin-modal-header h2 { margin: 0; font-size: 1.1rem; font-weight: 700; color: var(--color-navy); }
+    .admin-modal-close { background: none; border: none; cursor: pointer; padding: var(--space-xs); color: var(--color-text-muted); font-size: 1.5rem; line-height: 1; }
+    .admin-modal-close:hover { color: var(--color-navy); }
+    .admin-modal-body { padding: var(--space-md); overflow-y: auto; flex: 1; min-height: 0; }
+    .admin-modal-email-from, .admin-modal-email-to { font-size: 0.9rem; margin-bottom: var(--space-xs); }
+    .admin-modal-email-from strong, .admin-modal-email-to strong { color: var(--color-navy); }
+    .admin-modal-email-date { font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: var(--space-sm); }
+    .admin-modal-email-msg { white-space: pre-wrap; word-break: break-word; font-size: 0.95rem; color: var(--color-text); padding: var(--space-sm) 0; border-top: 1px solid var(--color-trace); margin-top: var(--space-sm); }
+    .admin-modal-reply { padding: var(--space-md); border-top: 1px solid var(--color-trace); }
+    .admin-modal-reply label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: var(--space-xs); }
+    .admin-modal-reply input[type="text"], .admin-modal-reply textarea { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--color-trace); border-radius: var(--radius); font-family: inherit; font-size: 0.95rem; }
+    .admin-modal-reply textarea { min-height: 120px; resize: vertical; }
+    .admin-modal-reply .reply-row { margin-bottom: var(--space-sm); }
+    .admin-modal-reply .reply-toolbar { display: flex; align-items: center; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-sm); }
+    .admin-modal-reply .reply-toolbar button { padding: 0.35rem 0.75rem; font-size: 0.9rem; }
+    .admin-emoji-picker { position: absolute; background: var(--color-surface); border: 1px solid var(--color-trace); border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: var(--space-sm); max-height: 200px; overflow-y: auto; z-index: 10; display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; }
+    .admin-emoji-picker[hidden] { display: none; }
+    .admin-emoji-picker span { cursor: pointer; font-size: 1.25rem; padding: 4px; }
+    .admin-emoji-picker span:hover { background: var(--color-bg-alt); border-radius: 4px; }
+    .admin-attach-list { font-size: 0.85rem; color: var(--color-text-muted); margin-top: var(--space-xs); }
+    .admin-attach-list span { display: inline-flex; align-items: center; gap: 4px; margin-right: var(--space-sm); margin-bottom: 4px; }
+    .admin-attach-list .remove-attach { cursor: pointer; color: #b91c1c; }
+    .admin-reply-status { font-size: 0.9rem; margin-left: var(--space-sm); }
+    .admin-reply-status.success { color: #15803d; }
+    .admin-reply-status.error { color: #b91c1c; }
+    .admin-char-count { font-size: 0.8rem; color: var(--color-text-muted); margin-top: 2px; }
+    .admin-char-count.near-limit { color: var(--color-accent); }
+    .admin-char-count.over-limit { color: #b91c1c; }
+    .admin-toolbar { display: flex; align-items: center; gap: var(--space-md); flex-wrap: wrap; }
+    .admin-toolbar .refresh-btn { margin-left: auto; }
+    .admin-loading { padding: var(--space-2xl); text-align: center; color: var(--color-text-muted); }
+    .admin-loading-spinner { display: inline-block; width: 24px; height: 24px; border: 2px solid var(--color-trace); border-top-color: var(--color-accent); border-radius: 50%; animation: admin-spin 0.8s linear infinite; margin-bottom: var(--space-sm); }
+    @keyframes admin-spin { to { transform: rotate(360deg); } }
+    .admin-empty-inbox { padding: var(--space-2xl); text-align: center; color: var(--color-text-muted); }
+    .admin-empty-inbox .empty-icon { font-size: 3rem; margin-bottom: var(--space-sm); opacity: 0.5; }
+    .admin-emailrow.unread .from-name { font-weight: 700; }
+    .admin-emailrow.unread .subject { font-weight: 700; }
+    .admin-modal-overlay { opacity: 0; transition: opacity 0.2s ease; }
+    .admin-modal-overlay.is-open { opacity: 1; }
+    .admin-modal-box { transform: scale(0.98); transition: transform 0.2s ease; }
+    .admin-modal-overlay.is-open .admin-modal-box { transform: scale(1); }
+
+    @media (max-width: 768px) {
+      .admin-app { flex-direction: column; }
+      .admin-sidebar { width: 100%; display: flex; flex-wrap: wrap; gap: 0; padding: var(--space-sm); border-right: none; border-bottom: 1px solid var(--color-trace); }
+      .admin-sidebar .nav-item { flex: 1 1 auto; }
+      .admin-sidebar .logout-wrap { width: 100%; border-top: 1px solid var(--color-trace); }
     }
   </style>
 </head>
@@ -61,37 +102,77 @@
       <a href="/" class="admin-header-portal">Back to site</a>
     </div>
   </header>
-  <div class="admin-wrap">
-    <h1 class="admin-title">Contact submissions</h1>
-    <p class="section-intro">This page is restricted. Sign in with your admin key to view messages sent via the contact form.</p>
 
+  <div id="admin-login-wrap" class="admin-login-wrap">
+    <h1 class="admin-title" style="font-family: var(--font-heading); margin-bottom: var(--space-md);">Admin inbox</h1>
+    <p class="section-intro" style="margin-bottom: var(--space-md);">Sign in with your admin key to view and reply to messages.</p>
     <div id="admin-login" class="admin-login">
       <label for="admin-key">Admin key</label>
       <input type="password" id="admin-key" placeholder="Enter admin key" autocomplete="off" />
       <button type="button" class="btn btn-primary" id="admin-load">Sign in</button>
       <p id="admin-error" class="admin-error" hidden></p>
     </div>
+  </div>
 
-    <div id="admin-content" hidden>
-      <p id="admin-empty" class="admin-empty" hidden>No submissions yet.</p>
-      <div id="admin-depts">
-        <div class="admin-dept-section" data-dept="general">
-          <h2 class="admin-dept-title">General (info@schmiedeler.com)</h2>
-          <div class="admin-dept-list" id="dept-general"></div>
-          <p class="admin-empty-dept" id="dept-general-empty" hidden>No messages in this department.</p>
+  <div id="admin-app" class="admin-app" hidden>
+    <aside class="admin-sidebar">
+      <button type="button" class="nav-item active" data-dept="general">General <span class="nav-count" id="count-general">0</span></button>
+      <button type="button" class="nav-item" data-dept="sales">Sales <span class="nav-count" id="count-sales">0</span></button>
+      <button type="button" class="nav-item" data-dept="accounting">Accounting <span class="nav-count" id="count-accounting">0</span></button>
+      <div class="logout-wrap">
+        <button type="button" class="btn btn-secondary" id="admin-logout">Log out</button>
+      </div>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-toolbar" id="admin-toolbar">
+        <span id="admin-toolbar-label">Inbox — General</span>
+        <button type="button" class="btn btn-secondary btn-sm refresh-btn" id="admin-refresh" aria-label="Refresh inbox">Refresh</button>
+      </div>
+      <div class="admin-loading" id="admin-loading" hidden><div class="admin-loading-spinner" aria-hidden="true"></div><div>Loading inbox…</div></div>
+      <div class="admin-emaillist" id="admin-emaillist"></div>
+      <div class="admin-empty-inbox" id="admin-empty-inbox" hidden><span class="empty-icon" aria-hidden="true">📭</span><p>No messages in this department.</p><p style="font-size: 0.9rem;">New contact form submissions will appear here.</p></div>
+    </main>
+  </div>
+
+  <div id="admin-modal" class="admin-modal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="modal-subject" aria-describedby="modal-from">
+    <div class="admin-modal-box">
+      <div class="admin-modal-header">
+        <h2 id="modal-subject">Subject</h2>
+        <button type="button" class="admin-modal-close" id="modal-close" aria-label="Close message">&times;</button>
+      </div>
+      <div class="admin-modal-body">
+        <div class="admin-modal-email-from" id="modal-from"></div>
+        <div class="admin-modal-email-to" id="modal-to"></div>
+        <div class="admin-modal-email-date" id="modal-date"></div>
+        <div class="admin-modal-email-msg" id="modal-msg"></div>
+      </div>
+      <div class="admin-modal-reply">
+        <div class="reply-row">
+          <label>To</label>
+          <input type="text" id="reply-to" readonly />
         </div>
-        <div class="admin-dept-section" data-dept="sales">
-          <h2 class="admin-dept-title">Sales (sales@schmiedeler.com)</h2>
-          <div class="admin-dept-list" id="dept-sales"></div>
-          <p class="admin-empty-dept" id="dept-sales-empty" hidden>No messages in this department.</p>
+        <div class="reply-row">
+          <label>CC (optional)</label>
+          <input type="text" id="reply-cc" placeholder="email@example.com, another@example.com" />
         </div>
-        <div class="admin-dept-section" data-dept="accounting">
-          <h2 class="admin-dept-title">Accounting (accounting@schmiedeler.com)</h2>
-          <div class="admin-dept-list" id="dept-accounting"></div>
-          <p class="admin-empty-dept" id="dept-accounting-empty" hidden>No messages in this department.</p>
+        <div class="reply-row">
+          <label for="reply-body">Your reply</label>
+          <div style="position: relative;">
+            <textarea id="reply-body" placeholder="Type your reply..." maxlength="10000" aria-describedby="reply-char-count"></textarea>
+            <div id="reply-char-count" class="admin-char-count" aria-live="polite">0 / 10,000 characters</div>
+            <div class="admin-emoji-picker" id="emoji-picker" hidden role="listbox" aria-label="Choose emoji"></div>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" id="reply-emoji-btn" style="margin-top: 4px;" aria-expanded="false" aria-haspopup="listbox">Insert emoji</button>
+          <input type="file" id="reply-attach" multiple hidden />
+          <button type="button" class="btn btn-secondary btn-sm" id="reply-attach-btn" style="margin-left: 4px;">Attach files</button>
+          <div class="admin-attach-list" id="reply-attach-list"></div>
+        </div>
+        <div class="reply-toolbar">
+          <button type="button" class="btn btn-primary" id="reply-send">Send reply</button>
+          <button type="button" class="btn btn-secondary" id="reply-cancel">Cancel</button>
+          <span class="admin-reply-status" id="reply-status" aria-live="polite"></span>
         </div>
       </div>
-      <button type="button" class="btn btn-secondary admin-logout" id="admin-logout">Log out</button>
     </div>
   </div>
 
@@ -100,12 +181,42 @@
       var keyInput = document.getElementById('admin-key');
       var loadBtn = document.getElementById('admin-load');
       var errorEl = document.getElementById('admin-error');
-      var loginDiv = document.getElementById('admin-login');
-      var contentDiv = document.getElementById('admin-content');
-      var emptyEl = document.getElementById('admin-empty');
+      var loginWrap = document.getElementById('admin-login-wrap');
+      var appEl = document.getElementById('admin-app');
+      var emaillistEl = document.getElementById('admin-emaillist');
+      var emptyInboxEl = document.getElementById('admin-empty-inbox');
+      var toolbarEl = document.getElementById('admin-toolbar');
       var logoutBtn = document.getElementById('admin-logout');
+      var modalEl = document.getElementById('admin-modal');
+      var modalClose = document.getElementById('modal-close');
+      var modalSubject = document.getElementById('modal-subject');
+      var modalFrom = document.getElementById('modal-from');
+      var modalTo = document.getElementById('modal-to');
+      var modalDate = document.getElementById('modal-date');
+      var modalMsg = document.getElementById('modal-msg');
+      var replyTo = document.getElementById('reply-to');
+      var replyCc = document.getElementById('reply-cc');
+      var replyBody = document.getElementById('reply-body');
+      var replySend = document.getElementById('reply-send');
+      var replyCancel = document.getElementById('reply-cancel');
+      var replyStatus = document.getElementById('reply-status');
+      var replyEmojiBtn = document.getElementById('reply-emoji-btn');
+      var emojiPicker = document.getElementById('emoji-picker');
+      var replyAttach = document.getElementById('reply-attach');
+      var replyAttachBtn = document.getElementById('reply-attach-btn');
+      var replyAttachList = document.getElementById('reply-attach-list');
+
       var STORAGE_KEY = 'schmiedeler_admin_key';
-      var DEPT_IDS = { general: 'dept-general', sales: 'dept-sales', accounting: 'dept-accounting' };
+      var DEPT_LABELS = { general: 'General', sales: 'Sales', accounting: 'Accounting' };
+      var DEPT_EMAILS = { general: 'info@schmiedeler.com', sales: 'sales@schmiedeler.com', accounting: 'accounting@schmiedeler.com' };
+      var EMOJIS = ['😀','😃','😄','😁','😅','😂','🤣','😊','😇','🙂','🙃','😉','😌','😍','🥰','😘','😗','😙','😚','😋','😛','😜','🤪','😝','🤑','🤗','🤭','🤫','🤔','🤐','👍','👎','👌','✌️','🤞','🤟','🤘','👏','🙌','💪','📧','📨','✉️','📩','💼','📋','✅','❌','⭐','🙏'];
+      var submissions = [];
+      var currentDept = 'general';
+      var currentSubmission = null;
+      var selectedFiles = [];
+      var OPENED_IDS_KEY = 'schmiedeler_admin_opened';
+      var MAX_BODY_LEN = 10000;
+      var modalFocusables;
 
       function showError(msg) {
         errorEl.textContent = msg || '';
@@ -116,12 +227,24 @@
         return sessionStorage.getItem(STORAGE_KEY) || (keyInput && keyInput.value ? keyInput.value.trim() : '');
       }
 
+      function getOpenedIds() {
+        try {
+          var raw = sessionStorage.getItem(OPENED_IDS_KEY);
+          return raw ? JSON.parse(raw) : {};
+        } catch (e) { return {}; }
+      }
+      function markOpened(id) {
+        var o = getOpenedIds();
+        o[id] = true;
+        try { sessionStorage.setItem(OPENED_IDS_KEY, JSON.stringify(o)); } catch (e) {}
+      }
+
       function loadSubmissions(key) {
         showError('');
-        fetch('/api/submissions', {
-          method: 'GET',
-          headers: { 'Authorization': 'Bearer ' + key }
-        })
+        var loadingEl = document.getElementById('admin-loading');
+        if (loadingEl) loadingEl.hidden = false;
+        if (loadBtn) { loadBtn.disabled = true; loadBtn.textContent = 'Signing in…'; }
+        fetch('/api/submissions', { method: 'GET', headers: { 'Authorization': 'Bearer ' + key } })
           .then(function (r) {
             if (r.status === 401) {
               sessionStorage.removeItem(STORAGE_KEY);
@@ -131,28 +254,42 @@
             return r.json();
           })
           .then(function (data) {
+            if (loadingEl) loadingEl.hidden = true;
+            if (loadBtn) { loadBtn.disabled = false; loadBtn.textContent = 'Sign in'; }
             if (!data) return;
             if (data.error && !data.submissions) {
               showError(data.error || 'Failed to load.');
               return;
             }
-            loginDiv.hidden = true;
-            contentDiv.hidden = false;
+            loginWrap.hidden = true;
+            appEl.hidden = false;
             sessionStorage.setItem(STORAGE_KEY, key);
-            render(data.submissions || []);
+            submissions = data.submissions || [];
+            updateCounts();
+            renderList();
           })
           .catch(function () {
+            if (loadingEl) loadingEl.hidden = true;
+            if (loadBtn) { loadBtn.disabled = false; loadBtn.textContent = 'Sign in'; }
             showError('Network error.');
           });
       }
 
-      function groupByDept(submissions) {
-        var groups = { general: [], sales: [], accounting: [] };
-        submissions.forEach(function (s) {
-          var dept = (s.department && groups.hasOwnProperty(s.department)) ? s.department : 'general';
-          groups[dept].push(s);
+      function groupByDept(list) {
+        var g = { general: [], sales: [], accounting: [] };
+        list.forEach(function (s) {
+          var d = (s.department && g[s.department]) ? s.department : 'general';
+          g[d].push(s);
         });
-        return groups;
+        return g;
+      }
+
+      function updateCounts() {
+        var g = groupByDept(submissions);
+        ['general','sales','accounting'].forEach(function (d) {
+          var el = document.getElementById('count-' + d);
+          if (el) el.textContent = (g[d] || []).length;
+        });
       }
 
       function escapeHtml(str) {
@@ -162,134 +299,291 @@
         return div.innerHTML;
       }
 
-      function renderCard(s) {
-        var date = s.createdAt ? new Date(s.createdAt).toLocaleString() : '—';
-        var card = document.createElement('div');
-        card.className = 'admin-card';
-        card.dataset.id = s.id || '';
-        card.innerHTML =
-          '<div class="admin-card-header">' +
-            '<span class="admin-card-from">' + escapeHtml(s.name || '') + ' &lt;' + escapeHtml(s.email || '') + '&gt;</span>' +
-            '<span class="admin-card-date">' + escapeHtml(date) + '</span>' +
-          '</div>' +
-          '<div class="admin-card-subject">' + escapeHtml(s.subject || '—') + '</div>' +
-          '<div class="admin-card-message">' + escapeHtml(s.message || '—') + '</div>' +
-          '<div class="admin-reply-toggle">' +
-            '<button type="button" class="btn btn-secondary btn-sm reply-toggle-btn">Reply</button>' +
-          '</div>' +
-          '<div class="admin-reply-form" hidden>' +
-            '<label>Your reply</label>' +
-            '<textarea placeholder="Type your reply..." rows="4"></textarea>' +
-            '<div class="reply-actions">' +
-              '<button type="button" class="btn btn-primary reply-send-btn">Send reply</button>' +
-              '<button type="button" class="btn btn-secondary reply-cancel-btn">Cancel</button>' +
-              '<span class="reply-status" aria-live="polite"></span>' +
-            '</div>' +
-          '</div>';
-        var form = card.querySelector('.admin-reply-form');
-        var toggleBtn = card.querySelector('.reply-toggle-btn');
-        var sendBtn = card.querySelector('.reply-send-btn');
-        var cancelBtn = card.querySelector('.reply-cancel-btn');
-        var textarea = card.querySelector('textarea');
-        var statusEl = card.querySelector('.reply-status');
-        toggleBtn.addEventListener('click', function () {
-          form.hidden = !form.hidden;
-          if (!form.hidden) textarea.focus();
-        });
-        cancelBtn.addEventListener('click', function () {
-          form.hidden = true;
-          textarea.value = '';
-          statusEl.textContent = '';
-          statusEl.className = 'reply-status';
-        });
-        sendBtn.addEventListener('click', function () {
-          var msg = (textarea && textarea.value) ? textarea.value.trim() : '';
-          if (!msg) {
-            statusEl.textContent = 'Please enter a message.';
-            statusEl.className = 'reply-status error';
-            return;
-          }
-          statusEl.textContent = 'Sending…';
-          statusEl.className = 'reply-status';
-          sendBtn.disabled = true;
-          fetch('/api/reply', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + getAuthKey()
-            },
-            body: JSON.stringify({ id: s.id, message: msg, subject: s.subject })
-          })
-            .then(function (r) { return r.json().then(function (data) { return { status: r.status, data: data }; }); })
-            .then(function (res) {
-              sendBtn.disabled = false;
-              if (res.status === 200 && res.data.success) {
-                statusEl.textContent = 'Reply sent.';
-                statusEl.className = 'reply-status success';
-                textarea.value = '';
-                setTimeout(function () {
-                  form.hidden = true;
-                  statusEl.textContent = '';
-                }, 2000);
-              } else {
-                statusEl.textContent = res.data.error || 'Failed to send reply.';
-                statusEl.className = 'reply-status error';
-              }
-            })
-            .catch(function () {
-              sendBtn.disabled = false;
-              statusEl.textContent = 'Network error.';
-              statusEl.className = 'reply-status error';
-            });
-        });
-        return card;
+      function snippet(text, maxLen) {
+        if (!text) return '';
+        text = text.replace(/\s+/g, ' ').trim();
+        return text.length <= (maxLen || 80) ? text : text.slice(0, maxLen || 80) + '…';
       }
 
-      function render(submissions) {
-        emptyEl.hidden = submissions.length > 0;
-        var groups = groupByDept(submissions);
-        ['general', 'sales', 'accounting'].forEach(function (dept) {
-          var listEl = document.getElementById(DEPT_IDS[dept]);
-          var emptyDeptEl = document.getElementById(DEPT_IDS[dept] + '-empty');
-          if (!listEl) return;
-          listEl.innerHTML = '';
-          var list = groups[dept] || [];
-          if (emptyDeptEl) emptyDeptEl.hidden = list.length > 0;
-          list.forEach(function (s) {
-            listEl.appendChild(renderCard(s));
-          });
+      function initial(name) {
+        if (!name || !name.trim()) return '?';
+        var parts = name.trim().split(/\s+/);
+        if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+        return name.trim()[0].toUpperCase();
+      }
+
+      function formatRelativeDate(isoStr) {
+        if (!isoStr) return '—';
+        var d = new Date(isoStr);
+        var now = new Date();
+        var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        var yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+        var dDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+        if (dDate.getTime() === today.getTime()) return 'Today ' + d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+        if (dDate.getTime() === yesterday.getTime()) return 'Yesterday ' + d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+        if (d.getFullYear() === now.getFullYear()) return d.toLocaleDateString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+        return d.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+      }
+
+      function updateCharCount() {
+        var el = document.getElementById('reply-char-count');
+        if (!el) return;
+        var len = (replyBody && replyBody.value) ? replyBody.value.length : 0;
+        el.textContent = len.toLocaleString() + ' / 10,000 characters';
+        el.className = 'admin-char-count' + (len >= MAX_BODY_LEN ? ' over-limit' : len >= MAX_BODY_LEN - 500 ? ' near-limit' : '');
+      }
+
+      function renderList() {
+        var g = groupByDept(submissions);
+        var list = g[currentDept] || [];
+        var labelEl = document.getElementById('admin-toolbar-label');
+        if (labelEl) labelEl.textContent = 'Inbox — ' + DEPT_LABELS[currentDept] + ' (' + DEPT_EMAILS[currentDept] + ')';
+        emaillistEl.innerHTML = '';
+        emptyInboxEl.hidden = list.length > 0;
+        var opened = getOpenedIds();
+        list.forEach(function (s) {
+          var row = document.createElement('div');
+          row.className = 'admin-emailrow' + (opened[s.id] ? '' : ' unread');
+          row.setAttribute('role', 'button');
+          row.tabIndex = 0;
+          row.setAttribute('aria-label', (s.subject || 'No subject') + ', from ' + (s.name || ''));
+          var dateStr = formatRelativeDate(s.createdAt);
+          row.innerHTML =
+            '<span class="avatar">' + escapeHtml(initial(s.name)) + '</span>' +
+            '<div class="meta">' +
+              '<div class="from-line"><span class="from-name">' + escapeHtml(s.name || '') + '</span><span class="date">' + escapeHtml(dateStr) + '</span></div>' +
+              '<div class="subject">' + escapeHtml(s.subject || '—') + '</div>' +
+              '<div class="snippet">' + escapeHtml(snippet(s.message)) + '</div>' +
+            '</div>';
+          row.addEventListener('click', function () { openModal(s); });
+          row.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(s); } });
+          emaillistEl.appendChild(row);
         });
       }
+
+      function hasDraft() {
+        var body = (replyBody && replyBody.value) ? replyBody.value.trim() : '';
+        return body.length > 0 || selectedFiles.length > 0;
+      }
+
+      function openModal(s) {
+        currentSubmission = s;
+        selectedFiles = [];
+        replyAttach.value = '';
+        replyAttachList.innerHTML = '';
+        replyCc.value = '';
+        replyBody.value = '';
+        replyStatus.textContent = '';
+        replyStatus.className = 'admin-reply-status';
+        emojiPicker.hidden = true;
+        if (replyEmojiBtn) replyEmojiBtn.setAttribute('aria-expanded', 'false');
+
+        modalSubject.textContent = s.subject || '—';
+        modalFrom.innerHTML = '<strong>From:</strong> ' + escapeHtml(s.name || '') + ' &lt;' + escapeHtml(s.email || '') + '&gt;';
+        modalTo.innerHTML = '<strong>To:</strong> ' + escapeHtml(s.toEmail || DEPT_EMAILS[s.department] || '—');
+        modalDate.textContent = formatRelativeDate(s.createdAt);
+        modalMsg.textContent = s.message || '—';
+        replyTo.value = s.email || '';
+        updateCharCount();
+        modalEl.hidden = false;
+        modalEl.classList.add('is-open');
+        markOpened(s.id);
+        renderList();
+        setTimeout(function () {
+          modalFocusables = modalEl.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+          if (modalFocusables.length) modalFocusables[0].focus();
+          else if (replyBody) replyBody.focus();
+        }, 50);
+      }
+
+      function closeModal(force) {
+        if (!force && hasDraft() && !confirm('Discard your reply?')) return;
+        modalEl.hidden = true;
+        modalEl.classList.remove('is-open');
+        currentSubmission = null;
+      }
+
+      modalClose.addEventListener('click', function () { closeModal(); });
+      modalEl.addEventListener('click', function (e) {
+        if (e.target === modalEl) closeModal();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        if (!modalEl.hidden) { e.preventDefault(); closeModal(); return; }
+        if (!emojiPicker.hidden) { e.preventDefault(); emojiPicker.hidden = true; if (replyEmojiBtn) replyEmojiBtn.setAttribute('aria-expanded', 'false'); }
+      });
+      modalEl.addEventListener('keydown', function (e) {
+        if (e.key !== 'Tab' || !modalFocusables || !modalFocusables.length) return;
+        var first = modalFocusables[0];
+        var last = modalFocusables[modalFocusables.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        } else {
+          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      });
+
+      if (replyBody) replyBody.addEventListener('input', updateCharCount);
+
+      replyEmojiBtn.addEventListener('click', function () {
+        emojiPicker.hidden = !emojiPicker.hidden;
+        replyEmojiBtn.setAttribute('aria-expanded', emojiPicker.hidden ? 'false' : 'true');
+        if (!emojiPicker.hidden && !emojiPicker.children.length) {
+          emojiPicker.innerHTML = '';
+          EMOJIS.forEach(function (emo) {
+            var span = document.createElement('span');
+            span.textContent = emo;
+            span.setAttribute('role', 'button');
+            span.addEventListener('click', function () {
+              var start = replyBody.selectionStart, end = replyBody.selectionEnd;
+              var text = replyBody.value;
+              replyBody.value = text.slice(0, start) + emo + text.slice(end);
+              replyBody.selectionStart = replyBody.selectionEnd = start + emo.length;
+              replyBody.focus();
+            });
+            emojiPicker.appendChild(span);
+          });
+        }
+      });
+
+      replyAttachBtn.addEventListener('click', function () { replyAttach.click(); });
+      replyAttach.addEventListener('change', function () {
+        var files = replyAttach.files;
+        for (var i = 0; i < files.length; i++) {
+          selectedFiles.push({ file: files[i], id: Date.now() + '-' + i });
+        }
+        updateAttachList();
+      });
+
+      function updateAttachList() {
+        replyAttachList.innerHTML = '';
+        selectedFiles.forEach(function (item) {
+          var span = document.createElement('span');
+          span.innerHTML = escapeHtml(item.file.name) + ' <button type="button" class="remove-attach" data-id="' + item.id + '">×</button>';
+          span.querySelector('.remove-attach').addEventListener('click', function () {
+            selectedFiles = selectedFiles.filter(function (x) { return x.id !== item.id; });
+            updateAttachList();
+          });
+          replyAttachList.appendChild(span);
+        });
+      }
+
+      function readFileAsBase64(file) {
+        return new Promise(function (resolve, reject) {
+          var reader = new FileReader();
+          reader.onload = function () {
+            var b = reader.result;
+            if (b.indexOf('base64,') !== -1) b = b.slice(b.indexOf('base64,') + 7);
+            resolve({ filename: file.name, content: b });
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      replySend.addEventListener('click', function () {
+        var msg = (replyBody && replyBody.value) ? replyBody.value.trim() : '';
+        if (!msg) {
+          replyStatus.textContent = 'Please enter a message.';
+          replyStatus.className = 'admin-reply-status error';
+          return;
+        }
+        if (!currentSubmission) return;
+        replyStatus.textContent = 'Sending…';
+        replyStatus.className = 'admin-reply-status';
+        replySend.disabled = true;
+
+        var ccStr = (replyCc && replyCc.value) ? replyCc.value.trim() : '';
+        var ccList = ccStr ? ccStr.split(/[\s,;]+/).map(function (e) { return e.trim(); }).filter(Boolean) : [];
+
+        Promise.all(selectedFiles.map(function (item) { return readFileAsBase64(item.file); }))
+          .then(function (attachments) {
+            return fetch('/api/reply', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + getAuthKey()
+              },
+              body: JSON.stringify({
+                id: currentSubmission.id,
+                message: msg,
+                subject: currentSubmission.subject,
+                cc: ccList.length ? ccList : undefined,
+                attachments: attachments.length ? attachments : undefined
+              })
+            });
+          })
+          .then(function (r) { return r.json().then(function (data) { return { status: r.status, data: data }; }); })
+          .then(function (res) {
+            replySend.disabled = false;
+            if (res.status === 200 && res.data.success) {
+              replyStatus.textContent = 'Reply sent.';
+              replyStatus.className = 'admin-reply-status success';
+              replyBody.value = '';
+              selectedFiles = [];
+              replyAttachList.innerHTML = '';
+              updateCharCount();
+              setTimeout(function () { closeModal(true); }, 1500);
+            } else {
+              replyStatus.textContent = res.data.error || 'Failed to send reply.';
+              replyStatus.className = 'admin-reply-status error';
+            }
+          })
+          .catch(function () {
+            replySend.disabled = false;
+            replyStatus.textContent = 'Network error.';
+            replyStatus.className = 'admin-reply-status error';
+          });
+      });
+
+      replyCancel.addEventListener('click', closeModal);
+
+      document.querySelectorAll('.admin-sidebar .nav-item[data-dept]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          currentDept = btn.getAttribute('data-dept');
+          document.querySelectorAll('.admin-sidebar .nav-item').forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          renderList();
+        });
+      });
+
+      var refreshBtn = document.getElementById('admin-refresh');
+      if (refreshBtn) refreshBtn.addEventListener('click', function () {
+        var key = getAuthKey();
+        if (!key) return;
+        refreshBtn.disabled = true;
+        refreshBtn.textContent = 'Refreshing…';
+        fetch('/api/submissions', { method: 'GET', headers: { 'Authorization': 'Bearer ' + key } })
+          .then(function (r) { return r.status === 401 ? null : r.json(); })
+          .then(function (data) {
+            refreshBtn.disabled = false;
+            refreshBtn.textContent = 'Refresh';
+            if (!data || (data.error && !data.submissions)) return;
+            submissions = data.submissions || [];
+            updateCounts();
+            renderList();
+          })
+          .catch(function () { refreshBtn.disabled = false; refreshBtn.textContent = 'Refresh'; });
+      });
 
       loadBtn.addEventListener('click', function () {
         var key = (keyInput && keyInput.value) ? keyInput.value.trim() : '';
-        if (!key) {
-          showError('Enter the admin key.');
-          return;
-        }
+        if (!key) { showError('Enter the admin key.'); return; }
         loadSubmissions(key);
       });
-
-      keyInput.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') loadBtn.click();
-      });
-
+      keyInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') loadBtn.click(); });
       logoutBtn.addEventListener('click', function () {
         sessionStorage.removeItem(STORAGE_KEY);
-        contentDiv.hidden = true;
-        loginDiv.hidden = false;
+        appEl.hidden = true;
+        loginWrap.hidden = false;
         keyInput.value = '';
         showError('');
       });
 
       var saved = sessionStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        keyInput.value = '';
-        loadSubmissions(saved);
-      } else {
-        contentDiv.hidden = true;
-        loginDiv.hidden = false;
-      }
+      if (saved) { keyInput.value = ''; loadSubmissions(saved); }
+      else { appEl.hidden = true; }
     })();
   </script>
 </body>
