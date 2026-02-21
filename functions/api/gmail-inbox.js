@@ -28,12 +28,15 @@ function getHeader(headers, name) {
   return h ? (h.value || '').trim() : '';
 }
 
+const GMAIL_ADDRESS = 'schmiedeler.associates@gmail.com';
+
 function inferDepartment(toHeader) {
   const lower = (toHeader || '').toLowerCase();
   if (lower.includes('sales@schmiedeler.com')) return 'sales';
   if (lower.includes('accounting@schmiedeler.com')) return 'accounting';
   if (lower.includes('info@schmiedeler.com')) return 'general';
-  return 'general';
+  if (lower.includes(GMAIL_ADDRESS)) return 'gmail';
+  return 'gmail';
 }
 
 export async function onRequest(context) {

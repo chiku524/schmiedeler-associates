@@ -29,27 +29,30 @@
     .admin-login button { margin-top: var(--space-md); width: 100%; padding: 0.65rem 1rem; font-weight: 600; border-radius: 8px; }
     .admin-error { color: #dc2626; margin-top: var(--space-sm); font-size: 0.9rem; }
 
-    .admin-app { display: flex; min-height: calc(100vh - 52px); }
-    .admin-sidebar { width: 240px; flex-shrink: 0; background: var(--color-bg-alt); border-right: 1px solid var(--color-trace); padding: var(--space-lg) 0; }
-    .admin-sidebar .nav-item { display: flex; align-items: center; justify-content: space-between; padding: var(--space-sm) var(--space-lg); color: var(--color-navy); text-decoration: none; font-weight: 600; cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-size: 0.95rem; border-left: 3px solid transparent; margin-left: 0; transition: background 0.15s, color 0.15s, border-color 0.15s; }
+    body.admin-portal-open { overflow: hidden; height: 100vh; }
+    .admin-app { display: flex; height: calc(100vh - 52px); min-height: 0; overflow: hidden; }
+    .admin-sidebar { width: 220px; flex-shrink: 0; background: var(--color-bg-alt); border-right: 1px solid var(--color-trace); padding: var(--space-md) 0; display: flex; flex-direction: column; }
+    .admin-sidebar-nav { flex: 1; min-height: 0; overflow-y: auto; }
+    .admin-sidebar .nav-item { display: flex; align-items: center; justify-content: space-between; padding: var(--space-sm) var(--space-md); color: var(--color-navy); text-decoration: none; font-weight: 600; cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-size: 0.9rem; border-left: 3px solid transparent; margin-left: 0; transition: background 0.15s, color 0.15s, border-color 0.15s; }
     .admin-sidebar .nav-item:hover { background: var(--color-surface); color: var(--color-accent); }
-    .admin-sidebar .nav-item.active { background: var(--dept-general-bg); color: var(--color-accent); border-left-color: var(--color-accent); padding-left: calc(var(--space-lg) - 3px); }
+    .admin-sidebar .nav-item.active { background: var(--dept-general-bg); color: var(--color-accent); border-left-color: var(--color-accent); padding-left: calc(var(--space-md) - 3px); }
     .admin-sidebar .nav-item[data-dept="sales"].active { background: var(--dept-sales-bg); color: var(--dept-sales); border-left-color: var(--dept-sales); }
     .admin-sidebar .nav-item[data-dept="accounting"].active { background: var(--dept-accounting-bg); color: var(--dept-accounting); border-left-color: var(--dept-accounting); }
-    .admin-sidebar .nav-count { font-size: 0.8rem; color: var(--color-text-muted); font-weight: 600; min-width: 1.5rem; text-align: right; }
+    .admin-sidebar .nav-item[data-dept="gmail"].active { background: rgba(66, 133, 244, 0.12); color: #4285f4; border-left-color: #4285f4; }
+    .admin-sidebar .nav-count { font-size: 0.75rem; color: var(--color-text-muted); font-weight: 600; min-width: 1.5rem; text-align: right; }
     .admin-sidebar .nav-item.active .nav-count { color: inherit; }
-    .admin-gmail-wrap { padding: var(--space-lg); border-top: 1px solid var(--color-trace); margin-top: var(--space-sm); }
-    .admin-gmail-status { font-size: 0.85rem; color: var(--color-text-muted); }
+    .admin-sidebar-footer { flex-shrink: 0; padding: var(--space-sm) var(--space-md); border-top: 1px solid var(--color-trace); margin-top: auto; }
+    .admin-gmail-wrap { margin-bottom: var(--space-xs); }
+    .admin-gmail-status { font-size: 0.75rem; color: var(--color-text-muted); }
     .admin-gmail-status.connected { color: var(--dept-accounting); font-weight: 600; }
     .admin-gmail-status.flash { color: var(--color-accent); animation: admin-flash 2s ease; }
-    .admin-app-error { font-size: 0.8rem; color: #dc2626; margin-top: var(--space-sm); margin-bottom: 0; }
+    .admin-app-error { font-size: 0.7rem; color: #dc2626; margin-top: 2px; margin-bottom: 0; }
     @keyframes admin-flash { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 1; } }
-    .admin-sidebar .logout-wrap { padding: var(--space-md); border-top: 1px solid var(--color-trace); margin-top: 0; }
-    .admin-main { flex: 1; min-width: 0; display: flex; flex-direction: column; background: var(--color-surface); }
-    .admin-toolbar { padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--color-trace); font-weight: 600; color: var(--color-navy); display: flex; align-items: center; gap: var(--space-md); flex-wrap: wrap; background: var(--color-surface); }
+    .admin-main { flex: 1; min-width: 0; display: flex; flex-direction: column; background: var(--color-surface); overflow: hidden; }
+    .admin-toolbar { padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--color-trace); font-weight: 600; color: var(--color-navy); display: flex; align-items: center; gap: var(--space-md); flex-wrap: wrap; background: var(--color-surface); flex-shrink: 0; }
     .admin-toolbar-label { font-size: 1rem; letter-spacing: -0.01em; }
     .admin-toolbar .refresh-btn { margin-left: auto; }
-    .admin-emaillist { flex: 1; overflow-y: auto; min-height: 200px; }
+    .admin-emaillist { flex: 1; overflow-y: auto; min-height: 0; }
     .admin-emailrow { display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--color-trace); cursor: pointer; transition: background 0.15s, border-left-color 0.15s; border-left: 3px solid transparent; }
     .admin-emailrow:hover { background: var(--color-bg-alt); }
     .admin-emailrow:focus { outline: none; background: var(--color-bg-alt); border-left-color: var(--color-accent); }
@@ -72,6 +75,7 @@
     .admin-modal-dept-badge { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent); background: var(--dept-general-bg); padding: 0.25rem 0.5rem; border-radius: 6px; margin-bottom: 0.35rem; }
     .admin-modal-dept-badge.dept-sales { color: var(--dept-sales); background: var(--dept-sales-bg); }
     .admin-modal-dept-badge.dept-accounting { color: var(--dept-accounting); background: var(--dept-accounting-bg); }
+    .admin-modal-dept-badge.dept-gmail { color: #4285f4; background: rgba(66, 133, 244, 0.12); }
     .admin-modal-header h2 { margin: 0; font-size: 1.2rem; font-weight: 700; color: var(--color-navy); letter-spacing: -0.02em; line-height: 1.3; }
     .admin-modal-close { width: 38px; height: 38px; border: none; border-radius: 8px; background: transparent; color: var(--color-text-muted); font-size: 1.5rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; }
     .admin-modal-close:hover { background: var(--color-bg-alt); color: var(--color-navy); }
@@ -131,7 +135,7 @@
     .admin-modal-overlay.is-open { opacity: 1; }
     .admin-modal-box { transform: scale(0.98); transition: transform 0.2s ease; }
     .admin-modal-overlay.is-open .admin-modal-box { transform: scale(1); }
-    .admin-pagination { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-sm); padding: var(--space-md) var(--space-lg); border-top: 1px solid var(--color-trace); background: var(--color-surface); }
+    .admin-pagination { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-sm); padding: var(--space-md) var(--space-lg); border-top: 1px solid var(--color-trace); background: var(--color-surface); flex-shrink: 0; }
     .admin-pagination-info { font-size: 0.9rem; color: var(--color-text-muted); }
     .admin-pagination-btns { display: flex; gap: var(--space-sm); }
     .admin-pagination-btns .btn:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -146,9 +150,11 @@
 
     @media (max-width: 768px) {
       .admin-app { flex-direction: column; }
-      .admin-sidebar { width: 100%; display: flex; flex-wrap: wrap; gap: 0; padding: var(--space-sm); border-right: none; border-bottom: 1px solid var(--color-trace); }
+      .admin-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; padding: var(--space-sm); border-right: none; border-bottom: 1px solid var(--color-trace); }
+      .admin-sidebar-nav { flex: 1 1 auto; display: flex; flex-wrap: wrap; }
       .admin-sidebar .nav-item { flex: 1 1 auto; }
-      .admin-sidebar .logout-wrap { width: 100%; border-top: 1px solid var(--color-trace); }
+      .admin-sidebar-footer { width: 100%; margin-top: 0; display: flex; align-items: center; gap: var(--space-sm); flex-wrap: wrap; }
+    }
       .admin-modal-box { max-width: 100%; max-height: 95vh; }
       .admin-modal-columns { flex-direction: column; }
       .admin-modal-body { width: 100%; max-height: 40vh; border-right: none; border-bottom: 1px solid var(--color-trace); }
@@ -183,16 +189,19 @@
 
   <div id="admin-app" class="admin-app" hidden>
     <aside class="admin-sidebar">
-      <button type="button" class="nav-item active" data-dept="general">General <span class="nav-count" id="count-general">0</span></button>
-      <button type="button" class="nav-item" data-dept="sales">Sales <span class="nav-count" id="count-sales">0</span></button>
-      <button type="button" class="nav-item" data-dept="accounting">Accounting <span class="nav-count" id="count-accounting">0</span></button>
-      <div class="admin-gmail-wrap">
-        <button type="button" class="btn btn-secondary btn-sm" id="admin-connect-gmail" hidden>Connect Gmail</button>
-        <span class="admin-gmail-status" id="admin-gmail-status" hidden aria-live="polite">✓ Gmail connected</span>
-        <p id="admin-app-error" class="admin-app-error" hidden></p>
+      <div class="admin-sidebar-nav">
+        <button type="button" class="nav-item active" data-dept="general">General <span class="nav-count" id="count-general">0</span></button>
+        <button type="button" class="nav-item" data-dept="sales">Sales <span class="nav-count" id="count-sales">0</span></button>
+        <button type="button" class="nav-item" data-dept="accounting">Accounting <span class="nav-count" id="count-accounting">0</span></button>
+        <button type="button" class="nav-item" data-dept="gmail">Gmail <span class="nav-count" id="count-gmail">0</span></button>
       </div>
-      <div class="logout-wrap">
-        <button type="button" class="btn btn-secondary" id="admin-logout">Log out</button>
+      <div class="admin-sidebar-footer">
+        <div class="admin-gmail-wrap">
+          <button type="button" class="btn btn-secondary btn-sm" id="admin-connect-gmail" hidden>Connect Gmail</button>
+          <span class="admin-gmail-status" id="admin-gmail-status" hidden aria-live="polite">✓ Gmail</span>
+          <p id="admin-app-error" class="admin-app-error" hidden></p>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" id="admin-logout">Log out</button>
       </div>
     </aside>
     <main class="admin-main">
@@ -318,8 +327,8 @@
       var replyAttachList = document.getElementById('reply-attach-list');
 
       var STORAGE_KEY = 'schmiedeler_admin_key';
-      var DEPT_LABELS = { general: 'General', sales: 'Sales', accounting: 'Accounting' };
-      var DEPT_EMAILS = { general: 'info@schmiedeler.com', sales: 'sales@schmiedeler.com', accounting: 'accounting@schmiedeler.com' };
+      var DEPT_LABELS = { general: 'General', sales: 'Sales', accounting: 'Accounting', gmail: 'Gmail' };
+      var DEPT_EMAILS = { general: 'info@schmiedeler.com', sales: 'sales@schmiedeler.com', accounting: 'accounting@schmiedeler.com', gmail: 'schmiedeler.associates@gmail.com' };
       var EMOJIS = ['😀','😃','😄','😁','😅','😂','🤣','😊','😇','🙂','🙃','😉','😌','😍','🥰','😘','😗','😙','😚','😋','😛','😜','🤪','😝','🤑','🤗','🤭','🤫','🤔','🤐','👍','👎','👌','✌️','🤞','🤟','🤘','👏','🙌','💪','📧','📨','✉️','📩','💼','📋','✅','❌','⭐','🙏'];
       var submissions = [];
       var currentDept = 'general';
@@ -387,6 +396,7 @@
             }
             loginWrap.hidden = true;
             appEl.hidden = false;
+            document.body.classList.add('admin-portal-open');
             sessionStorage.setItem(STORAGE_KEY, key);
 
             var kvList = (data.submissions || []).map(function (s) {
@@ -451,9 +461,9 @@
       }
 
       function groupByDept(list) {
-        var g = { general: [], sales: [], accounting: [] };
+        var g = { general: [], sales: [], accounting: [], gmail: [] };
         list.forEach(function (s) {
-          var d = (s.department && g[s.department]) ? s.department : 'general';
+          var d = (s.department && g[s.department]) ? s.department : 'gmail';
           g[d].push(s);
         });
         return g;
@@ -461,7 +471,7 @@
 
       function updateCounts() {
         var g = groupByDept(submissions);
-        ['general','sales','accounting'].forEach(function (d) {
+        ['general','sales','accounting','gmail'].forEach(function (d) {
           var el = document.getElementById('count-' + d);
           if (el) el.textContent = (g[d] || []).length;
         });
@@ -526,11 +536,11 @@
         var pageList = list.slice(start, start + PAGE_SIZE);
 
         var labelEl = document.getElementById('admin-toolbar-label');
-        if (labelEl) labelEl.textContent = 'Inbox — ' + DEPT_LABELS[currentDept] + ' (' + DEPT_EMAILS[currentDept] + ')';
+        if (labelEl) labelEl.textContent = 'Inbox — ' + DEPT_LABELS[currentDept] + (DEPT_EMAILS[currentDept] ? ' (' + DEPT_EMAILS[currentDept] + ')' : '');
         emaillistEl.innerHTML = '';
         emptyInboxEl.hidden = total > 0;
         var emptyHint = document.getElementById('admin-empty-hint');
-        if (emptyHint) emptyHint.textContent = 'Contact form submissions and emails sent to ' + (DEPT_EMAILS[currentDept] || 'this address') + ' will appear here.';
+        if (emptyHint) emptyHint.textContent = currentDept === 'gmail' ? 'Emails sent directly to the Gmail address will appear here.' : 'Contact form submissions and emails sent to ' + (DEPT_EMAILS[currentDept] || 'this address') + ' will appear here.';
 
         var paginationEl = document.getElementById('admin-pagination');
         var paginationInfo = document.getElementById('admin-pagination-info');
@@ -586,7 +596,7 @@
         var deptBadge = document.getElementById('modal-dept-badge');
         if (deptBadge) {
           deptBadge.textContent = DEPT_LABELS[s.department] || 'General';
-          deptBadge.className = 'admin-modal-dept-badge' + (s.department === 'sales' ? ' dept-sales' : s.department === 'accounting' ? ' dept-accounting' : '');
+          deptBadge.className = 'admin-modal-dept-badge' + (s.department === 'sales' ? ' dept-sales' : s.department === 'accounting' ? ' dept-accounting' : s.department === 'gmail' ? ' dept-gmail' : '');
         }
         modalFrom.innerHTML = '<strong>From:</strong> ' + escapeHtml(s.name || '') + ' &lt;' + escapeHtml(s.email || '') + '&gt;';
         modalTo.innerHTML = '<strong>To:</strong> ' + escapeHtml(s.toEmail || DEPT_EMAILS[s.department] || '—');
@@ -738,7 +748,7 @@
             if (currentSubmission.source === 'gmail') {
               payload = {
                 toEmail: currentSubmission.email,
-                department: currentSubmission.department,
+                department: currentSubmission.department === 'gmail' ? 'general' : currentSubmission.department,
                 message: msg,
                 subject: subjectStr,
                 cc: ccList.length ? ccList : undefined,
