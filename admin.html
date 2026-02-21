@@ -13,6 +13,12 @@
     .admin-header-inner { max-width: 100%; margin: 0; padding: var(--space-sm) var(--space-md); display: flex; align-items: center; justify-content: space-between; }
     .admin-header-logo { font-family: var(--font-heading); font-weight: 700; color: var(--color-navy-dark); text-decoration: none; font-size: 1.2rem; }
     .admin-header-portal { font-weight: 600; color: var(--color-navy); text-decoration: none; padding: var(--space-xs) var(--space-sm); border-radius: var(--radius); }
+    .admin-theme-toggle { width: 40px; height: 40px; border: none; border-radius: var(--radius); background: var(--color-bg-alt); color: var(--color-navy); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    .admin-theme-toggle:hover { color: var(--color-accent); }
+    .admin-theme-icon { display: none; }
+    .admin-theme-sun { display: inline !important; }
+    html[data-theme="dark"] .admin-theme-sun { display: none !important; }
+    html[data-theme="dark"] .admin-theme-moon { display: inline !important; }
     .admin-login-wrap { max-width: 24rem; margin: 2rem auto; padding: var(--space-xl); }
     .admin-login label { display: block; font-weight: 600; margin-bottom: var(--space-xs); }
     .admin-login input { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--color-trace); border-radius: var(--radius); }
@@ -86,6 +92,17 @@
     .admin-modal-overlay.is-open { opacity: 1; }
     .admin-modal-box { transform: scale(0.98); transition: transform 0.2s ease; }
     .admin-modal-overlay.is-open .admin-modal-box { transform: scale(1); }
+    .admin-pagination { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-sm); padding: var(--space-sm) var(--space-md); border-top: 1px solid var(--color-trace); background: var(--color-surface); }
+    .admin-pagination-info { font-size: 0.9rem; color: var(--color-text-muted); }
+    .admin-pagination-btns { display: flex; gap: var(--space-sm); }
+    .admin-format-toolbar { display: flex; gap: 2px; margin-bottom: 4px; }
+    .admin-format-toolbar button { width: 32px; height: 32px; padding: 0; border: 1px solid var(--color-trace); border-radius: 4px; background: var(--color-surface); color: var(--color-navy); cursor: pointer; font-size: 0.9rem; font-weight: 700; }
+    .admin-format-toolbar button:hover { background: var(--color-bg-alt); }
+    .admin-format-toolbar button.active { background: var(--color-bg-alt); color: var(--color-accent); }
+    .admin-reply-body-editor { min-height: 120px; padding: 0.5rem 0.75rem; border: 1px solid var(--color-trace); border-radius: var(--radius); font-family: inherit; font-size: 0.95rem; background: var(--color-surface); color: var(--color-text); }
+    .admin-reply-body-editor:focus { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+    .admin-reply-body-editor[data-placeholder]:empty::before { content: attr(data-placeholder); color: var(--color-text-muted); }
+    .admin-attach-hint { font-size: 0.8rem; color: var(--color-text-muted); margin-top: 2px; }
 
     @media (max-width: 768px) {
       .admin-app { flex-direction: column; }
@@ -99,7 +116,13 @@
   <header class="admin-header">
     <div class="admin-header-inner">
       <a href="/" class="admin-header-logo">Schmiedeler &amp; Associates</a>
-      <a href="/" class="admin-header-portal">Back to site</a>
+      <div style="display: flex; align-items: center; gap: var(--space-md);">
+        <button type="button" class="admin-theme-toggle" id="admin-theme-toggle" aria-label="Toggle dark mode" title="Dark mode">
+          <span class="admin-theme-icon admin-theme-sun" aria-hidden="true">☀</span>
+          <span class="admin-theme-icon admin-theme-moon" aria-hidden="true">☽</span>
+        </button>
+        <a href="/" class="admin-header-portal">Back to site</a>
+      </div>
     </div>
   </header>
 
@@ -130,6 +153,13 @@
       </div>
       <div class="admin-loading" id="admin-loading" hidden><div class="admin-loading-spinner" aria-hidden="true"></div><div>Loading inbox…</div></div>
       <div class="admin-emaillist" id="admin-emaillist"></div>
+      <nav class="admin-pagination" id="admin-pagination" aria-label="Inbox pagination" hidden>
+        <span class="admin-pagination-info" id="admin-pagination-info"></span>
+        <div class="admin-pagination-btns">
+          <button type="button" class="btn btn-secondary btn-sm" id="admin-pagination-prev" aria-label="Previous page">Previous</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="admin-pagination-next" aria-label="Next page">Next</button>
+        </div>
+      </nav>
       <div class="admin-empty-inbox" id="admin-empty-inbox" hidden><span class="empty-icon" aria-hidden="true">📭</span><p>No messages in this department.</p><p style="font-size: 0.9rem;">New contact form submissions will appear here.</p></div>
     </main>
   </div>
@@ -157,14 +187,20 @@
         </div>
         <div class="reply-row">
           <label for="reply-body">Your reply</label>
+          <div class="admin-format-toolbar">
+            <button type="button" id="format-bold" title="Bold" aria-label="Bold">B</button>
+            <button type="button" id="format-italic" title="Italic" aria-label="Italic"><em>I</em></button>
+            <button type="button" id="format-underline" title="Underline" aria-label="Underline"><u>U</u></button>
+          </div>
           <div style="position: relative;">
-            <textarea id="reply-body" placeholder="Type your reply..." maxlength="10000" aria-describedby="reply-char-count"></textarea>
+            <div id="reply-body" class="admin-reply-body-editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Reply message" data-placeholder="Type your reply..."></div>
             <div id="reply-char-count" class="admin-char-count" aria-live="polite">0 / 10,000 characters</div>
             <div class="admin-emoji-picker" id="emoji-picker" hidden role="listbox" aria-label="Choose emoji"></div>
           </div>
           <button type="button" class="btn btn-secondary btn-sm" id="reply-emoji-btn" style="margin-top: 4px;" aria-expanded="false" aria-haspopup="listbox">Insert emoji</button>
-          <input type="file" id="reply-attach" multiple hidden />
-          <button type="button" class="btn btn-secondary btn-sm" id="reply-attach-btn" style="margin-left: 4px;">Attach files</button>
+          <input type="file" id="reply-attach" multiple hidden accept="image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.txt,.csv" />
+          <button type="button" class="btn btn-secondary btn-sm" id="reply-attach-btn" style="margin-left: 4px;">Attach files (images, video, PDF, documents)</button>
+          <div class="admin-attach-hint">Max 4 MB per file, 10 MB total. Images, video, PDF, Word, Excel supported.</div>
           <div class="admin-attach-list" id="reply-attach-list"></div>
         </div>
         <div class="reply-toolbar">
@@ -215,7 +251,10 @@
       var currentSubmission = null;
       var selectedFiles = [];
       var OPENED_IDS_KEY = 'schmiedeler_admin_opened';
+      var THEME_KEY = 'schmiedeler_admin_theme';
       var MAX_BODY_LEN = 10000;
+      var PAGE_SIZE = 20;
+      var currentPage = 1;
       var modalFocusables;
 
       function showError(msg) {
@@ -326,10 +365,17 @@
         return d.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
       }
 
+      function getReplyText() {
+        return replyBody ? (replyBody.innerText || '').trim() : '';
+      }
+      function getReplyHtml() {
+        return replyBody ? (replyBody.innerHTML || '').trim() : '';
+      }
+
       function updateCharCount() {
         var el = document.getElementById('reply-char-count');
         if (!el) return;
-        var len = (replyBody && replyBody.value) ? replyBody.value.length : 0;
+        var len = (replyBody && replyBody.innerText) ? replyBody.innerText.length : 0;
         el.textContent = len.toLocaleString() + ' / 10,000 characters';
         el.className = 'admin-char-count' + (len >= MAX_BODY_LEN ? ' over-limit' : len >= MAX_BODY_LEN - 500 ? ' near-limit' : '');
       }
@@ -337,12 +383,30 @@
       function renderList() {
         var g = groupByDept(submissions);
         var list = g[currentDept] || [];
+        var total = list.length;
+        var totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+        if (currentPage > totalPages) currentPage = totalPages;
+        var start = (currentPage - 1) * PAGE_SIZE;
+        var pageList = list.slice(start, start + PAGE_SIZE);
+
         var labelEl = document.getElementById('admin-toolbar-label');
         if (labelEl) labelEl.textContent = 'Inbox — ' + DEPT_LABELS[currentDept] + ' (' + DEPT_EMAILS[currentDept] + ')';
         emaillistEl.innerHTML = '';
-        emptyInboxEl.hidden = list.length > 0;
+        emptyInboxEl.hidden = total > 0;
+
+        var paginationEl = document.getElementById('admin-pagination');
+        var paginationInfo = document.getElementById('admin-pagination-info');
+        var paginationPrev = document.getElementById('admin-pagination-prev');
+        var paginationNext = document.getElementById('admin-pagination-next');
+        if (total > 0 && paginationEl) {
+          paginationEl.hidden = false;
+          if (paginationInfo) paginationInfo.textContent = 'Showing ' + (start + 1) + '–' + Math.min(start + PAGE_SIZE, total) + ' of ' + total;
+          if (paginationPrev) { paginationPrev.disabled = currentPage <= 1; paginationPrev.ariaDisabled = currentPage <= 1; }
+          if (paginationNext) { paginationNext.disabled = currentPage >= totalPages; paginationNext.ariaDisabled = currentPage >= totalPages; }
+        } else if (paginationEl) paginationEl.hidden = true;
+
         var opened = getOpenedIds();
-        list.forEach(function (s) {
+        pageList.forEach(function (s) {
           var row = document.createElement('div');
           row.className = 'admin-emailrow' + (opened[s.id] ? '' : ' unread');
           row.setAttribute('role', 'button');
@@ -363,8 +427,7 @@
       }
 
       function hasDraft() {
-        var body = (replyBody && replyBody.value) ? replyBody.value.trim() : '';
-        return body.length > 0 || selectedFiles.length > 0;
+        return getReplyText().length > 0 || selectedFiles.length > 0;
       }
 
       function openModal(s) {
@@ -373,7 +436,7 @@
         replyAttach.value = '';
         replyAttachList.innerHTML = '';
         replyCc.value = '';
-        replyBody.value = '';
+        replyBody.innerHTML = '';
         replyStatus.textContent = '';
         replyStatus.className = 'admin-reply-status';
         emojiPicker.hidden = true;
@@ -391,7 +454,7 @@
         markOpened(s.id);
         renderList();
         setTimeout(function () {
-          modalFocusables = modalEl.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+          modalFocusables = modalEl.querySelectorAll('button, [href], input, select, textarea, [contenteditable="true"], [tabindex]:not([tabindex="-1"])');
           if (modalFocusables.length) modalFocusables[0].focus();
           else if (replyBody) replyBody.focus();
         }, 50);
@@ -424,7 +487,18 @@
         }
       });
 
-      if (replyBody) replyBody.addEventListener('input', updateCharCount);
+      if (replyBody) {
+        replyBody.addEventListener('input', updateCharCount);
+        replyBody.addEventListener('paste', function (e) {
+          e.preventDefault();
+          var text = (e.clipboardData || window.clipboardData).getData('text/plain');
+          document.execCommand('insertText', false, text);
+        });
+      }
+
+      document.getElementById('format-bold').addEventListener('click', function () { replyBody.focus(); document.execCommand('bold', false, null); });
+      document.getElementById('format-italic').addEventListener('click', function () { replyBody.focus(); document.execCommand('italic', false, null); });
+      document.getElementById('format-underline').addEventListener('click', function () { replyBody.focus(); document.execCommand('underline', false, null); });
 
       replyEmojiBtn.addEventListener('click', function () {
         emojiPicker.hidden = !emojiPicker.hidden;
@@ -436,11 +510,9 @@
             span.textContent = emo;
             span.setAttribute('role', 'button');
             span.addEventListener('click', function () {
-              var start = replyBody.selectionStart, end = replyBody.selectionEnd;
-              var text = replyBody.value;
-              replyBody.value = text.slice(0, start) + emo + text.slice(end);
-              replyBody.selectionStart = replyBody.selectionEnd = start + emo.length;
               replyBody.focus();
+              document.execCommand('insertText', false, emo);
+              updateCharCount();
             });
             emojiPicker.appendChild(span);
           });
@@ -483,7 +555,7 @@
       }
 
       replySend.addEventListener('click', function () {
-        var msg = (replyBody && replyBody.value) ? replyBody.value.trim() : '';
+        var msg = getReplyText();
         if (!msg) {
           replyStatus.textContent = 'Please enter a message.';
           replyStatus.className = 'admin-reply-status error';
@@ -496,22 +568,25 @@
 
         var ccStr = (replyCc && replyCc.value) ? replyCc.value.trim() : '';
         var ccList = ccStr ? ccStr.split(/[\s,;]+/).map(function (e) { return e.trim(); }).filter(Boolean) : [];
+        var htmlBody = getReplyHtml();
 
         Promise.all(selectedFiles.map(function (item) { return readFileAsBase64(item.file); }))
           .then(function (attachments) {
+            var payload = {
+              id: currentSubmission.id,
+              message: msg,
+              subject: currentSubmission.subject,
+              cc: ccList.length ? ccList : undefined,
+              attachments: attachments.length ? attachments : undefined
+            };
+            if (htmlBody && htmlBody !== '<br>') payload.html = htmlBody;
             return fetch('/api/reply', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + getAuthKey()
               },
-              body: JSON.stringify({
-                id: currentSubmission.id,
-                message: msg,
-                subject: currentSubmission.subject,
-                cc: ccList.length ? ccList : undefined,
-                attachments: attachments.length ? attachments : undefined
-              })
+              body: JSON.stringify(payload)
             });
           })
           .then(function (r) { return r.json().then(function (data) { return { status: r.status, data: data }; }); })
@@ -520,7 +595,7 @@
             if (res.status === 200 && res.data.success) {
               replyStatus.textContent = 'Reply sent.';
               replyStatus.className = 'admin-reply-status success';
-              replyBody.value = '';
+              replyBody.innerHTML = '';
               selectedFiles = [];
               replyAttachList.innerHTML = '';
               updateCharCount();
@@ -542,11 +617,37 @@
       document.querySelectorAll('.admin-sidebar .nav-item[data-dept]').forEach(function (btn) {
         btn.addEventListener('click', function () {
           currentDept = btn.getAttribute('data-dept');
+          currentPage = 1;
           document.querySelectorAll('.admin-sidebar .nav-item').forEach(function (b) { b.classList.remove('active'); });
           btn.classList.add('active');
           renderList();
         });
       });
+
+      var paginationPrev = document.getElementById('admin-pagination-prev');
+      var paginationNext = document.getElementById('admin-pagination-next');
+      if (paginationPrev) paginationPrev.addEventListener('click', function () {
+        if (currentPage > 1) { currentPage--; renderList(); }
+      });
+      if (paginationNext) paginationNext.addEventListener('click', function () {
+        var g = groupByDept(submissions);
+        var list = g[currentDept] || [];
+        if (currentPage < Math.ceil(list.length / PAGE_SIZE)) { currentPage++; renderList(); }
+      });
+
+      (function initTheme() {
+        try {
+          var theme = localStorage.getItem(THEME_KEY) || '';
+          if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+          else document.documentElement.removeAttribute('data-theme');
+        } catch (e) {}
+        var themeBtn = document.getElementById('admin-theme-toggle');
+        if (themeBtn) themeBtn.addEventListener('click', function () {
+          var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+          document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+          try { localStorage.setItem(THEME_KEY, isDark ? 'light' : 'dark'); } catch (e) {}
+        });
+      })();
 
       var refreshBtn = document.getElementById('admin-refresh');
       if (refreshBtn) refreshBtn.addEventListener('click', function () {

@@ -1,7 +1,8 @@
 /**
  * POST /api/reply — send a reply to a contact submission (admin only).
  * Auth: Authorization: Bearer <ADMIN_SECRET>.
- * Body: { id, message, subject?, cc?, attachments? }.
+ * Body: { id, message, subject?, cc?, attachments?, html? }.
+ * message: plain text (required). html: optional rich HTML; if provided, email is sent with both text and html.
  * cc: optional array of email strings or comma-separated string.
  * attachments: optional array of { filename: string, content: base64 string }; max 4MB each, 10MB total.
  * Sends from the department address that received the original (submission.toEmail).
@@ -101,6 +102,16 @@ export async function onRequest(context) {
     return jsonResponse({ error: 'Message too long' }, 400, corsHeaders(origin));
   }
 
+  let html = typeof body.html === 'string' ? body.html.trim() : '';
+  const ALLOWED = ['b', 'i', 'u', 'strong', 'em', 'br', 'p', 'div', 'span'];
+  if (html && html.length <= 50000) {
+    html = html
+      .replace(/<\/?(?!b|i|u|strong|em|br|p|div|span)(\w+)[^>]*\/?>/gi, '')
+      .replace(/<(b|i|u|strong|em|br|p|div|span)(\s[^>]*)?>/gi, (_, tag) => '<' + tag.toLowerCase() + '>');
+  } else if (html) {
+    html = '';
+  }
+
   const raw = await kv.get(id);
   if (!raw) {
     return jsonResponse({ error: 'Submission not found' }, 404, corsHeaders(origin));
@@ -130,6 +141,7 @@ export async function onRequest(context) {
     subject,
     text: message,
   };
+  if (html) payload.html = html;
   if (ccValid.length > 0) payload.cc = ccValid;
   if (attachmentsSanitized.length > 0) payload.attachments = attachmentsSanitized;
 
