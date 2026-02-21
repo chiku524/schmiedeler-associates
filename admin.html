@@ -47,32 +47,42 @@
     .admin-emailrow .snippet { font-size: 0.9rem; color: var(--color-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .admin-empty-inbox { padding: var(--space-2xl); text-align: center; color: var(--color-text-muted); }
 
-    .admin-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; display: flex; align-items: center; justify-content: center; padding: var(--space-md); }
+    .admin-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; display: flex; align-items: center; justify-content: center; padding: var(--space-md); backdrop-filter: blur(4px); }
     .admin-modal-overlay[hidden] { display: none; }
-    .admin-modal-box { background: var(--color-surface); border-radius: var(--radius); box-shadow: var(--shadow-lg); max-width: 640px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; }
-    .admin-modal-header { padding: var(--space-md); border-bottom: 1px solid var(--color-trace); display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-md); }
-    .admin-modal-header h2 { margin: 0; font-size: 1.1rem; font-weight: 700; color: var(--color-navy); }
-    .admin-modal-close { background: none; border: none; cursor: pointer; padding: var(--space-xs); color: var(--color-text-muted); font-size: 1.5rem; line-height: 1; }
-    .admin-modal-close:hover { color: var(--color-navy); }
-    .admin-modal-body { padding: var(--space-md); overflow-y: auto; flex: 1; min-height: 0; }
-    .admin-modal-email-from, .admin-modal-email-to { font-size: 0.9rem; margin-bottom: var(--space-xs); }
+    .admin-modal-box { background: var(--color-surface); border-radius: 12px; box-shadow: 0 24px 48px rgba(0,0,0,0.15); max-width: 680px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
+    .admin-modal-header { padding: var(--space-lg) var(--space-xl); border-bottom: 1px solid var(--color-trace); display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-md); background: var(--color-surface); }
+    .admin-modal-header h2 { margin: 0; font-size: 1.2rem; font-weight: 700; color: var(--color-navy); letter-spacing: -0.02em; line-height: 1.3; }
+    .admin-modal-close { width: 36px; height: 36px; border: none; border-radius: 8px; background: transparent; color: var(--color-text-muted); font-size: 1.4rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; }
+    .admin-modal-close:hover { background: var(--color-bg-alt); color: var(--color-navy); }
+    .admin-modal-body { padding: var(--space-lg) var(--space-xl); overflow-y: auto; flex: 1; min-height: 0; }
+    .admin-modal-section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); margin-bottom: var(--space-sm); }
+    .admin-modal-inbound { background: rgba(148, 163, 184, 0.08); border-radius: 10px; padding: var(--space-md) var(--space-lg); margin-bottom: var(--space-lg); border: 1px solid var(--color-trace); }
+    .admin-modal-inbound .admin-modal-section-label { color: var(--color-text-muted); }
+    .admin-modal-email-from, .admin-modal-email-to { font-size: 0.9rem; margin-bottom: var(--space-xs); color: var(--color-text); }
     .admin-modal-email-from strong, .admin-modal-email-to strong { color: var(--color-navy); }
-    .admin-modal-email-date { font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: var(--space-sm); }
-    .admin-modal-email-msg { white-space: pre-wrap; word-break: break-word; font-size: 0.95rem; color: var(--color-text); padding: var(--space-sm) 0; border-top: 1px solid var(--color-trace); margin-top: var(--space-sm); }
-    .admin-modal-reply { padding: var(--space-md); border-top: 1px solid var(--color-trace); }
-    .admin-modal-reply label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: var(--space-xs); }
-    .admin-modal-reply input[type="text"], .admin-modal-reply textarea { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--color-trace); border-radius: var(--radius); font-family: inherit; font-size: 0.95rem; }
-    .admin-modal-reply textarea { min-height: 120px; resize: vertical; }
-    .admin-modal-reply .reply-row { margin-bottom: var(--space-sm); }
-    .admin-modal-reply .reply-toolbar { display: flex; align-items: center; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-sm); }
-    .admin-modal-reply .reply-toolbar button { padding: 0.35rem 0.75rem; font-size: 0.9rem; }
+    .admin-modal-email-date { font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: var(--space-md); }
+    .admin-modal-email-msg { white-space: pre-wrap; word-break: break-word; font-size: 0.95rem; color: var(--color-text); line-height: 1.55; padding-top: var(--space-sm); border-top: 1px solid var(--color-trace); margin-top: var(--space-sm); }
+    .admin-modal-reply { padding: var(--space-lg) var(--space-xl); border-top: 1px solid var(--color-trace); background: rgba(180, 83, 9, 0.04); }
+    .admin-modal-reply .admin-modal-section-label { color: var(--color-accent); }
+    .admin-modal-reply label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: var(--space-xs); color: var(--color-navy); }
+    .admin-modal-reply input[type="text"] { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--color-trace); border-radius: 8px; font-family: inherit; font-size: 0.95rem; background: var(--color-surface); }
+    .admin-modal-reply .reply-row { margin-bottom: var(--space-md); }
+    .admin-modal-reply .reply-toolbar { display: flex; align-items: center; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-md); padding-top: var(--space-sm); }
+    .admin-modal-reply .reply-toolbar button { padding: 0.5rem 1rem; font-size: 0.9rem; border-radius: 8px; }
     .admin-emoji-picker { position: absolute; background: var(--color-surface); border: 1px solid var(--color-trace); border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: var(--space-sm); max-height: 200px; overflow-y: auto; z-index: 10; display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; }
     .admin-emoji-picker[hidden] { display: none; }
     .admin-emoji-picker span { cursor: pointer; font-size: 1.25rem; padding: 4px; }
     .admin-emoji-picker span:hover { background: var(--color-bg-alt); border-radius: 4px; }
-    .admin-attach-list { font-size: 0.85rem; color: var(--color-text-muted); margin-top: var(--space-xs); }
-    .admin-attach-list span { display: inline-flex; align-items: center; gap: 4px; margin-right: var(--space-sm); margin-bottom: 4px; }
-    .admin-attach-list .remove-attach { cursor: pointer; color: #b91c1c; }
+    .admin-attach-zone { border: 2px dashed var(--color-trace); border-radius: 10px; padding: var(--space-lg); text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; background: var(--color-surface); margin-top: var(--space-sm); }
+    .admin-attach-zone:hover { border-color: var(--color-accent); background: rgba(180, 83, 9, 0.04); }
+    .admin-attach-zone.is-dragover { border-color: var(--color-accent); background: rgba(180, 83, 9, 0.08); }
+    .admin-attach-zone.has-files { border-style: solid; padding: var(--space-md); }
+    .admin-attach-zone-icon { font-size: 2rem; margin-bottom: var(--space-sm); opacity: 0.7; }
+    .admin-attach-zone-text { font-size: 0.9rem; font-weight: 600; color: var(--color-navy); margin-bottom: 2px; }
+    .admin-attach-zone-hint { font-size: 0.8rem; color: var(--color-text-muted); }
+    .admin-attach-list { font-size: 0.85rem; color: var(--color-text-muted); margin-top: var(--space-sm); display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+    .admin-attach-list span { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; background: var(--color-bg-alt); border-radius: 6px; }
+    .admin-attach-list .remove-attach { cursor: pointer; color: #b91c1c; padding: 0 2px; font-weight: 700; }
     .admin-reply-status { font-size: 0.9rem; margin-left: var(--space-sm); }
     .admin-reply-status.success { color: #15803d; }
     .admin-reply-status.error { color: #b91c1c; }
@@ -96,13 +106,12 @@
     .admin-pagination-info { font-size: 0.9rem; color: var(--color-text-muted); }
     .admin-pagination-btns { display: flex; gap: var(--space-sm); }
     .admin-format-toolbar { display: flex; gap: 2px; margin-bottom: 4px; }
-    .admin-format-toolbar button { width: 32px; height: 32px; padding: 0; border: 1px solid var(--color-trace); border-radius: 4px; background: var(--color-surface); color: var(--color-navy); cursor: pointer; font-size: 0.9rem; font-weight: 700; }
-    .admin-format-toolbar button:hover { background: var(--color-bg-alt); }
+    .admin-format-toolbar button { width: 34px; height: 34px; padding: 0; border: 1px solid var(--color-trace); border-radius: 8px; background: var(--color-surface); color: var(--color-navy); cursor: pointer; font-size: 0.9rem; font-weight: 700; transition: background 0.2s, border-color 0.2s; }
+    .admin-format-toolbar button:hover { background: var(--color-bg-alt); border-color: var(--color-accent); }
     .admin-format-toolbar button.active { background: var(--color-bg-alt); color: var(--color-accent); }
-    .admin-reply-body-editor { min-height: 120px; padding: 0.5rem 0.75rem; border: 1px solid var(--color-trace); border-radius: var(--radius); font-family: inherit; font-size: 0.95rem; background: var(--color-surface); color: var(--color-text); }
+    .admin-reply-body-editor { min-height: 120px; padding: 0.6rem 0.75rem; border: 1px solid var(--color-trace); border-radius: 8px; font-family: inherit; font-size: 0.95rem; background: var(--color-surface); color: var(--color-text); line-height: 1.5; }
     .admin-reply-body-editor:focus { outline: 2px solid var(--color-accent); outline-offset: 2px; }
     .admin-reply-body-editor[data-placeholder]:empty::before { content: attr(data-placeholder); color: var(--color-text-muted); }
-    .admin-attach-hint { font-size: 0.8rem; color: var(--color-text-muted); margin-top: 2px; }
 
     @media (max-width: 768px) {
       .admin-app { flex-direction: column; }
@@ -171,12 +180,16 @@
         <button type="button" class="admin-modal-close" id="modal-close" aria-label="Close message">&times;</button>
       </div>
       <div class="admin-modal-body">
-        <div class="admin-modal-email-from" id="modal-from"></div>
-        <div class="admin-modal-email-to" id="modal-to"></div>
-        <div class="admin-modal-email-date" id="modal-date"></div>
-        <div class="admin-modal-email-msg" id="modal-msg"></div>
+        <div class="admin-modal-inbound">
+          <div class="admin-modal-section-label" id="modal-inbound-label">Inbound message (from customer)</div>
+          <div class="admin-modal-email-from" id="modal-from"></div>
+          <div class="admin-modal-email-to" id="modal-to"></div>
+          <div class="admin-modal-email-date" id="modal-date"></div>
+          <div class="admin-modal-email-msg" id="modal-msg"></div>
+        </div>
       </div>
       <div class="admin-modal-reply">
+        <div class="admin-modal-section-label">Your reply</div>
         <div class="reply-row">
           <label>To</label>
           <input type="text" id="reply-to" readonly />
@@ -186,7 +199,7 @@
           <input type="text" id="reply-cc" placeholder="email@example.com, another@example.com" />
         </div>
         <div class="reply-row">
-          <label for="reply-body">Your reply</label>
+          <label for="reply-body">Message</label>
           <div class="admin-format-toolbar">
             <button type="button" id="format-bold" title="Bold" aria-label="Bold">B</button>
             <button type="button" id="format-italic" title="Italic" aria-label="Italic"><em>I</em></button>
@@ -197,10 +210,16 @@
             <div id="reply-char-count" class="admin-char-count" aria-live="polite">0 / 10,000 characters</div>
             <div class="admin-emoji-picker" id="emoji-picker" hidden role="listbox" aria-label="Choose emoji"></div>
           </div>
-          <button type="button" class="btn btn-secondary btn-sm" id="reply-emoji-btn" style="margin-top: 4px;" aria-expanded="false" aria-haspopup="listbox">Insert emoji</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="reply-emoji-btn" style="margin-top: 6px;" aria-expanded="false" aria-haspopup="listbox">Insert emoji</button>
+        </div>
+        <div class="reply-row">
+          <label>Attachments</label>
           <input type="file" id="reply-attach" multiple hidden accept="image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.txt,.csv" />
-          <button type="button" class="btn btn-secondary btn-sm" id="reply-attach-btn" style="margin-left: 4px;">Attach files (images, video, PDF, documents)</button>
-          <div class="admin-attach-hint">Max 4 MB per file, 10 MB total. Images, video, PDF, Word, Excel supported.</div>
+          <div class="admin-attach-zone" id="admin-attach-zone" role="button" tabindex="0" aria-label="Click or drop files to upload attachments">
+            <div class="admin-attach-zone-icon" id="attach-zone-icon" aria-hidden="true">📎</div>
+            <div class="admin-attach-zone-text" id="attach-zone-text">Click or drop files to upload attachments</div>
+            <div class="admin-attach-zone-hint" id="attach-zone-hint">Images, video, PDF, Word, Excel — max 4 MB per file, 10 MB total</div>
+          </div>
           <div class="admin-attach-list" id="reply-attach-list"></div>
         </div>
         <div class="reply-toolbar">
@@ -239,7 +258,10 @@
       var replyEmojiBtn = document.getElementById('reply-emoji-btn');
       var emojiPicker = document.getElementById('emoji-picker');
       var replyAttach = document.getElementById('reply-attach');
-      var replyAttachBtn = document.getElementById('reply-attach-btn');
+      var adminAttachZone = document.getElementById('admin-attach-zone');
+      var attachZoneText = document.getElementById('attach-zone-text');
+      var attachZoneHint = document.getElementById('attach-zone-hint');
+      var attachZoneIcon = document.getElementById('attach-zone-icon');
       var replyAttachList = document.getElementById('reply-attach-list');
 
       var STORAGE_KEY = 'schmiedeler_admin_key';
@@ -435,6 +457,7 @@
         selectedFiles = [];
         replyAttach.value = '';
         replyAttachList.innerHTML = '';
+        updateAttachList();
         replyCc.value = '';
         replyBody.innerHTML = '';
         replyStatus.textContent = '';
@@ -519,12 +542,26 @@
         }
       });
 
-      replyAttachBtn.addEventListener('click', function () { replyAttach.click(); });
+      function triggerAttachInput() { if (replyAttach) replyAttach.click(); }
+      if (adminAttachZone) {
+        adminAttachZone.addEventListener('click', function (e) { if (e.target.closest('.remove-attach')) return; triggerAttachInput(); });
+        adminAttachZone.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerAttachInput(); } });
+        adminAttachZone.addEventListener('dragover', function (e) { e.preventDefault(); e.stopPropagation(); adminAttachZone.classList.add('is-dragover'); });
+        adminAttachZone.addEventListener('dragleave', function (e) { e.preventDefault(); adminAttachZone.classList.remove('is-dragover'); });
+        adminAttachZone.addEventListener('drop', function (e) {
+          e.preventDefault();
+          adminAttachZone.classList.remove('is-dragover');
+          var files = e.dataTransfer && e.dataTransfer.files;
+          if (files && files.length) for (var i = 0; i < files.length; i++) selectedFiles.push({ file: files[i], id: Date.now() + '-' + i });
+          updateAttachList();
+        });
+      }
       replyAttach.addEventListener('change', function () {
         var files = replyAttach.files;
         for (var i = 0; i < files.length; i++) {
           selectedFiles.push({ file: files[i], id: Date.now() + '-' + i });
         }
+        replyAttach.value = '';
         updateAttachList();
       });
 
@@ -533,12 +570,13 @@
         selectedFiles.forEach(function (item) {
           var span = document.createElement('span');
           span.innerHTML = escapeHtml(item.file.name) + ' <button type="button" class="remove-attach" data-id="' + item.id + '">×</button>';
-          span.querySelector('.remove-attach').addEventListener('click', function () {
-            selectedFiles = selectedFiles.filter(function (x) { return x.id !== item.id; });
-            updateAttachList();
-          });
+          span.querySelector('.remove-attach').addEventListener('click', function (e) { e.stopPropagation(); selectedFiles = selectedFiles.filter(function (x) { return x.id !== item.id; }); updateAttachList(); });
           replyAttachList.appendChild(span);
         });
+        if (attachZoneText) attachZoneText.textContent = selectedFiles.length ? selectedFiles.length + ' file(s) attached — click to add more' : 'Click or drop files to upload attachments';
+        if (attachZoneHint) attachZoneHint.textContent = selectedFiles.length ? '' : 'Images, video, PDF, Word, Excel — max 4 MB per file, 10 MB total';
+        if (adminAttachZone) adminAttachZone.classList.toggle('has-files', selectedFiles.length > 0);
+        if (attachZoneIcon) attachZoneIcon.textContent = selectedFiles.length ? '📁' : '📎';
       }
 
       function readFileAsBase64(file) {
