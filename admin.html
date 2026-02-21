@@ -40,7 +40,9 @@
     .admin-sidebar .nav-item.active .nav-count { color: inherit; }
     .admin-gmail-wrap { padding: var(--space-lg); border-top: 1px solid var(--color-trace); margin-top: var(--space-sm); }
     .admin-gmail-status { font-size: 0.85rem; color: var(--color-text-muted); }
+    .admin-gmail-status.connected { color: var(--dept-accounting); font-weight: 600; }
     .admin-gmail-status.flash { color: var(--color-accent); animation: admin-flash 2s ease; }
+    .admin-app-error { font-size: 0.8rem; color: #dc2626; margin-top: var(--space-sm); margin-bottom: 0; }
     @keyframes admin-flash { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 1; } }
     .admin-sidebar .logout-wrap { padding: var(--space-md); border-top: 1px solid var(--color-trace); margin-top: 0; }
     .admin-main { flex: 1; min-width: 0; display: flex; flex-direction: column; background: var(--color-surface); }
@@ -62,10 +64,10 @@
     .admin-empty-inbox .empty-icon { font-size: 3.5rem; margin-bottom: var(--space-sm); opacity: 0.4; display: block; }
     .admin-empty-inbox p { margin: 0 0 var(--space-xs); font-size: 1rem; }
 
-    .admin-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: flex; align-items: center; justify-content: center; padding: var(--space-lg); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+    .admin-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: flex; align-items: center; justify-content: center; padding: var(--space-md); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); overflow-y: auto; }
     .admin-modal-overlay[hidden] { display: none; }
-    .admin-modal-box { background: var(--color-surface); border-radius: 14px; box-shadow: 0 24px 56px rgba(0,0,0,0.18), 0 0 0 1px var(--color-trace); max-width: 700px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
-    .admin-modal-header { padding: var(--space-lg) var(--space-xl); border-bottom: 1px solid var(--color-trace); display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-md); background: var(--color-surface); }
+    .admin-modal-box { background: var(--color-surface); border-radius: 14px; box-shadow: 0 24px 56px rgba(0,0,0,0.18), 0 0 0 1px var(--color-trace); max-width: 700px; width: 100%; max-height: min(90vh, 900px); display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; margin: auto; }
+    .admin-modal-header { padding: var(--space-md) var(--space-xl); border-bottom: 1px solid var(--color-trace); display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-md); background: var(--color-surface); flex-shrink: 0; }
     .admin-modal-header-content { flex: 1; min-width: 0; }
     .admin-modal-dept-badge { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent); background: var(--dept-general-bg); padding: 0.25rem 0.5rem; border-radius: 6px; margin-bottom: 0.35rem; }
     .admin-modal-dept-badge.dept-sales { color: var(--dept-sales); background: var(--dept-sales-bg); }
@@ -74,38 +76,44 @@
     .admin-modal-close { width: 38px; height: 38px; border: none; border-radius: 8px; background: transparent; color: var(--color-text-muted); font-size: 1.5rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; }
     .admin-modal-close:hover { background: var(--color-bg-alt); color: var(--color-navy); }
     .admin-modal-close:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
-    .admin-modal-body { padding: var(--space-lg) var(--space-xl); overflow-y: auto; flex: 1; min-height: 0; }
+    .admin-modal-body { padding: var(--space-md) var(--space-xl); overflow-y: auto; flex: 1; min-height: 0; }
     .admin-modal-section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); margin-bottom: var(--space-sm); }
-    .admin-modal-inbound { background: var(--color-bg-alt); border-radius: 10px; padding: var(--space-lg); margin-bottom: var(--space-lg); border: 1px solid var(--color-trace); }
-    .admin-modal-inbound .admin-modal-section-label { color: var(--color-text-muted); }
-    .admin-modal-email-from, .admin-modal-email-to { font-size: 0.9rem; margin-bottom: var(--space-xs); color: var(--color-text); }
+    .admin-modal-inbound { background: var(--color-bg-alt); border-radius: 10px; padding: var(--space-md) var(--space-lg); margin-bottom: var(--space-md); border: 1px solid var(--color-trace); max-height: 28vh; min-height: 120px; display: flex; flex-direction: column; overflow: hidden; }
+    .admin-modal-inbound .admin-modal-section-label { color: var(--color-text-muted); flex-shrink: 0; }
+    .admin-modal-email-from, .admin-modal-email-to { font-size: 0.85rem; margin-bottom: var(--space-xs); color: var(--color-text); flex-shrink: 0; }
     .admin-modal-email-from strong, .admin-modal-email-to strong { color: var(--color-navy); }
-    .admin-modal-email-date { font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: var(--space-md); }
-    .admin-modal-email-msg { white-space: pre-wrap; word-break: break-word; font-size: 0.95rem; color: var(--color-text); line-height: 1.6; padding-top: var(--space-md); border-top: 1px solid var(--color-trace); margin-top: var(--space-sm); }
-    .admin-modal-reply { padding: var(--space-xl); border-top: 1px solid var(--color-trace); background: linear-gradient(to bottom, rgba(180, 83, 9, 0.05), rgba(180, 83, 9, 0.02)); }
+    .admin-modal-email-date { font-size: 0.75rem; color: var(--color-text-muted); margin-bottom: var(--space-sm); flex-shrink: 0; }
+    .admin-modal-email-msg { white-space: pre-wrap; word-break: break-word; font-size: 0.9rem; color: var(--color-text); line-height: 1.55; padding-top: var(--space-sm); border-top: 1px solid var(--color-trace); margin-top: var(--space-sm); overflow-y: auto; flex: 1; min-height: 0; }
+    .admin-modal-reply { padding: var(--space-md) var(--space-xl) var(--space-lg); border-top: 1px solid var(--color-trace); background: linear-gradient(to bottom, rgba(180, 83, 9, 0.05), rgba(180, 83, 9, 0.02)); flex-shrink: 0; overflow-y: auto; max-height: 50vh; }
     .admin-modal-reply .admin-modal-section-label { color: var(--color-accent); }
     .admin-reply-from-note { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 0.75rem; opacity: 0.9; }
     .admin-modal-reply label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: var(--space-xs); color: var(--color-navy); }
     .admin-modal-reply input[type="text"] { width: 100%; padding: 0.55rem 0.8rem; border: 1px solid var(--color-trace); border-radius: 8px; font-family: inherit; font-size: 0.95rem; background: var(--color-surface); color: var(--color-text); transition: border-color 0.2s, box-shadow 0.2s; }
     .admin-modal-reply input[type="text"]:focus { outline: none; border-color: var(--color-accent); box-shadow: 0 0 0 2px var(--color-trace-accent); }
     .admin-modal-reply input[readonly] { background: var(--color-bg-alt); cursor: default; }
-    .admin-modal-reply .reply-row { margin-bottom: var(--space-md); }
-    .admin-modal-reply .reply-toolbar { display: flex; align-items: center; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-md); padding-top: var(--space-sm); }
+    .admin-modal-reply .reply-row { margin-bottom: var(--space-sm); }
+    .admin-modal-reply .reply-row:last-of-type { margin-bottom: 0; }
+    .admin-modal-reply .reply-toolbar { display: flex; align-items: center; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-md); padding-top: var(--space-sm); border-top: 1px solid var(--color-trace); }
     .admin-modal-reply .reply-toolbar button { padding: 0.5rem 1rem; font-size: 0.9rem; border-radius: 8px; }
-    .admin-emoji-picker { position: absolute; background: var(--color-surface); border: 1px solid var(--color-trace); border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: var(--space-sm); max-height: 200px; overflow-y: auto; z-index: 10; display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; }
-    .admin-emoji-picker[hidden] { display: none; }
-    .admin-emoji-picker span { cursor: pointer; font-size: 1.25rem; padding: 4px; }
+    .admin-format-toolbar-wrap { position: relative; margin-bottom: 4px; }
+    .admin-format-toolbar { display: flex; align-items: center; gap: 2px; flex-wrap: wrap; }
+    .admin-format-toolbar .emoji-trigger { width: 34px; height: 34px; padding: 0; border: 1px solid var(--color-trace); border-radius: 8px; background: var(--color-surface); color: var(--color-navy); cursor: pointer; font-size: 1rem; display: inline-flex; align-items: center; justify-content: center; transition: background 0.2s, border-color 0.2s; }
+    .admin-format-toolbar .emoji-trigger:hover { background: var(--color-bg-alt); border-color: var(--color-accent); }
+    .admin-emoji-picker { position: absolute; left: 0; top: 100%; margin-top: 4px; background: var(--color-surface); border: 1px solid var(--color-trace); border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: var(--space-sm); max-height: 180px; overflow-y: auto; z-index: 20; display: grid; grid-template-columns: repeat(8, 1fr); gap: 2px; }
+    .admin-emoji-picker[hidden] { display: none !important; }
+    .admin-emoji-picker span { cursor: pointer; font-size: 1.15rem; padding: 4px; line-height: 1; }
     .admin-emoji-picker span:hover { background: var(--color-bg-alt); border-radius: 4px; }
-    .admin-attach-zone { border: 2px dashed var(--color-trace); border-radius: 10px; padding: var(--space-lg); text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; background: var(--color-surface); margin-top: var(--space-sm); }
+    .admin-attach-zone { border: 2px dashed var(--color-trace); border-radius: 8px; padding: var(--space-md); text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; background: var(--color-surface); margin-top: var(--space-xs); }
     .admin-attach-zone:hover { border-color: var(--color-accent); background: rgba(180, 83, 9, 0.04); }
     .admin-attach-zone.is-dragover { border-color: var(--color-accent); background: rgba(180, 83, 9, 0.08); }
-    .admin-attach-zone.has-files { border-style: solid; padding: var(--space-md); }
-    .admin-attach-zone-icon { font-size: 2rem; margin-bottom: var(--space-sm); opacity: 0.7; }
-    .admin-attach-zone-text { font-size: 0.9rem; font-weight: 600; color: var(--color-navy); margin-bottom: 2px; }
-    .admin-attach-zone-hint { font-size: 0.8rem; color: var(--color-text-muted); }
+    .admin-attach-zone.has-files { border-style: solid; padding: var(--space-sm); }
+    .admin-attach-zone-icon { font-size: 1.5rem; margin-bottom: 4px; opacity: 0.7; }
+    .admin-attach-zone-text { font-size: 0.85rem; font-weight: 600; color: var(--color-navy); margin-bottom: 2px; }
+    .admin-attach-zone-hint { font-size: 0.75rem; color: var(--color-text-muted); }
     .admin-attach-list { font-size: 0.85rem; color: var(--color-text-muted); margin-top: var(--space-sm); display: flex; flex-wrap: wrap; gap: var(--space-sm); }
     .admin-attach-list span { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; background: var(--color-bg-alt); border-radius: 6px; }
     .admin-attach-list .remove-attach { cursor: pointer; color: #b91c1c; padding: 0 2px; font-weight: 700; }
+    .admin-reply-hint { margin-top: var(--space-sm); margin-bottom: 0; font-size: 0.75rem; color: var(--color-text-muted); }
     .admin-reply-status { font-size: 0.9rem; margin-left: var(--space-sm); }
     .admin-reply-status.success { color: #15803d; }
     .admin-reply-status.error { color: #b91c1c; }
@@ -130,7 +138,8 @@
     .admin-format-toolbar button { width: 34px; height: 34px; padding: 0; border: 1px solid var(--color-trace); border-radius: 8px; background: var(--color-surface); color: var(--color-navy); cursor: pointer; font-size: 0.9rem; font-weight: 700; transition: background 0.2s, border-color 0.2s; }
     .admin-format-toolbar button:hover { background: var(--color-bg-alt); border-color: var(--color-accent); }
     .admin-format-toolbar button.active { background: var(--color-bg-alt); color: var(--color-accent); }
-    .admin-reply-body-editor { min-height: 120px; padding: 0.6rem 0.75rem; border: 1px solid var(--color-trace); border-radius: 8px; font-family: inherit; font-size: 0.95rem; background: var(--color-surface); color: var(--color-text); line-height: 1.5; }
+    #reply-body-wrap { margin-top: 2px; }
+    .admin-reply-body-editor { min-height: 100px; max-height: 160px; overflow-y: auto; padding: 0.55rem 0.75rem; border: 1px solid var(--color-trace); border-radius: 8px; font-family: inherit; font-size: 0.95rem; background: var(--color-surface); color: var(--color-text); line-height: 1.5; }
     .admin-reply-body-editor:focus { outline: 2px solid var(--color-accent); outline-offset: 2px; }
     .admin-reply-body-editor[data-placeholder]:empty::before { content: attr(data-placeholder); color: var(--color-text-muted); }
 
@@ -174,7 +183,8 @@
       <button type="button" class="nav-item" data-dept="accounting">Accounting <span class="nav-count" id="count-accounting">0</span></button>
       <div class="admin-gmail-wrap">
         <button type="button" class="btn btn-secondary btn-sm" id="admin-connect-gmail" hidden>Connect Gmail</button>
-        <span class="admin-gmail-status" id="admin-gmail-status" hidden>Gmail connected</span>
+        <span class="admin-gmail-status" id="admin-gmail-status" hidden aria-live="polite">✓ Gmail connected</span>
+        <p id="admin-app-error" class="admin-app-error" hidden></p>
       </div>
       <div class="logout-wrap">
         <button type="button" class="btn btn-secondary" id="admin-logout">Log out</button>
@@ -232,17 +242,19 @@
         </div>
         <div class="reply-row">
           <label for="reply-body">Message</label>
-          <div class="admin-format-toolbar">
-            <button type="button" id="format-bold" title="Bold" aria-label="Bold">B</button>
-            <button type="button" id="format-italic" title="Italic" aria-label="Italic"><em>I</em></button>
-            <button type="button" id="format-underline" title="Underline" aria-label="Underline"><u>U</u></button>
-          </div>
-          <div style="position: relative;">
-            <div id="reply-body" class="admin-reply-body-editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Reply message" data-placeholder="Type your reply..."></div>
-            <div id="reply-char-count" class="admin-char-count" aria-live="polite">0 / 10,000 characters</div>
+          <div class="admin-format-toolbar-wrap">
+            <div class="admin-format-toolbar">
+              <button type="button" id="format-bold" title="Bold" aria-label="Bold">B</button>
+              <button type="button" id="format-italic" title="Italic" aria-label="Italic"><em>I</em></button>
+              <button type="button" id="format-underline" title="Underline" aria-label="Underline"><u>U</u></button>
+              <button type="button" class="emoji-trigger" id="reply-emoji-btn" title="Insert emoji" aria-label="Insert emoji" aria-expanded="false" aria-haspopup="listbox">😀</button>
+            </div>
             <div class="admin-emoji-picker" id="emoji-picker" hidden role="listbox" aria-label="Choose emoji"></div>
           </div>
-          <button type="button" class="btn btn-secondary btn-sm" id="reply-emoji-btn" style="margin-top: 6px;" aria-expanded="false" aria-haspopup="listbox">Insert emoji</button>
+          <div id="reply-body-wrap">
+            <div id="reply-body" class="admin-reply-body-editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Reply message" data-placeholder="Type your reply..."></div>
+            <div id="reply-char-count" class="admin-char-count" aria-live="polite">0 / 10,000 characters</div>
+          </div>
         </div>
         <div class="reply-row">
           <label>Attachments</label>
@@ -259,7 +271,7 @@
           <button type="button" class="btn btn-secondary" id="reply-cancel">Cancel</button>
           <span class="admin-reply-status" id="reply-status" aria-live="polite"></span>
         </div>
-        <p class="admin-reply-hint" style="margin-top: var(--space-sm); margin-bottom: 0; font-size: 0.8rem; color: var(--color-text-muted);">Replies are sent via your department @schmiedeler.com address; the recipient will see that address as the sender.</p>
+        <p class="admin-reply-hint">Replies are sent via your department @schmiedeler.com address.</p>
       </div>
     </div>
   </div>
@@ -316,6 +328,10 @@
       function showError(msg) {
         errorEl.textContent = msg || '';
         errorEl.hidden = !msg;
+      }
+      function showAppError(msg) {
+        var el = document.getElementById('admin-app-error');
+        if (el) { el.textContent = msg || ''; el.hidden = !msg; }
       }
 
       function getAuthKey() {
@@ -393,13 +409,13 @@
             var connectBtn = document.getElementById('admin-connect-gmail');
             var statusEl = document.getElementById('admin-gmail-status');
             if (gmailData.gmailConnected) {
-              if (connectBtn) connectBtn.hidden = true;
-              if (statusEl) { statusEl.hidden = false; statusEl.textContent = 'Gmail connected'; }
+              if (connectBtn) { connectBtn.hidden = true; connectBtn.disabled = false; connectBtn.textContent = 'Connect Gmail'; }
+              if (statusEl) { statusEl.hidden = false; statusEl.textContent = '✓ Gmail connected'; statusEl.classList.add('connected'); }
+              showAppError('');
               updateCounts();
               renderList();
             } else {
-              if (connectBtn) connectBtn.hidden = true;
-              if (statusEl) statusEl.hidden = true;
+              if (statusEl) { statusEl.hidden = true; statusEl.classList.remove('connected'); }
               fetch('/api/gmail-auth-url', { method: 'GET', headers: { 'Authorization': 'Bearer ' + key } })
                 .then(function (r) { return r.json(); })
                 .then(function (authData) {
@@ -407,12 +423,14 @@
                     window.location = authData.url;
                     return;
                   }
-                  if (connectBtn) connectBtn.hidden = false;
+                  if (connectBtn) { connectBtn.hidden = false; connectBtn.disabled = false; connectBtn.textContent = 'Connect Gmail'; }
+                  showAppError(authData && authData.error ? authData.error : 'Could not get Gmail sign-in URL.');
                   updateCounts();
                   renderList();
                 })
                 .catch(function () {
-                  if (connectBtn) connectBtn.hidden = false;
+                  if (connectBtn) { connectBtn.hidden = false; connectBtn.disabled = false; connectBtn.textContent = 'Connect Gmail'; }
+                  showAppError('Network error. Try again.');
                   updateCounts();
                   renderList();
                 });
@@ -821,8 +839,8 @@
             submissions = kvList.concat(gmailList).sort(function (a, b) { return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(); });
             var connectBtn = document.getElementById('admin-connect-gmail');
             var statusEl = document.getElementById('admin-gmail-status');
-            if (gmailData.gmailConnected) { if (connectBtn) connectBtn.hidden = true; if (statusEl) { statusEl.hidden = false; statusEl.textContent = 'Gmail connected'; } }
-            else { if (connectBtn) connectBtn.hidden = false; if (statusEl) statusEl.hidden = true; }
+            if (gmailData.gmailConnected) { if (connectBtn) connectBtn.hidden = true; if (statusEl) { statusEl.hidden = false; statusEl.textContent = '✓ Gmail connected'; statusEl.classList.add('connected'); } showAppError(''); }
+            else { if (connectBtn) connectBtn.hidden = false; if (statusEl) { statusEl.hidden = true; statusEl.classList.remove('connected'); } }
             updateCounts();
             renderList();
           })
@@ -837,23 +855,32 @@
       keyInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') loadBtn.click(); });
       logoutBtn.addEventListener('click', function () {
         sessionStorage.removeItem(STORAGE_KEY);
-        appEl.hidden = true;
-        loginWrap.hidden = false;
-        keyInput.value = '';
-        showError('');
+        window.location = window.location.pathname || '/admin.html';
       });
 
       var connectGmailBtn = document.getElementById('admin-connect-gmail');
       if (connectGmailBtn) connectGmailBtn.addEventListener('click', function () {
         var key = getAuthKey();
         if (!key) return;
+        showAppError('');
+        connectGmailBtn.disabled = true;
+        connectGmailBtn.textContent = 'Redirecting…';
         fetch('/api/gmail-auth-url', { method: 'GET', headers: { 'Authorization': 'Bearer ' + key } })
           .then(function (r) { return r.json(); })
           .then(function (data) {
-            if (data && data.url) window.location = data.url;
-            else showError('Could not get Gmail sign-in URL.');
+            if (data && data.url) {
+              window.location = data.url;
+              return;
+            }
+            connectGmailBtn.disabled = false;
+            connectGmailBtn.textContent = 'Connect Gmail';
+            showAppError(data && data.error ? data.error : 'Could not get Gmail sign-in URL.');
           })
-          .catch(function () { showError('Network error.'); });
+          .catch(function () {
+            connectGmailBtn.disabled = false;
+            connectGmailBtn.textContent = 'Connect Gmail';
+            showAppError('Network error. Try again.');
+          });
       });
 
       var saved = sessionStorage.getItem(STORAGE_KEY);
@@ -868,7 +895,7 @@
         try { history.replaceState(null, '', window.location.pathname + (window.location.hash || '')); } catch (e) {}
         showError('');
         var statusEl = document.getElementById('admin-gmail-status');
-        if (statusEl) { statusEl.hidden = false; statusEl.textContent = 'Gmail connected'; statusEl.classList.add('flash'); setTimeout(function () { statusEl.classList.remove('flash'); }, 2000); }
+        if (statusEl) { statusEl.hidden = false; statusEl.textContent = '✓ Gmail connected'; statusEl.classList.add('connected', 'flash'); setTimeout(function () { statusEl.classList.remove('flash'); }, 2000); }
       }
       if (params.get('gmail') === 'denied' || params.get('gmail') === 'error') {
         try { history.replaceState(null, '', window.location.pathname + (window.location.hash || '')); } catch (e) {}
