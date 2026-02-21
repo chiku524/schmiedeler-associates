@@ -126,10 +126,13 @@ Output: `assets/logo.png` (512px width, transparent), `assets/logo.jpg` (512px, 
 
 If pushing to GitHub does **not** trigger a Cloudflare deployment, the Pages project may not be connected to Git. You can deploy on every push using GitHub Actions instead:
 
-1. **Create a Cloudflare API token**
+1. **Create a Cloudflare API token** (required for `wrangler pages deploy`)
    - Go to [Cloudflare Dashboard](https://dash.cloudflare.com) → **My Profile** → **API Tokens** → **Create Token**.
-   - Use the “Edit Cloudflare Workers” template (or create a custom token with **Account** → **Cloudflare Pages** → **Edit**).
-   - Copy the token value.
+   - Click **Create Custom Token** (do not use “Edit Cloudflare Workers” alone—it may lack Pages permissions).
+   - **Permissions:** add **Account** → **Cloudflare Pages** → **Edit** (this allows deploy to your Pages project).
+   - Optionally add **Account** → **Account Settings** → **Read** if you use account-level features.
+   - **Account resources:** include your account.
+   - Create the token and **copy the value immediately** (it is shown only once). If you see “Authentication error” or “Invalid access token” in CI, the token is missing Pages Edit or is wrong/expired—create a new token with the above permission and update the GitHub secret.
 
 2. **Add GitHub repository secrets**
    - In your GitHub repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**.
