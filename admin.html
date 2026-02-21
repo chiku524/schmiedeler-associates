@@ -66,7 +66,7 @@
 
     .admin-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: flex; align-items: center; justify-content: center; padding: var(--space-md); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); overflow-y: auto; }
     .admin-modal-overlay[hidden] { display: none; }
-    .admin-modal-box { background: var(--color-surface); border-radius: 14px; box-shadow: 0 24px 56px rgba(0,0,0,0.18), 0 0 0 1px var(--color-trace); max-width: 700px; width: 100%; max-height: min(90vh, 900px); display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; margin: auto; }
+    .admin-modal-box { background: var(--color-surface); border-radius: 14px; box-shadow: 0 24px 56px rgba(0,0,0,0.18), 0 0 0 1px var(--color-trace); max-width: 1100px; width: 100%; max-height: min(90vh, 920px); display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; margin: auto; }
     .admin-modal-header { padding: var(--space-md) var(--space-xl); border-bottom: 1px solid var(--color-trace); display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-md); background: var(--color-surface); flex-shrink: 0; }
     .admin-modal-header-content { flex: 1; min-width: 0; }
     .admin-modal-dept-badge { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent); background: var(--dept-general-bg); padding: 0.25rem 0.5rem; border-radius: 6px; margin-bottom: 0.35rem; }
@@ -76,15 +76,16 @@
     .admin-modal-close { width: 38px; height: 38px; border: none; border-radius: 8px; background: transparent; color: var(--color-text-muted); font-size: 1.5rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; }
     .admin-modal-close:hover { background: var(--color-bg-alt); color: var(--color-navy); }
     .admin-modal-close:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
-    .admin-modal-body { padding: var(--space-md) var(--space-xl); overflow-y: auto; flex: 1; min-height: 0; }
+    .admin-modal-columns { display: flex; flex: 1; min-height: 0; }
+    .admin-modal-body { width: 50%; min-width: 0; padding: var(--space-md) var(--space-lg); overflow-y: auto; border-right: 1px solid var(--color-trace); display: flex; flex-direction: column; }
     .admin-modal-section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); margin-bottom: var(--space-sm); }
-    .admin-modal-inbound { background: var(--color-bg-alt); border-radius: 10px; padding: var(--space-md) var(--space-lg); margin-bottom: var(--space-md); border: 1px solid var(--color-trace); max-height: 28vh; min-height: 120px; display: flex; flex-direction: column; overflow: hidden; }
+    .admin-modal-inbound { background: var(--color-bg-alt); border-radius: 10px; padding: var(--space-md) var(--space-lg); border: 1px solid var(--color-trace); display: flex; flex-direction: column; overflow: hidden; flex: 1; min-height: 0; }
     .admin-modal-inbound .admin-modal-section-label { color: var(--color-text-muted); flex-shrink: 0; }
     .admin-modal-email-from, .admin-modal-email-to { font-size: 0.85rem; margin-bottom: var(--space-xs); color: var(--color-text); flex-shrink: 0; }
     .admin-modal-email-from strong, .admin-modal-email-to strong { color: var(--color-navy); }
     .admin-modal-email-date { font-size: 0.75rem; color: var(--color-text-muted); margin-bottom: var(--space-sm); flex-shrink: 0; }
     .admin-modal-email-msg { white-space: pre-wrap; word-break: break-word; font-size: 0.9rem; color: var(--color-text); line-height: 1.55; padding-top: var(--space-sm); border-top: 1px solid var(--color-trace); margin-top: var(--space-sm); overflow-y: auto; flex: 1; min-height: 0; }
-    .admin-modal-reply { padding: var(--space-md) var(--space-xl) var(--space-lg); border-top: 1px solid var(--color-trace); background: linear-gradient(to bottom, rgba(180, 83, 9, 0.05), rgba(180, 83, 9, 0.02)); flex-shrink: 0; overflow-y: auto; max-height: 50vh; }
+    .admin-modal-reply { width: 50%; min-width: 0; padding: var(--space-md) var(--space-lg) var(--space-lg); background: linear-gradient(to bottom, rgba(180, 83, 9, 0.05), rgba(180, 83, 9, 0.02)); overflow-y: auto; display: flex; flex-direction: column; }
     .admin-modal-reply .admin-modal-section-label { color: var(--color-accent); }
     .admin-reply-from-note { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 0.75rem; opacity: 0.9; }
     .admin-modal-reply label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: var(--space-xs); color: var(--color-navy); }
@@ -148,6 +149,10 @@
       .admin-sidebar { width: 100%; display: flex; flex-wrap: wrap; gap: 0; padding: var(--space-sm); border-right: none; border-bottom: 1px solid var(--color-trace); }
       .admin-sidebar .nav-item { flex: 1 1 auto; }
       .admin-sidebar .logout-wrap { width: 100%; border-top: 1px solid var(--color-trace); }
+      .admin-modal-box { max-width: 100%; max-height: 95vh; }
+      .admin-modal-columns { flex-direction: column; }
+      .admin-modal-body { width: 100%; max-height: 40vh; border-right: none; border-bottom: 1px solid var(--color-trace); }
+      .admin-modal-reply { width: 100%; }
     }
   </style>
 </head>
@@ -217,16 +222,17 @@
         </div>
         <button type="button" class="admin-modal-close" id="modal-close" aria-label="Close message">&times;</button>
       </div>
-      <div class="admin-modal-body">
-        <div class="admin-modal-inbound">
-          <div class="admin-modal-section-label" id="modal-inbound-label">Inbound message (from customer)</div>
-          <div class="admin-modal-email-from" id="modal-from"></div>
-          <div class="admin-modal-email-to" id="modal-to"></div>
-          <div class="admin-modal-email-date" id="modal-date"></div>
-          <div class="admin-modal-email-msg" id="modal-msg"></div>
+      <div class="admin-modal-columns">
+        <div class="admin-modal-body">
+          <div class="admin-modal-inbound">
+            <div class="admin-modal-section-label" id="modal-inbound-label">Inbound message (from customer)</div>
+            <div class="admin-modal-email-from" id="modal-from"></div>
+            <div class="admin-modal-email-to" id="modal-to"></div>
+            <div class="admin-modal-email-date" id="modal-date"></div>
+            <div class="admin-modal-email-msg" id="modal-msg"></div>
+          </div>
         </div>
-      </div>
-      <div class="admin-modal-reply">
+        <div class="admin-modal-reply">
         <div class="admin-modal-section-label">Your reply <span class="admin-reply-from-note">(sent from this department’s @schmiedeler.com address)</span></div>
         <div class="reply-row">
           <label for="reply-subject">Subject</label>
@@ -272,6 +278,7 @@
           <span class="admin-reply-status" id="reply-status" aria-live="polite"></span>
         </div>
         <p class="admin-reply-hint">Replies are sent via your department @schmiedeler.com address.</p>
+        </div>
       </div>
     </div>
   </div>
