@@ -1,12 +1,11 @@
 /**
  * POST /api/reply — send a reply to a contact submission (admin only).
  * Auth: Authorization: Bearer <ADMIN_SECRET>.
- * Body: { id, message, subject?, cc?, attachments?, html? }.
- * message: plain text (required). html: optional rich HTML; if provided, email is sent with both text and html.
- * cc: optional array of email strings or comma-separated string.
- * attachments: optional array of { filename: string, content: base64 string }; max 4MB each, 10MB total.
- * Sends from the department address that received the original (submission.toEmail).
- * Requires env: ADMIN_SECRET, RESEND_API_KEY, CONTACT_SUBMISSIONS (KV).
+ * Body (contact form submission): { id, message, subject?, cc?, attachments?, html? }.
+ * Body (Gmail/direct reply): { toEmail, department, message, subject?, cc?, attachments?, html? } — no KV lookup.
+ * message: plain text (required). html: optional rich HTML.
+ * Sends from the department address (submission.toEmail or DEPARTMENT_EMAILS[department]).
+ * Requires env: ADMIN_SECRET, RESEND_API_KEY; CONTACT_SUBMISSIONS (KV) only for id-based reply.
  */
 
 const RESEND_URL = 'https://api.resend.com/emails';
@@ -54,10 +53,6 @@ export async function onRequest(context) {
   }
 
   const kv = env.CONTACT_SUBMISSIONS;
-  if (!kv || typeof kv.get !== 'function') {
-    return jsonResponse({ error: 'Storage not configured' }, 503, corsHeaders(origin));
-  }
-
   const apiKey = env.RESEND_API_KEY;
   if (!apiKey) {
     return jsonResponse({ error: 'Reply is not configured. Missing RESEND_API_KEY.' }, 503, corsHeaders(origin));
@@ -92,11 +87,12 @@ export async function onRequest(context) {
     attachmentsSanitized.push({ filename: a.filename.slice(0, 255), content: raw });
   }
 
-  if (!id || !message) {
-    return jsonResponse({ error: 'Missing required fields: id, message' }, 400, corsHeaders(origin));
-  }
-  if (!id.startsWith('submission:')) {
-    return jsonResponse({ error: 'Invalid submission id' }, 400, corsHeaders(origin));
+  const toEmailDirect = typeof body.toEmail === 'string' ? body.toEmail.trim() : '';
+  const departmentDirect = typeof body.department === 'string' ? body.department.trim() : '';
+  const isDirectReply = toEmailDirect && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(toEmailDirect) && ['general', 'sales', 'accounting'].includes(departmentDirect);
+
+  if (!message) {
+    return jsonResponse({ error: 'Missing required field: message' }, 400, corsHeaders(origin));
   }
   if (message.length > 10000) {
     return jsonResponse({ error: 'Message too long' }, 400, corsHeaders(origin));
@@ -112,28 +108,47 @@ export async function onRequest(context) {
     html = '';
   }
 
-  const raw = await kv.get(id);
-  if (!raw) {
-    return jsonResponse({ error: 'Submission not found' }, 404, corsHeaders(origin));
+  let toEmail, fromEmail, subject;
+
+  if (isDirectReply) {
+    toEmail = toEmailDirect;
+    const DEPARTMENT_EMAILS = {
+      general: 'info@schmiedeler.com',
+      sales: 'sales@schmiedeler.com',
+      accounting: 'accounting@schmiedeler.com',
+    };
+    fromEmail = DEPARTMENT_EMAILS[departmentDirect] || 'info@schmiedeler.com';
+    subject = subjectOverride
+      ? (subjectOverride.startsWith('Re:') ? subjectOverride : `Re: ${subjectOverride}`)
+      : 'Re: Your message';
+  } else {
+    if (!id || !id.startsWith('submission:')) {
+      return jsonResponse({ error: 'Missing id (submission) or valid toEmail+department' }, 400, corsHeaders(origin));
+    }
+    if (!kv || typeof kv.get !== 'function') {
+      return jsonResponse({ error: 'Storage not configured' }, 503, corsHeaders(origin));
+    }
+    const raw = await kv.get(id);
+    if (!raw) {
+      return jsonResponse({ error: 'Submission not found' }, 404, corsHeaders(origin));
+    }
+    let submission;
+    try {
+      submission = JSON.parse(raw);
+    } catch {
+      return jsonResponse({ error: 'Invalid submission data' }, 500, corsHeaders(origin));
+    }
+    toEmail = submission.email;
+    if (!toEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(toEmail)) {
+      return jsonResponse({ error: 'Invalid recipient' }, 400, corsHeaders(origin));
+    }
+    fromEmail = submission.toEmail || 'info@schmiedeler.com';
+    subject = subjectOverride
+      ? (subjectOverride.startsWith('Re:') ? subjectOverride : `Re: ${subjectOverride}`)
+      : (submission.subject ? `Re: ${submission.subject}` : 'Re: Your message');
   }
 
-  let submission;
-  try {
-    submission = JSON.parse(raw);
-  } catch {
-    return jsonResponse({ error: 'Invalid submission data' }, 500, corsHeaders(origin));
-  }
-
-  const toEmail = submission.email;
-  if (!toEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(toEmail)) {
-    return jsonResponse({ error: 'Invalid recipient' }, 400, corsHeaders(origin));
-  }
-
-  const fromEmail = submission.toEmail || 'info@schmiedeler.com';
   const fromAddress = `Schmiedeler & Associates <${fromEmail}>`;
-  const subject = subjectOverride
-    ? (subjectOverride.startsWith('Re:') ? subjectOverride : `Re: ${subjectOverride}`)
-    : (submission.subject ? `Re: ${submission.subject}` : 'Re: Your message');
 
   const payload = {
     from: fromAddress,

@@ -13,59 +13,82 @@
     .admin-header-inner { max-width: 100%; margin: 0; padding: var(--space-sm) var(--space-md); display: flex; align-items: center; justify-content: space-between; }
     .admin-header-logo { font-family: var(--font-heading); font-weight: 700; color: var(--color-navy-dark); text-decoration: none; font-size: 1.2rem; }
     .admin-header-portal { font-weight: 600; color: var(--color-navy); text-decoration: none; padding: var(--space-xs) var(--space-sm); border-radius: var(--radius); }
-    .admin-theme-toggle { width: 40px; height: 40px; border: none; border-radius: var(--radius); background: var(--color-bg-alt); color: var(--color-navy); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-    .admin-theme-toggle:hover { color: var(--color-accent); }
+    .admin-theme-toggle { width: 40px; height: 40px; border: none; border-radius: var(--radius); background: var(--color-bg-alt); color: var(--color-navy); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: color 0.2s, background 0.2s; }
+    .admin-theme-toggle:hover { color: var(--color-accent); background: var(--color-surface); }
+    .admin-theme-toggle:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
     .admin-theme-icon { display: none; }
     .admin-theme-sun { display: inline !important; }
     html[data-theme="dark"] .admin-theme-sun { display: none !important; }
     html[data-theme="dark"] .admin-theme-moon { display: inline !important; }
-    .admin-login-wrap { max-width: 24rem; margin: 2rem auto; padding: var(--space-xl); }
-    .admin-login label { display: block; font-weight: 600; margin-bottom: var(--space-xs); }
-    .admin-login input { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--color-trace); border-radius: var(--radius); }
-    .admin-login button { margin-top: var(--space-sm); }
-    .admin-error { color: #b91c1c; margin-top: var(--space-sm); font-size: 0.9rem; }
+    .admin-login-wrap { max-width: 28rem; margin: 3rem auto; padding: var(--space-xl); background: var(--color-surface); border-radius: 14px; box-shadow: var(--shadow-lg); border: 1px solid var(--color-trace); }
+    .admin-login-wrap .admin-title { font-size: 1.75rem; letter-spacing: -0.02em; color: var(--color-navy); }
+    .admin-login-wrap .section-intro { color: var(--color-text-muted); font-size: 1rem; }
+    .admin-login label { display: block; font-weight: 600; margin-bottom: var(--space-xs); font-size: 0.9rem; color: var(--color-navy); }
+    .admin-login input { width: 100%; padding: 0.65rem 0.9rem; border: 1px solid var(--color-trace); border-radius: 8px; font-size: 1rem; background: var(--color-surface); color: var(--color-text); transition: border-color 0.2s, box-shadow 0.2s; }
+    .admin-login input:focus { outline: none; border-color: var(--color-accent); box-shadow: 0 0 0 3px var(--color-trace-accent); }
+    .admin-login button { margin-top: var(--space-md); width: 100%; padding: 0.65rem 1rem; font-weight: 600; border-radius: 8px; }
+    .admin-error { color: #dc2626; margin-top: var(--space-sm); font-size: 0.9rem; }
 
     .admin-app { display: flex; min-height: calc(100vh - 52px); }
-    .admin-sidebar { width: 220px; flex-shrink: 0; background: var(--color-bg-alt); border-right: 1px solid var(--color-trace); padding: var(--space-md) 0; }
-    .admin-sidebar .nav-item { display: flex; align-items: center; justify-content: space-between; padding: var(--space-sm) var(--space-md); color: var(--color-navy); text-decoration: none; font-weight: 600; cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-size: 1rem; }
+    .admin-sidebar { width: 240px; flex-shrink: 0; background: var(--color-bg-alt); border-right: 1px solid var(--color-trace); padding: var(--space-lg) 0; }
+    .admin-sidebar .nav-item { display: flex; align-items: center; justify-content: space-between; padding: var(--space-sm) var(--space-lg); color: var(--color-navy); text-decoration: none; font-weight: 600; cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-size: 0.95rem; border-left: 3px solid transparent; margin-left: 0; transition: background 0.15s, color 0.15s, border-color 0.15s; }
     .admin-sidebar .nav-item:hover { background: var(--color-surface); color: var(--color-accent); }
-    .admin-sidebar .nav-item.active { background: rgba(180, 83, 9, 0.12); color: var(--color-accent); border-left: 3px solid var(--color-accent); padding-left: calc(var(--space-md) - 3px); }
-    .admin-sidebar .nav-count { font-size: 0.85rem; color: var(--color-text-muted); font-weight: 500; }
-    .admin-sidebar .nav-item.active .nav-count { color: var(--color-accent); }
-    .admin-sidebar .logout-wrap { padding: var(--space-md); border-top: 1px solid var(--color-trace); margin-top: var(--space-sm); }
+    .admin-sidebar .nav-item.active { background: var(--dept-general-bg); color: var(--color-accent); border-left-color: var(--color-accent); padding-left: calc(var(--space-lg) - 3px); }
+    .admin-sidebar .nav-item[data-dept="sales"].active { background: var(--dept-sales-bg); color: var(--dept-sales); border-left-color: var(--dept-sales); }
+    .admin-sidebar .nav-item[data-dept="accounting"].active { background: var(--dept-accounting-bg); color: var(--dept-accounting); border-left-color: var(--dept-accounting); }
+    .admin-sidebar .nav-count { font-size: 0.8rem; color: var(--color-text-muted); font-weight: 600; min-width: 1.5rem; text-align: right; }
+    .admin-sidebar .nav-item.active .nav-count { color: inherit; }
+    .admin-gmail-wrap { padding: var(--space-lg); border-top: 1px solid var(--color-trace); margin-top: var(--space-sm); }
+    .admin-gmail-status { font-size: 0.85rem; color: var(--color-text-muted); }
+    .admin-gmail-status.flash { color: var(--color-accent); animation: admin-flash 2s ease; }
+    @keyframes admin-flash { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 1; } }
+    .admin-sidebar .logout-wrap { padding: var(--space-md); border-top: 1px solid var(--color-trace); margin-top: 0; }
     .admin-main { flex: 1; min-width: 0; display: flex; flex-direction: column; background: var(--color-surface); }
-    .admin-toolbar { padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--color-trace); font-weight: 600; color: var(--color-navy); }
-    .admin-emaillist { flex: 1; overflow-y: auto; }
-    .admin-emailrow { display: flex; align-items: center; gap: var(--space-md); padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--color-trace); cursor: pointer; transition: background 0.15s; }
+    .admin-toolbar { padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--color-trace); font-weight: 600; color: var(--color-navy); display: flex; align-items: center; gap: var(--space-md); flex-wrap: wrap; background: var(--color-surface); }
+    .admin-toolbar-label { font-size: 1rem; letter-spacing: -0.01em; }
+    .admin-toolbar .refresh-btn { margin-left: auto; }
+    .admin-emaillist { flex: 1; overflow-y: auto; min-height: 200px; }
+    .admin-emailrow { display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--color-trace); cursor: pointer; transition: background 0.15s, border-left-color 0.15s; border-left: 3px solid transparent; }
     .admin-emailrow:hover { background: var(--color-bg-alt); }
-    .admin-emailrow .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; flex-shrink: 0; }
+    .admin-emailrow:focus { outline: none; background: var(--color-bg-alt); border-left-color: var(--color-accent); }
+    .admin-emailrow .avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--color-accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; flex-shrink: 0; }
     .admin-emailrow .meta { flex: 1; min-width: 0; }
-    .admin-emailrow .from-line { display: flex; align-items: center; gap: var(--space-sm); margin-bottom: 2px; }
+    .admin-emailrow .from-line { display: flex; align-items: center; gap: var(--space-sm); margin-bottom: 4px; }
     .admin-emailrow .from-name { font-weight: 600; color: var(--color-navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .admin-emailrow .date { font-size: 0.85rem; color: var(--color-text-muted); flex-shrink: 0; }
-    .admin-emailrow .subject { font-weight: 600; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .admin-emailrow .snippet { font-size: 0.9rem; color: var(--color-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .admin-empty-inbox { padding: var(--space-2xl); text-align: center; color: var(--color-text-muted); }
+    .admin-emailrow .date { font-size: 0.8rem; color: var(--color-text-muted); flex-shrink: 0; }
+    .admin-emailrow .subject { font-weight: 600; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.95rem; }
+    .admin-emailrow .snippet { font-size: 0.875rem; color: var(--color-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+    .admin-empty-inbox { padding: var(--space-2xl) var(--space-lg); text-align: center; color: var(--color-text-muted); }
+    .admin-empty-inbox .empty-icon { font-size: 3.5rem; margin-bottom: var(--space-sm); opacity: 0.4; display: block; }
+    .admin-empty-inbox p { margin: 0 0 var(--space-xs); font-size: 1rem; }
 
-    .admin-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; display: flex; align-items: center; justify-content: center; padding: var(--space-md); backdrop-filter: blur(4px); }
+    .admin-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: flex; align-items: center; justify-content: center; padding: var(--space-lg); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
     .admin-modal-overlay[hidden] { display: none; }
-    .admin-modal-box { background: var(--color-surface); border-radius: 12px; box-shadow: 0 24px 48px rgba(0,0,0,0.15); max-width: 680px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
+    .admin-modal-box { background: var(--color-surface); border-radius: 14px; box-shadow: 0 24px 56px rgba(0,0,0,0.18), 0 0 0 1px var(--color-trace); max-width: 700px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
     .admin-modal-header { padding: var(--space-lg) var(--space-xl); border-bottom: 1px solid var(--color-trace); display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-md); background: var(--color-surface); }
+    .admin-modal-header-content { flex: 1; min-width: 0; }
+    .admin-modal-dept-badge { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent); background: var(--dept-general-bg); padding: 0.25rem 0.5rem; border-radius: 6px; margin-bottom: 0.35rem; }
+    .admin-modal-dept-badge.dept-sales { color: var(--dept-sales); background: var(--dept-sales-bg); }
+    .admin-modal-dept-badge.dept-accounting { color: var(--dept-accounting); background: var(--dept-accounting-bg); }
     .admin-modal-header h2 { margin: 0; font-size: 1.2rem; font-weight: 700; color: var(--color-navy); letter-spacing: -0.02em; line-height: 1.3; }
-    .admin-modal-close { width: 36px; height: 36px; border: none; border-radius: 8px; background: transparent; color: var(--color-text-muted); font-size: 1.4rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; }
+    .admin-modal-close { width: 38px; height: 38px; border: none; border-radius: 8px; background: transparent; color: var(--color-text-muted); font-size: 1.5rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; }
     .admin-modal-close:hover { background: var(--color-bg-alt); color: var(--color-navy); }
+    .admin-modal-close:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
     .admin-modal-body { padding: var(--space-lg) var(--space-xl); overflow-y: auto; flex: 1; min-height: 0; }
     .admin-modal-section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); margin-bottom: var(--space-sm); }
-    .admin-modal-inbound { background: rgba(148, 163, 184, 0.08); border-radius: 10px; padding: var(--space-md) var(--space-lg); margin-bottom: var(--space-lg); border: 1px solid var(--color-trace); }
+    .admin-modal-inbound { background: var(--color-bg-alt); border-radius: 10px; padding: var(--space-lg); margin-bottom: var(--space-lg); border: 1px solid var(--color-trace); }
     .admin-modal-inbound .admin-modal-section-label { color: var(--color-text-muted); }
     .admin-modal-email-from, .admin-modal-email-to { font-size: 0.9rem; margin-bottom: var(--space-xs); color: var(--color-text); }
     .admin-modal-email-from strong, .admin-modal-email-to strong { color: var(--color-navy); }
     .admin-modal-email-date { font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: var(--space-md); }
-    .admin-modal-email-msg { white-space: pre-wrap; word-break: break-word; font-size: 0.95rem; color: var(--color-text); line-height: 1.55; padding-top: var(--space-sm); border-top: 1px solid var(--color-trace); margin-top: var(--space-sm); }
-    .admin-modal-reply { padding: var(--space-lg) var(--space-xl); border-top: 1px solid var(--color-trace); background: rgba(180, 83, 9, 0.04); }
+    .admin-modal-email-msg { white-space: pre-wrap; word-break: break-word; font-size: 0.95rem; color: var(--color-text); line-height: 1.6; padding-top: var(--space-md); border-top: 1px solid var(--color-trace); margin-top: var(--space-sm); }
+    .admin-modal-reply { padding: var(--space-xl); border-top: 1px solid var(--color-trace); background: linear-gradient(to bottom, rgba(180, 83, 9, 0.05), rgba(180, 83, 9, 0.02)); }
     .admin-modal-reply .admin-modal-section-label { color: var(--color-accent); }
+    .admin-reply-from-note { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 0.75rem; opacity: 0.9; }
     .admin-modal-reply label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: var(--space-xs); color: var(--color-navy); }
-    .admin-modal-reply input[type="text"] { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--color-trace); border-radius: 8px; font-family: inherit; font-size: 0.95rem; background: var(--color-surface); }
+    .admin-modal-reply input[type="text"] { width: 100%; padding: 0.55rem 0.8rem; border: 1px solid var(--color-trace); border-radius: 8px; font-family: inherit; font-size: 0.95rem; background: var(--color-surface); color: var(--color-text); transition: border-color 0.2s, box-shadow 0.2s; }
+    .admin-modal-reply input[type="text"]:focus { outline: none; border-color: var(--color-accent); box-shadow: 0 0 0 2px var(--color-trace-accent); }
+    .admin-modal-reply input[readonly] { background: var(--color-bg-alt); cursor: default; }
     .admin-modal-reply .reply-row { margin-bottom: var(--space-md); }
     .admin-modal-reply .reply-toolbar { display: flex; align-items: center; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-md); padding-top: var(--space-sm); }
     .admin-modal-reply .reply-toolbar button { padding: 0.5rem 1rem; font-size: 0.9rem; border-radius: 8px; }
@@ -89,22 +112,20 @@
     .admin-char-count { font-size: 0.8rem; color: var(--color-text-muted); margin-top: 2px; }
     .admin-char-count.near-limit { color: var(--color-accent); }
     .admin-char-count.over-limit { color: #b91c1c; }
-    .admin-toolbar { display: flex; align-items: center; gap: var(--space-md); flex-wrap: wrap; }
     .admin-toolbar .refresh-btn { margin-left: auto; }
     .admin-loading { padding: var(--space-2xl); text-align: center; color: var(--color-text-muted); }
-    .admin-loading-spinner { display: inline-block; width: 24px; height: 24px; border: 2px solid var(--color-trace); border-top-color: var(--color-accent); border-radius: 50%; animation: admin-spin 0.8s linear infinite; margin-bottom: var(--space-sm); }
+    .admin-loading-spinner { display: inline-block; width: 28px; height: 28px; border: 2px solid var(--color-trace); border-top-color: var(--color-accent); border-radius: 50%; animation: admin-spin 0.8s linear infinite; margin-bottom: var(--space-sm); }
     @keyframes admin-spin { to { transform: rotate(360deg); } }
-    .admin-empty-inbox { padding: var(--space-2xl); text-align: center; color: var(--color-text-muted); }
-    .admin-empty-inbox .empty-icon { font-size: 3rem; margin-bottom: var(--space-sm); opacity: 0.5; }
     .admin-emailrow.unread .from-name { font-weight: 700; }
     .admin-emailrow.unread .subject { font-weight: 700; }
     .admin-modal-overlay { opacity: 0; transition: opacity 0.2s ease; }
     .admin-modal-overlay.is-open { opacity: 1; }
     .admin-modal-box { transform: scale(0.98); transition: transform 0.2s ease; }
     .admin-modal-overlay.is-open .admin-modal-box { transform: scale(1); }
-    .admin-pagination { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-sm); padding: var(--space-sm) var(--space-md); border-top: 1px solid var(--color-trace); background: var(--color-surface); }
+    .admin-pagination { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-sm); padding: var(--space-md) var(--space-lg); border-top: 1px solid var(--color-trace); background: var(--color-surface); }
     .admin-pagination-info { font-size: 0.9rem; color: var(--color-text-muted); }
     .admin-pagination-btns { display: flex; gap: var(--space-sm); }
+    .admin-pagination-btns .btn:disabled { opacity: 0.6; cursor: not-allowed; }
     .admin-format-toolbar { display: flex; gap: 2px; margin-bottom: 4px; }
     .admin-format-toolbar button { width: 34px; height: 34px; padding: 0; border: 1px solid var(--color-trace); border-radius: 8px; background: var(--color-surface); color: var(--color-navy); cursor: pointer; font-size: 0.9rem; font-weight: 700; transition: background 0.2s, border-color 0.2s; }
     .admin-format-toolbar button:hover { background: var(--color-bg-alt); border-color: var(--color-accent); }
@@ -151,13 +172,17 @@
       <button type="button" class="nav-item active" data-dept="general">General <span class="nav-count" id="count-general">0</span></button>
       <button type="button" class="nav-item" data-dept="sales">Sales <span class="nav-count" id="count-sales">0</span></button>
       <button type="button" class="nav-item" data-dept="accounting">Accounting <span class="nav-count" id="count-accounting">0</span></button>
+      <div class="admin-gmail-wrap">
+        <button type="button" class="btn btn-secondary btn-sm" id="admin-connect-gmail" hidden>Connect Gmail</button>
+        <span class="admin-gmail-status" id="admin-gmail-status" hidden>Gmail connected</span>
+      </div>
       <div class="logout-wrap">
         <button type="button" class="btn btn-secondary" id="admin-logout">Log out</button>
       </div>
     </aside>
     <main class="admin-main">
       <div class="admin-toolbar" id="admin-toolbar">
-        <span id="admin-toolbar-label">Inbox — General</span>
+        <span id="admin-toolbar-label" class="admin-toolbar-label">Inbox — General</span>
         <button type="button" class="btn btn-secondary btn-sm refresh-btn" id="admin-refresh" aria-label="Refresh inbox">Refresh</button>
       </div>
       <div class="admin-loading" id="admin-loading" hidden><div class="admin-loading-spinner" aria-hidden="true"></div><div>Loading inbox…</div></div>
@@ -169,14 +194,17 @@
           <button type="button" class="btn btn-secondary btn-sm" id="admin-pagination-next" aria-label="Next page">Next</button>
         </div>
       </nav>
-      <div class="admin-empty-inbox" id="admin-empty-inbox" hidden><span class="empty-icon" aria-hidden="true">📭</span><p>No messages in this department.</p><p style="font-size: 0.9rem;">New contact form submissions will appear here.</p></div>
+      <div class="admin-empty-inbox" id="admin-empty-inbox" hidden><span class="empty-icon" aria-hidden="true">📭</span><p>No messages in this department.</p><p id="admin-empty-hint" style="font-size: 0.9rem;">Contact form submissions and emails sent to this address will appear here.</p></div>
     </main>
   </div>
 
   <div id="admin-modal" class="admin-modal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="modal-subject" aria-describedby="modal-from">
     <div class="admin-modal-box">
       <div class="admin-modal-header">
-        <h2 id="modal-subject">Subject</h2>
+        <div class="admin-modal-header-content">
+          <span class="admin-modal-dept-badge" id="modal-dept-badge">General</span>
+          <h2 id="modal-subject">Subject</h2>
+        </div>
         <button type="button" class="admin-modal-close" id="modal-close" aria-label="Close message">&times;</button>
       </div>
       <div class="admin-modal-body">
@@ -189,14 +217,18 @@
         </div>
       </div>
       <div class="admin-modal-reply">
-        <div class="admin-modal-section-label">Your reply</div>
+        <div class="admin-modal-section-label">Your reply <span class="admin-reply-from-note">(sent from this department’s @schmiedeler.com address)</span></div>
         <div class="reply-row">
-          <label>To</label>
-          <input type="text" id="reply-to" readonly />
+          <label for="reply-subject">Subject</label>
+          <input type="text" id="reply-subject" placeholder="Re: ..." aria-label="Reply subject" />
         </div>
         <div class="reply-row">
-          <label>CC (optional)</label>
-          <input type="text" id="reply-cc" placeholder="email@example.com, another@example.com" />
+          <label>To</label>
+          <input type="text" id="reply-to" readonly aria-readonly="true" />
+        </div>
+        <div class="reply-row">
+          <label for="reply-cc">CC (optional)</label>
+          <input type="text" id="reply-cc" placeholder="email@example.com, another@example.com" aria-label="CC recipients" />
         </div>
         <div class="reply-row">
           <label for="reply-body">Message</label>
@@ -227,6 +259,7 @@
           <button type="button" class="btn btn-secondary" id="reply-cancel">Cancel</button>
           <span class="admin-reply-status" id="reply-status" aria-live="polite"></span>
         </div>
+        <p class="admin-reply-hint" style="margin-top: var(--space-sm); margin-bottom: 0; font-size: 0.8rem; color: var(--color-text-muted);">Replies are sent via your department @schmiedeler.com address; the recipient will see that address as the sender.</p>
       </div>
     </div>
   </div>
@@ -249,6 +282,7 @@
       var modalTo = document.getElementById('modal-to');
       var modalDate = document.getElementById('modal-date');
       var modalMsg = document.getElementById('modal-msg');
+      var replySubject = document.getElementById('reply-subject');
       var replyTo = document.getElementById('reply-to');
       var replyCc = document.getElementById('reply-cc');
       var replyBody = document.getElementById('reply-body');
@@ -305,19 +339,25 @@
         var loadingEl = document.getElementById('admin-loading');
         if (loadingEl) loadingEl.hidden = false;
         if (loadBtn) { loadBtn.disabled = true; loadBtn.textContent = 'Signing in…'; }
-        fetch('/api/submissions', { method: 'GET', headers: { 'Authorization': 'Bearer ' + key } })
-          .then(function (r) {
-            if (r.status === 401) {
-              sessionStorage.removeItem(STORAGE_KEY);
-              showError('Invalid key. Please try again.');
-              return null;
-            }
+        Promise.all([
+          fetch('/api/submissions', { method: 'GET', headers: { 'Authorization': 'Bearer ' + key } }).then(function (r) {
+            if (r.status === 401) return null;
+            return r.json();
+          }),
+          fetch('/api/gmail-inbox', { method: 'GET', headers: { 'Authorization': 'Bearer ' + key } }).then(function (r) {
             return r.json();
           })
-          .then(function (data) {
+        ])
+          .then(function (arr) {
+            var data = arr[0];
+            var gmailData = arr[1] || {};
             if (loadingEl) loadingEl.hidden = true;
             if (loadBtn) { loadBtn.disabled = false; loadBtn.textContent = 'Sign in'; }
-            if (!data) return;
+            if (!data) {
+              sessionStorage.removeItem(STORAGE_KEY);
+              showError('Invalid key. Please try again.');
+              return;
+            }
             if (data.error && !data.submissions) {
               showError(data.error || 'Failed to load.');
               return;
@@ -325,9 +365,58 @@
             loginWrap.hidden = true;
             appEl.hidden = false;
             sessionStorage.setItem(STORAGE_KEY, key);
-            submissions = data.submissions || [];
-            updateCounts();
-            renderList();
+
+            var kvList = (data.submissions || []).map(function (s) {
+              s.source = s.source || 'form';
+              s.createdAt = s.createdAt || '';
+              return s;
+            });
+            var gmailList = (gmailData.gmail || []).map(function (m) {
+              return {
+                id: m.id,
+                name: m.name,
+                email: m.email,
+                toEmail: m.toEmail,
+                subject: m.subject,
+                message: m.message,
+                createdAt: m.createdAt,
+                department: m.department,
+                source: 'gmail'
+              };
+            });
+            submissions = kvList.concat(gmailList).sort(function (a, b) {
+              var tA = new Date(a.createdAt).getTime();
+              var tB = new Date(b.createdAt).getTime();
+              return tB - tA;
+            });
+
+            var connectBtn = document.getElementById('admin-connect-gmail');
+            var statusEl = document.getElementById('admin-gmail-status');
+            if (gmailData.gmailConnected) {
+              if (connectBtn) connectBtn.hidden = true;
+              if (statusEl) { statusEl.hidden = false; statusEl.textContent = 'Gmail connected'; }
+              updateCounts();
+              renderList();
+            } else {
+              if (connectBtn) connectBtn.hidden = true;
+              if (statusEl) statusEl.hidden = true;
+              fetch('/api/gmail-auth-url', { method: 'GET', headers: { 'Authorization': 'Bearer ' + key } })
+                .then(function (r) { return r.json(); })
+                .then(function (authData) {
+                  if (authData && authData.url) {
+                    window.location = authData.url;
+                    return;
+                  }
+                  if (connectBtn) connectBtn.hidden = false;
+                  updateCounts();
+                  renderList();
+                })
+                .catch(function () {
+                  if (connectBtn) connectBtn.hidden = false;
+                  updateCounts();
+                  renderList();
+                });
+            }
           })
           .catch(function () {
             if (loadingEl) loadingEl.hidden = true;
@@ -415,6 +504,8 @@
         if (labelEl) labelEl.textContent = 'Inbox — ' + DEPT_LABELS[currentDept] + ' (' + DEPT_EMAILS[currentDept] + ')';
         emaillistEl.innerHTML = '';
         emptyInboxEl.hidden = total > 0;
+        var emptyHint = document.getElementById('admin-empty-hint');
+        if (emptyHint) emptyHint.textContent = 'Contact form submissions and emails sent to ' + (DEPT_EMAILS[currentDept] || 'this address') + ' will appear here.';
 
         var paginationEl = document.getElementById('admin-pagination');
         var paginationInfo = document.getElementById('admin-pagination-info');
@@ -465,12 +556,19 @@
         emojiPicker.hidden = true;
         if (replyEmojiBtn) replyEmojiBtn.setAttribute('aria-expanded', 'false');
 
-        modalSubject.textContent = s.subject || '—';
+        var subj = s.subject || '';
+        modalSubject.textContent = subj || '—';
+        var deptBadge = document.getElementById('modal-dept-badge');
+        if (deptBadge) {
+          deptBadge.textContent = DEPT_LABELS[s.department] || 'General';
+          deptBadge.className = 'admin-modal-dept-badge' + (s.department === 'sales' ? ' dept-sales' : s.department === 'accounting' ? ' dept-accounting' : '');
+        }
         modalFrom.innerHTML = '<strong>From:</strong> ' + escapeHtml(s.name || '') + ' &lt;' + escapeHtml(s.email || '') + '&gt;';
         modalTo.innerHTML = '<strong>To:</strong> ' + escapeHtml(s.toEmail || DEPT_EMAILS[s.department] || '—');
         modalDate.textContent = formatRelativeDate(s.createdAt);
         modalMsg.textContent = s.message || '—';
         replyTo.value = s.email || '';
+        replySubject.value = subj ? (subj.toLowerCase().indexOf('re:') === 0 ? subj : 'Re: ' + subj) : 'Re: Your message';
         updateCharCount();
         modalEl.hidden = false;
         modalEl.classList.add('is-open');
@@ -606,17 +704,30 @@
 
         var ccStr = (replyCc && replyCc.value) ? replyCc.value.trim() : '';
         var ccList = ccStr ? ccStr.split(/[\s,;]+/).map(function (e) { return e.trim(); }).filter(Boolean) : [];
+        var subjectStr = (replySubject && replySubject.value) ? replySubject.value.trim() : (currentSubmission.subject ? 'Re: ' + currentSubmission.subject : 'Re: Your message');
         var htmlBody = getReplyHtml();
 
         Promise.all(selectedFiles.map(function (item) { return readFileAsBase64(item.file); }))
           .then(function (attachments) {
-            var payload = {
-              id: currentSubmission.id,
-              message: msg,
-              subject: currentSubmission.subject,
-              cc: ccList.length ? ccList : undefined,
-              attachments: attachments.length ? attachments : undefined
-            };
+            var payload;
+            if (currentSubmission.source === 'gmail') {
+              payload = {
+                toEmail: currentSubmission.email,
+                department: currentSubmission.department,
+                message: msg,
+                subject: subjectStr,
+                cc: ccList.length ? ccList : undefined,
+                attachments: attachments.length ? attachments : undefined
+              };
+            } else {
+              payload = {
+                id: currentSubmission.id,
+                message: msg,
+                subject: subjectStr,
+                cc: ccList.length ? ccList : undefined,
+                attachments: attachments.length ? attachments : undefined
+              };
+            }
             if (htmlBody && htmlBody !== '<br>') payload.html = htmlBody;
             return fetch('/api/reply', {
               method: 'POST',
@@ -693,13 +804,25 @@
         if (!key) return;
         refreshBtn.disabled = true;
         refreshBtn.textContent = 'Refreshing…';
-        fetch('/api/submissions', { method: 'GET', headers: { 'Authorization': 'Bearer ' + key } })
-          .then(function (r) { return r.status === 401 ? null : r.json(); })
-          .then(function (data) {
+        Promise.all([
+          fetch('/api/submissions', { method: 'GET', headers: { 'Authorization': 'Bearer ' + key } }).then(function (r) { return r.status === 401 ? null : r.json(); }),
+          fetch('/api/gmail-inbox', { method: 'GET', headers: { 'Authorization': 'Bearer ' + key } }).then(function (r) { return r.json(); })
+        ])
+          .then(function (arr) {
+            var data = arr[0];
+            var gmailData = arr[1] || {};
             refreshBtn.disabled = false;
             refreshBtn.textContent = 'Refresh';
             if (!data || (data.error && !data.submissions)) return;
-            submissions = data.submissions || [];
+            var kvList = (data.submissions || []).map(function (s) { s.source = s.source || 'form'; s.createdAt = s.createdAt || ''; return s; });
+            var gmailList = (gmailData.gmail || []).map(function (m) {
+              return { id: m.id, name: m.name, email: m.email, toEmail: m.toEmail, subject: m.subject, message: m.message, createdAt: m.createdAt, department: m.department, source: 'gmail' };
+            });
+            submissions = kvList.concat(gmailList).sort(function (a, b) { return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(); });
+            var connectBtn = document.getElementById('admin-connect-gmail');
+            var statusEl = document.getElementById('admin-gmail-status');
+            if (gmailData.gmailConnected) { if (connectBtn) connectBtn.hidden = true; if (statusEl) { statusEl.hidden = false; statusEl.textContent = 'Gmail connected'; } }
+            else { if (connectBtn) connectBtn.hidden = false; if (statusEl) statusEl.hidden = true; }
             updateCounts();
             renderList();
           })
@@ -720,9 +843,37 @@
         showError('');
       });
 
+      var connectGmailBtn = document.getElementById('admin-connect-gmail');
+      if (connectGmailBtn) connectGmailBtn.addEventListener('click', function () {
+        var key = getAuthKey();
+        if (!key) return;
+        fetch('/api/gmail-auth-url', { method: 'GET', headers: { 'Authorization': 'Bearer ' + key } })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (data && data.url) window.location = data.url;
+            else showError('Could not get Gmail sign-in URL.');
+          })
+          .catch(function () { showError('Network error.'); });
+      });
+
       var saved = sessionStorage.getItem(STORAGE_KEY);
-      if (saved) { keyInput.value = ''; loadSubmissions(saved); }
-      else { appEl.hidden = true; }
+      if (saved) {
+        keyInput.value = '';
+        loadSubmissions(saved);
+      } else {
+        appEl.hidden = true;
+      }
+      var params = new URLSearchParams(window.location.search);
+      if (params.get('gmail') === 'connected') {
+        try { history.replaceState(null, '', window.location.pathname + (window.location.hash || '')); } catch (e) {}
+        showError('');
+        var statusEl = document.getElementById('admin-gmail-status');
+        if (statusEl) { statusEl.hidden = false; statusEl.textContent = 'Gmail connected'; statusEl.classList.add('flash'); setTimeout(function () { statusEl.classList.remove('flash'); }, 2000); }
+      }
+      if (params.get('gmail') === 'denied' || params.get('gmail') === 'error') {
+        try { history.replaceState(null, '', window.location.pathname + (window.location.hash || '')); } catch (e) {}
+        showError(params.get('gmail') === 'denied' ? 'Gmail access was denied.' : 'Gmail connection failed.');
+      }
     })();
   </script>
 </body>
